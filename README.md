@@ -5,4 +5,6 @@ Basically everything here was a test program written by me to learn the syntax o
 Only the Mastermind.pas file isnt java, it is an old program I wrote, the first big one.
 I decided to keep it due to its sentimental value.
 
+BTW, Don't mind the c++ folder, it's only for the things I have to do for my uni.
+
 Peace.
