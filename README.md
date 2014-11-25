@@ -9,3 +9,6 @@ I decided to keep it due to its sentimental value.
 BTW, Don't mind the c++ folder, it's only for the things I have to do for my uni.
 
 Peace.
+
+
+siema heniu
