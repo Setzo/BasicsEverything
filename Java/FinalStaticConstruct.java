@@ -4,12 +4,12 @@ class Thing {
 	public final static int LN=45;				//stała statyczna
 	public static int cnt = 0;					//counter na 0
 	public int a,id;							
-	public static String word=null;					//statyczny string
+	public static String word=null;				//statyczny string
 	
 	public Thing() {							//constructor
 		
-		id = cnt;
-		cnt++;
+		id = cnt;								//przypisywanie ID każdemy rekordowi
+		cnt++;									//counter wszystkich Thing'ów
 	}
 	
 	public int getA() {
