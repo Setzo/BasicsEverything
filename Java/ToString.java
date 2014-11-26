@@ -41,7 +41,7 @@ public class ToStr {
 		x.setName(data.nextLine());
 		y.setName(data.nextLine());
 		
-		System.out.println(x +""+ y);
+		System.out.println(x +""+ y);	//Program szuka metody toString w każdej klasie i ją wypisuje
 		data.close();
 	}
 }
