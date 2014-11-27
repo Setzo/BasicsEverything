@@ -7,7 +7,7 @@ public class Peace {
          
         System.out.println(plant.name);
          
-        System.out.println(plant.ID);
+        System.out.println(Plant.ID);
      
     }
 }
