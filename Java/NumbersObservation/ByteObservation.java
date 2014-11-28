@@ -2,7 +2,7 @@
 public class ByteObservation {
 	public static void main(String[] args) {
 
-		byte byteVal,cnt=0;
+		byte byteVal;
 
 		//byteVal = (byte) 128;
 		//System.out.println(byteVal);
