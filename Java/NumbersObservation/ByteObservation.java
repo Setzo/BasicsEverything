@@ -10,11 +10,11 @@ public class ByteObservation {
 		//byteVal = (byte) 400;
 		//System.out.println(byteVal);
 		
-		for(int i=0;i<=400;i++) {
+		for(int i=0;i<=999;i++) {
 			
 			byteVal=(byte)i;
 			System.out.printf("%3d %4d | ",i,byteVal);
-			if(i%50==0) {
+			if((i%50==0)&&(i!=0)) {
 				System.out.printf("\n\n");
 			}
 		}
