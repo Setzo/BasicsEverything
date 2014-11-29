@@ -6,7 +6,7 @@
            -2147483648  Integer 2147483647            
   -9223372036854775808  Long    9223372036854775807   
 
-               Floating point values : 
+               Floating point values :  
 
                1.4E-45  Float   3.4028235E38
               4.9E-324  Double  1.7976931348623157E308
