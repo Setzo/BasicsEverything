@@ -9,6 +9,9 @@ class Dod {
 	}
 }
 
+interface IInterface {
+	public void sayHi();
+}
 
 public class AnonClass {
 	public static void main(String[] args) {
@@ -29,5 +32,15 @@ public class AnonClass {
 		
 		System.out.println(x.dod(5, 7));
 		System.out.println(y.dod(5, 7));
+		
+		IInterface z = new IInterface() {
+
+			@Override
+			public void sayHi() {
+				System.out.println("Hi");
+			}
+		};
+		
+		z.sayHi();
 	}
 }
