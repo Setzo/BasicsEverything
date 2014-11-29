@@ -1,5 +1,5 @@
+//It's not working, work in progress
 
-/*
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -34,4 +34,4 @@ public class ShortSearching {
 		input.close();
 	}
 }
-*/
+//It's not working, work in progress
