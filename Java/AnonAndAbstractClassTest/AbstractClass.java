@@ -23,7 +23,7 @@ public class AnonClass {
 			
 			@Override public String toString() {
 				return "Anonymous class injected";
-			}
+			} 
 		};
 		Dod y = new Dod();
 		
