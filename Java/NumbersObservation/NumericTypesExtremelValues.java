@@ -7,7 +7,7 @@ public class Caster {
 		int 	intVal     =	678;
 		long	longVal    =	20394;
 		
-		float 	floatVal   =	543.75f;	//(float)543.75
+		float 	floatVal   =	543.75f;	//(float)543.75 
 		double 	doubleVal  =	890.45;
 		
 		intVal = (int)longVal;				//działa tylko, gdy longVal należy do zbioru zakresów wartości int'a
