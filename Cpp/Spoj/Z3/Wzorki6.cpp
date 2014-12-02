@@ -10,7 +10,8 @@ void wypWz(int w, int k, int h, int l)
 			for (int j = 0; j < l; j++) {
 				printf(".");
 			}
-			printf("|");			}
+			printf("|");			
+		}
 		for (int j = 0; j < l; j++) {
 			printf(".");
 		}
