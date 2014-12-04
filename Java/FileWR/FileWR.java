@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class ByteS {
 	public static void main(String[] args) {
+		long time=System.currentTimeMillis();
 		File byteObs = new File("byteObs.txt");
 		Tab tablica = new Tab();
 		int x = 0;
@@ -53,5 +54,6 @@ public class ByteS {
 			System.out.printf("%6d ", tablica.getTabElement(x));
 			x++;
 		}
+		System.out.printf("\n\n%d ms", (System.currentTimeMillis()-time));
 	}
 }
