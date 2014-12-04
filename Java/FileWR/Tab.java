@@ -39,12 +39,15 @@ public class Tab {
 	}
 	
 	public boolean hasNxt(int i) {
-		if(tab[i+1]>=-128 && tab[i+1]<=127) {
-			return true;
-		}
-		else {
+		try{
+			if(tab[i]==1) {
+				return true;
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			//e.printStackTrace();
 			return false;
 		}
+		return true;	
 	}
 	
 	public void writeTab() {
