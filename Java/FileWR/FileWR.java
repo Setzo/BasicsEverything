@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
-public class byteS {
+public class ByteS {
 	public static void main(String[] args) {
 		File byteObs = new File ("byteObs.txt");
 		Tab tablica = new Tab();
@@ -14,7 +14,7 @@ public class byteS {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(byteObs))) {
 			StringBuilder sb = new StringBuilder("");
 			byte byteVal;
-			for(int i=0;i<=9999;i++) {
+			for(int i=0;i<10000;i++) {
 				if((i%50==0)&&(i!=0)) {
 					sb.append("\n");
 				}
@@ -35,6 +35,7 @@ public class byteS {
 			bw.write(sb.toString());
 		} catch (IOException e) {
             System.out.println("Unable to read file " + byteObs.toString());
+            //e.printStackTrace();
         } catch (Exception e ) {
         	System.out.println("Unknown error");
         	//e.printStackTrace();
