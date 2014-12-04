@@ -33,26 +33,26 @@ public class Tab {
 	public void setTab(short[] tab) {
 		this.tab = tab;
 	}
-	
+
 	public void writeTabElement(int i) {
 		System.out.print(tab[i]);
 	}
-	
+
 	public boolean hasNxt(int i) {
-		try{
-			if(tab[i]==1) {
+		try {
+			if (tab[i] == 1) {
 				return true;
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			return false;
 		}
-		return true;	
+		return true;
 	}
-	
+
 	public void writeTab() {
-		for(int i=0; i<10000; i++) {
-			System.out.printf("Value : %6d",tab[i]);
+		for (int i = 0; i < 10000; i++) {
+			System.out.printf("Value : %6d", tab[i]);
 		}
 	}
 }
