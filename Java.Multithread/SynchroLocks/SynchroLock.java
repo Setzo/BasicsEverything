@@ -74,7 +74,6 @@ public class Work {
 		// process();
 		long ti2 = System.currentTimeMillis();
 		System.out.println("Time taken: " + (ti2 - ti1));
-		System.out.println("List1: " + arrayL1.size() + " List 2: "
-				+ arrayL2.size());
+		System.out.println("List1: " + arrayL1.size() + " List 2: "+ arrayL2.size());
 	}
 }
