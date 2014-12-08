@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Euler8 {
 	
-	static int[] x = new int[1000];
+	static int[] x = new int[1000]; 
 	public static void main(String[] args) {
 		File txt = new File("text.txt");
 		StringBuilder sb = new StringBuilder();
