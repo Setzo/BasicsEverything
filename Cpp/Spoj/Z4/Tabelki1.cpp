@@ -5,7 +5,7 @@ int main()
 {
 	int t, w, k;
 	int tab[101][101];
-	scanf_s("%d", &t);
+	scanf_s("%d", &t); 
 	for (int i = 0; i < t; i++) {
 		scanf_s("%d %d", &w, &k);
 		for (int j = 0; j < w; j++) {
