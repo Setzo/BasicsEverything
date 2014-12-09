@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 public class Euler97 {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) /*throws InterruptedException*/ {
 		BigInteger x = new BigInteger("2");
 		StringBuilder sb = new StringBuilder("");
 		x = BigInteger.valueOf(2);
