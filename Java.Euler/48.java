@@ -9,7 +9,7 @@ public class Euler48 {
 		BigInteger y = new BigInteger("0");
 		//System.out.println(y);
 		for(int i=1; i<=1000; i++) {
-			x=x.valueOf(i);
+			x=BigInteger.valueOf(i);
 			x=x.pow(i);
 			y=y.add(x);
 			/*try {
