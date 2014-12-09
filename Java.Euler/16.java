@@ -13,6 +13,7 @@ public class Euler16 {
 		for(int i=0; i<sb.length(); i++) {
 			sum=sum+Character.getNumericValue(sb.charAt(i));
 		}
+		sb.delete(0, sb.length());
 		System.out.println(sum);
 	}
 }
