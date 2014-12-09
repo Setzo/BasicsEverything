@@ -10,7 +10,7 @@ public class Euler16 {
 		int sum=0;
 		x=x.pow(1000);
 		sb.append(x.toString());
-		for(int i=0; i<302; i++) {
+		for(int i=0; i<sb.length(); i++) {
 			sum=sum+Character.getNumericValue(sb.charAt(i));
 		}
 		System.out.println(sum);
