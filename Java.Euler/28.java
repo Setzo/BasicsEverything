@@ -2,15 +2,10 @@ package euler28;
 
 public class Euler28 {
 	public static void main(String[] args) {
-		long sum=0;
+		long sum=1;
 		Long lastNum = (long)1;
-		for(int i=1; i<=1001; i+=2) {
-			if(i==1) {
-				sum=1;
-			}
-			else {
-				sum = sum +(lastNum*4)+(10*(i-1));
-			}
+		for(int i=3; i<=1001; i+=2) {
+			sum = sum +(lastNum*4)+(10*(i-1));
 			System.out.println(sum);
 			lastNum = lastNum + 4*(i-1);
 		}
