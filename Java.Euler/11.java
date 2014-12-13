@@ -28,21 +28,13 @@ public class Euler11 {
 		for(int i=3; i<tab.length; i++) {
 			for(int j=3; j<tab[i].length; j++) {
 				result = tab[i-3][j-3]*tab[i-2][j-3]*tab[i-1][j-3]*tab[i][j-3];
-				if(result>max) {
-					max=result;
-				}
+				max=Math.max(result,max);
 				result = tab[i-3][j-3]*tab[i-3][j-2]*tab[i-3][j-1]*tab[i-3][j];
-				if(result>max) {
-					max=result;
-				}
+				max=Math.max(result,max);
 				result = tab[i-3][j-3]*tab[i-2][j-2]*tab[i-1][j-1]*tab[i][j];
-				if(result>max) {
-					max=result;
-				}
+				max=Math.max(result,max);
 				result = tab[i-3][j]*tab[i-2][j-1]*tab[i-1][j-2]*tab[i][j-3];
-				if(result>max) {
-					max=result;
-				}
+				max=Math.max(result,max);
 			}
 		}
 		System.out.println(max);
