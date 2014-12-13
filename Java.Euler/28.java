@@ -6,7 +6,6 @@ public class Euler28 {
 		Long lastNum = (long)1;
 		for(int i=3; i<=1001; i+=2) {
 			sum = sum +(lastNum*4)+(10*(i-1));
-			System.out.println(sum);
 			lastNum = lastNum + 4*(i-1);
 		}
 		System.out.println(sum);
