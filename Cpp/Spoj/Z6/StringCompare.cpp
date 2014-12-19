@@ -2,7 +2,6 @@
 #include <iomanip>
 #include <utility>
 #include <string>
-#include <sstream>
 #include <algorithm>
 
 typedef char letter;
