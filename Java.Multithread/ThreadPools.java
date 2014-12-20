@@ -22,7 +22,7 @@ class Processor implements Runnable {
 			e.printStackTrace();
 		}
 		
-		System.out.println(id + "  " + (System.currentTimeMillis()-t));
+		System.out.println(id + "  " + (System.currentTimeMillis()-t) + " ms");
 	}
 }
 
