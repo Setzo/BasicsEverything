@@ -48,7 +48,7 @@ public class UrlLib implements Iterable<String> {
 	}
 	
 	public UrlLib() {
-		urls.add("https://www.youtube.com/watch?v=t3jxvshXDfg&list=PLB841C370FAFB8EC7&index=11");
+		urls.add("http://stackoverflow.com/");
 		urls.add("http://csgolounge.com/");
 		urls.add("https://projecteuler.net/");
 	}
