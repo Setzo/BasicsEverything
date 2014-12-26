@@ -14,6 +14,6 @@ public class Application {
 				helloWorld.setSize(500, 500);
 				helloWorld.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			//JFrame.EXIT_ON_CLOSE = 3
 			}
-			});
+		});
 	}
 }
