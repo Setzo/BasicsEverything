@@ -72,7 +72,9 @@ public class MainFrame extends JFrame {
 
 	public void start() {
 		SwingWorker<Boolean, Integer> sw = new SwingWorker<Boolean, Integer>() {
-
+			
+			private Boolean stat = false;
+			
 			@Override
 			protected Boolean doInBackground() throws Exception {
 				
@@ -87,7 +89,6 @@ public class MainFrame extends JFrame {
 			@Override
 			protected void process(List<Integer> chunks) {
 				
-				Boolean stat = false;
 				int val = chunks.get(chunks.size()-1);
 				percentage.setText(String.valueOf(val) + "% Done");
 				statusLabel.setText("Not completed, status: " + stat.toString());
@@ -97,7 +98,7 @@ public class MainFrame extends JFrame {
 			protected void done() {
 				
 				try {
-					Boolean stat = get();
+					stat = get();
 					statusLabel.setText("Completed, status: " + stat.toString());
 					
 				} catch (InterruptedException e) {
