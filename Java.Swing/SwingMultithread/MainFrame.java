@@ -18,7 +18,7 @@ public class MainFrame extends JFrame {
 	
 	private static final long serialVersionUID = -7611703358605238817L;
 	private JLabel percentage = new JLabel("0");
-	private JLabel statusLabel = new JLabel("Not completed");
+	private JLabel statusLabel = new JLabel("Not started");
 	private JButton startButton = new JButton("Start");
 	
 	public MainFrame(String title) {
@@ -65,7 +65,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
-		setSize(200, 400);
+		setSize(220, 260);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -87,8 +87,10 @@ public class MainFrame extends JFrame {
 			@Override
 			protected void process(List<Integer> chunks) {
 				
+				Boolean stat = false;
 				int val = chunks.get(chunks.size()-1);
 				percentage.setText(String.valueOf(val) + "% Done");
+				statusLabel.setText("Not completed, status: " + stat.toString());
 			}
 
 			@Override
