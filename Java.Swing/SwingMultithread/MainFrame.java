@@ -32,7 +32,7 @@ public class MainFrame extends JFrame {
 		        }
 		    }
 		} catch (Exception e) {
-		    // If Nimbus is not available, you can set the GUI to another look and feel.
+			e.printStackTrace();
 		}
 		setLayout(new GridBagLayout());
 		
