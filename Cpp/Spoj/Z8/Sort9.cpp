@@ -12,9 +12,6 @@ int main() {
 	int y[101];
 	int z[101];
 
-	//long perm = t *(t - 1) / 2;
-	
-	//double* res = (double*) malloc (perm * sizeof(double*));
 	double res[100000];
 
 	for (int i = 0; i < t; i++) {
