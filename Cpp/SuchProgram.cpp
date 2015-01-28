@@ -9,7 +9,6 @@
 #define fucksgiven return
 #define very system
 #define stahp ("pause");
-#define I ;
 #define program main(){
 #define zero 0;}
 
