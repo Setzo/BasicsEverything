@@ -1,5 +1,5 @@
 package gui;
-
+ 
 public class ServerInfo {
 
 	private int id;
