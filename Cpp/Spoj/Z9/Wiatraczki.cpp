@@ -30,23 +30,10 @@ int main() {
 		int j = 0;
 		for (int i = 0; i < n; i++) {
 
-			//PRAWY DOLNY - IF NEGATE
 			for (int x = 1; x + j < n; x++) {
 				tab[n + j][n + j + x] = '*';
-			}
-
-			//LEWY DOLNY - IF NEGATE
-			for (int x = 1; x + j < n; x++) {
 				tab[n + j + x][n - j - 1] = '*';
-			}
-
-			//LEWY GORNY - IF NEGATE
-			for (int x = 1; x + j < n; x++) {
 				tab[n - j - 1][n - j - 1 - x] = '*';
-			}
-
-			//PRAWY GORNY - IF NEGATE
-			for (int x = 1; x + j < n; x++) {
 				tab[n - j - 1 - x][n + j] = '*';
 			}
 
