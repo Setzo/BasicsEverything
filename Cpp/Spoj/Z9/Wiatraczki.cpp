@@ -37,7 +37,6 @@ int main() {
 				tab[n - j - 1 - x][n + j] = '*';
 			}
 
-			//POPRZECZNE
 			tab[n + j][n - j - 1] = '*';
 			tab[n + j][n + j] = '*';
 			tab[n - j - 1][n - j - 1] = '*';
@@ -46,26 +45,19 @@ int main() {
 			j++;
 		}
 
-		if (negate) {
+		for (int i = 0; i < 2 * n; i++) {
+			for (int j = 0; j < 2 * n; j++) {
 
-			for (int i = 0; i < 2 * n; i++) {
-				for (int j = 0; j < 2 * n; j++) {
-
+				if (negate) {
 					printf("%c", tab[i][j]);
 				}
-				printf("\n");
-			}
-		}
-		else {
-
-			for (int i = 0; i < 2 * n; i++) {
-				for (int j = 0; j < 2 * n; j++) {
-
+				else {
 					printf("%c", tab[j][i]);
 				}
-				printf("\n");
 			}
+			printf("\n");
 		}
+
 	}
 
 	return 0;
