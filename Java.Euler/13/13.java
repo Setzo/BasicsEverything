@@ -19,6 +19,6 @@ public class Euler13 {
 			e.printStackTrace();
 		}
 		
-		System.out.println(sum.toString().substring(0, 10));
+		System.out.print(sum.toString().substring(0, 10));
 	}
 }
