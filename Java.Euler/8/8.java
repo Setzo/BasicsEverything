@@ -1,21 +1,23 @@
 package euler8;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Euler8 {
 	
-	static int[] x = new int[1000]; 
+	static int[] x = new int[1000];
+	
 	public static void main(String[] args) {
-		File txt = new File("text.txt");
+		
 		StringBuilder sb = new StringBuilder();
 		long max=1, act=1;
+		
 		//int[] max1 = new int[13];
 		//int[] act1 = new int[13];
-		try(Scanner data = new Scanner(txt)) {
+		
+		try(Scanner data = new Scanner(Euler8.class.getResourceAsStream("text.txt"))) {
+			
 			sb.append(data.nextLine());
-		} catch (FileNotFoundException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 		
