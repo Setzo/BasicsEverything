@@ -7,8 +7,6 @@ public class Euler34 {
 
 		int a = 0;
 		
-		countFSum(40585);
-		
 		for (long i = 3; i < 10000000; i++) {
 			
 			if(countFSum(i) == i) {
