@@ -3,7 +3,7 @@ package euler34;
 
 public class Euler34 {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
 
 		int a = 0;
 		
