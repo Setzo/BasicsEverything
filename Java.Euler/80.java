@@ -41,9 +41,9 @@ public class Euler80 {
 		while(!divider.equals(sqrtNum)) {
 			
 			divider = sqrtNum;
-			sqrtNum = num.divide(divider, 150, BigDecimal.ROUND_HALF_DOWN);
+			sqrtNum = num.divide(divider, 100, BigDecimal.ROUND_FLOOR);
 			sqrtNum = sqrtNum.add(divider);
-			sqrtNum = sqrtNum.divide(new BigDecimal("2"), 150, BigDecimal.ROUND_HALF_DOWN);
+			sqrtNum = sqrtNum.divide(new BigDecimal("2"), 100, BigDecimal.ROUND_FLOOR);
 		}
 		
 		return sqrtNum;
