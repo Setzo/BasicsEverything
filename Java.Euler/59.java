@@ -47,7 +47,7 @@ public class Euler59 {
 		
 		for(int i = 0; i < ENCRYTPED.length; i++) {
 			if((xored[i] >= 'a' && xored[i] <= 'z') || (xored[i] >= 'A' && xored[i] <= 'Z')) {
-				sigm += 1;
+				sigm++;
 			}
 		}
 		
