@@ -18,7 +18,7 @@ public class AppletTest extends JApplet implements ActionListener {
 		setSize(750, 300);
 		
 		timer = new Timer(17, this);
-		game = new Game(getWidth(), getHeight());
+		game = new Game();
 		
 		setLayout(new BorderLayout());
 		add(game, BorderLayout.CENTER);
