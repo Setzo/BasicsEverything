@@ -23,7 +23,7 @@ public class Game extends JComponent {
 	
 	private BufferedImage buffer;
 
-	protected Game(int x, int y) {
+	protected Game() {
 		
 		ball = new Ellipse2D.Double(0, 0, 30, 30);
 		pane = new RoundRectangle2D.Double(100, 100, 300, 20, 50, 50);
