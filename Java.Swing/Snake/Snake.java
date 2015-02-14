@@ -239,16 +239,16 @@ public class Snake extends JPanel implements ActionListener {
 	}
 	
 	public void startGame() {
-		
-        for (int i = 0; i < snakeSize; i++) {
-        	
-        	snakeXs[i] = (FIELD_SIZEX / 2 % DOT_SIZEXY) * DOT_SIZEXY - i * DOT_SIZEXY;
-            snakeYs[i] = (FIELD_SIZEY / 2 % DOT_SIZEXY) * DOT_SIZEXY;
-        }
 
-        makeFood();
+		for (int i = 0; i < snakeSize; i++) {
 
-        timer.start();
+			snakeXs[i] = (FIELD_SIZEX / 2 % DOT_SIZEXY) * DOT_SIZEXY - i * DOT_SIZEXY;
+			snakeYs[i] = (FIELD_SIZEY / 2 % DOT_SIZEXY) * DOT_SIZEXY;
+		}
+
+		makeFood();
+
+		timer.start();
 	}
 	
 	public void paintComponent(Graphics g) {
