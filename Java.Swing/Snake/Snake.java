@@ -343,9 +343,8 @@ public class Snake extends JPanel implements ActionListener {
 			} else if (snakeYs[i] == snakeYs [i + 1] && snakeYs[i] == snakeYs[i - 1]){
 				
 				g2.drawImage(snakeTorsoLeftRight, snakeXs[i], snakeYs[i], this);
-			}
-			
-			else if((snakeXs[i] == snakeXs[i + 1] && snakeXs[i] > snakeXs[i-1])
+				
+			} else if((snakeXs[i] == snakeXs[i + 1] && snakeXs[i] > snakeXs[i-1])
 					|| (snakeXs[i] > snakeXs[i + 1] && snakeXs[i] == snakeXs[i-1])) {
 				
 				if((snakeYs[i] == snakeYs[i + 1] && snakeYs[i] > snakeYs[i-1])
