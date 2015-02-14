@@ -9,6 +9,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Random;
@@ -137,6 +138,10 @@ public class Snake extends JPanel implements ActionListener {
 		.addKeyEventDispatcher((e) -> {
 
 			setDirection(e.getKeyCode());
+			
+			if(e.getKeyCode() == KeyEvent.VK_SPACE && !isAlive) {
+				restartGame();
+			}
 			
 			return false;
 		});
@@ -288,7 +293,32 @@ public class Snake extends JPanel implements ActionListener {
 	        g2.fillRect(0, 0, FIELD_SIZEX, FIELD_SIZEY);
 	        
 	        g2.setColor(Color.ORANGE);
+	        
 	        g2.drawString("Game Over", FIELD_SIZEX / 2 - 30, FIELD_SIZEY / 2 - 20);
+	        g2.drawString("Press SPACE to try again", FIELD_SIZEX / 2 - 67, FIELD_SIZEY / 2);
+	}
+	
+	private void restartGame() {
+		
+		timer = new Timer(VELOCITY, this);
+		
+		snakeXs = new int[DOT_LIMIT];
+		snakeYs = new int[DOT_LIMIT];
+		
+		isAlive = true;
+		
+		rightDirection = 0;
+		leftDirection = 0;
+		upDirection = 1;
+		downDirection = 0;
+		
+		lastDirection = new LinkedList<Integer>();
+		
+		lastDirection.add(UP_DIRECTION);
+		
+		snakeSize = 2;
+		
+		startGame();
 	}
 	
 	private void paintSnake(Graphics2D g2, int i) {
