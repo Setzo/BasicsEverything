@@ -75,6 +75,7 @@ public class Snake extends JPanel implements ActionListener {
 	private int[] snakeYs;
 	
 	private Timer timer;
+	private Timer velocityUpTimer;
 
 	private BufferedImage buffer;
 	
@@ -110,6 +111,11 @@ public class Snake extends JPanel implements ActionListener {
 		foodIcon = createIcon("/images/snakeFood.png");
 		
 		timer = new Timer(VELOCITY, this);
+		
+		velocityUpTimer = new Timer(5000, (e) -> {
+			
+			timer.setDelay(timer.getDelay() <= 40 ? 40 : timer.getDelay() - 5);
+		});
 		
 		snakeXs = new int[DOT_LIMIT];
 		snakeYs = new int[DOT_LIMIT];
@@ -254,6 +260,7 @@ public class Snake extends JPanel implements ActionListener {
 		makeFood();
 
 		timer.start();
+		velocityUpTimer.start();
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -301,6 +308,11 @@ public class Snake extends JPanel implements ActionListener {
 	private void restartGame() {
 		
 		timer = new Timer(VELOCITY, this);
+		
+		velocityUpTimer = new Timer(5000, (e) -> {
+			
+			timer.setDelay(timer.getDelay() < 40 ? 40 : timer.getDelay() - 5);
+		});
 		
 		snakeXs = new int[DOT_LIMIT];
 		snakeYs = new int[DOT_LIMIT];
@@ -454,6 +466,7 @@ public class Snake extends JPanel implements ActionListener {
 
 		if (!isAlive) {
 			timer.stop();
+			velocityUpTimer.stop();
 		}
 	}
 
