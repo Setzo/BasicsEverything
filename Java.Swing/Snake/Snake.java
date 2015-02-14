@@ -21,6 +21,11 @@ public class Snake extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 6541285683612229156L;
 	
+	private static final int UP_DIRECTION = 38;
+	private static final int DOWN_DIRECTION = 40;
+	private static final int RIGHT_DIRECTION = 39;
+	private static final int LEFT_DIRECTION = 37;
+
 	private final int FIELD_SIZEX;
 	private final int FIELD_SIZEY;
 
@@ -117,7 +122,7 @@ public class Snake extends JPanel implements ActionListener {
 		
 		lastDirection = new LinkedList<Integer>();
 		
-		lastDirection.add(38);
+		lastDirection.add(UP_DIRECTION);
 		
 		setFocusable(true);
 		setBackground(new Color(77, 77, 77));
@@ -141,7 +146,7 @@ public class Snake extends JPanel implements ActionListener {
 
 	public void setDirection(int e) {
 		
-		if(e < 37 || e > 40) {
+		if(e < LEFT_DIRECTION || e > DOWN_DIRECTION) {
 			return;
 		}
 		
@@ -152,31 +157,31 @@ public class Snake extends JPanel implements ActionListener {
 		zeroDirection();
 		
 		switch (e) {
-		case 38 : {
+		case UP_DIRECTION : {
 			upDirection = 1;
-			if(lastDirection.getLast() != 38) {
-				lastDirection.add(38);
+			if(lastDirection.getLast() != UP_DIRECTION) {
+				lastDirection.add(UP_DIRECTION);
 			}
 			return;
 			
-		} case 40 : {
+		} case DOWN_DIRECTION : {
 			downDirection = 1;
-			if(lastDirection.getLast() != 40) {
-				lastDirection.add(40);
+			if(lastDirection.getLast() != DOWN_DIRECTION) {
+				lastDirection.add(DOWN_DIRECTION);
 			}
 			return;
 			
-		} case 39 : {
+		} case RIGHT_DIRECTION : {
 			rightDirection = 1;
-			if(lastDirection.getLast() != 39) {
-				lastDirection.add(39);
+			if(lastDirection.getLast() != RIGHT_DIRECTION) {
+				lastDirection.add(RIGHT_DIRECTION);
 			}
 			return;
 			
-		} case 37 : {
+		} case LEFT_DIRECTION : {
 			leftDirection = 1;
-			if(lastDirection.getLast() != 37) {
-				lastDirection.add(37);
+			if(lastDirection.getLast() != LEFT_DIRECTION) {
+				lastDirection.add(LEFT_DIRECTION);
 			}
 			return;
 			
@@ -192,13 +197,13 @@ public class Snake extends JPanel implements ActionListener {
 			if(lastDirection.get(i) == iter) {
 				continue;
 				
-			} else if(lastDirection.get(i) == 40 && iter == 38) {
+			} else if(lastDirection.get(i) == DOWN_DIRECTION && iter == UP_DIRECTION) {
 				return false;
-			} else if(lastDirection.get(i) == 38 && iter == 40) {
+			} else if(lastDirection.get(i) == UP_DIRECTION && iter == DOWN_DIRECTION) {
 				return false;
-			} else if(lastDirection.get(i) == 37 && iter == 39) {
+			} else if(lastDirection.get(i) == LEFT_DIRECTION && iter == RIGHT_DIRECTION) {
 				return false;
-			} else if(lastDirection.get(i) == 39 && iter == 37) {
+			} else if(lastDirection.get(i) == RIGHT_DIRECTION && iter == LEFT_DIRECTION) {
 				return false;
 			} else {
 				return true;
@@ -290,21 +295,19 @@ public class Snake extends JPanel implements ActionListener {
 	
 	private void paintSnake(Graphics2D g2, int i) {
 		
-		//38 up // 40 down // 39 right // 37 left
-		
 		if (i == 0) {
 			
 			switch(lastDirection.getLast()) {
-			case 37 : {
+			case LEFT_DIRECTION : {
 				g2.drawImage(snakeHeadLeft, snakeXs[i], snakeYs[i], this);
 				break;
-			} case 38 : {
+			} case UP_DIRECTION : {
 				g2.drawImage(snakeHeadUp, snakeXs[i], snakeYs[i], this);
 				break;
-			} case 39 : {
+			} case RIGHT_DIRECTION : {
 				g2.drawImage(snakeHeadRight, snakeXs[i], snakeYs[i], this);
 				break;
-			} case 40 : {
+			} case DOWN_DIRECTION : {
 				g2.drawImage(snakeHeadDown, snakeXs[i], snakeYs[i], this);
 				break;
 			}
