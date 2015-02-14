@@ -313,23 +313,23 @@ public class Snake extends JPanel implements ActionListener {
 
 		} else if (i == snakeSize - 1) {
 			
-			if(snakeXs[snakeSize] > snakeXs[snakeSize - 1]
-					&& snakeYs[snakeSize] == snakeYs[snakeSize - 1]) {
+			if(snakeXs[snakeSize - 1] > snakeXs[snakeSize - 2]
+					&& snakeYs[snakeSize -1] == snakeYs[snakeSize - 2]) {
 				
 				g2.drawImage(snakeTailLeft, snakeXs[i], snakeYs[i], this);
 				
-			} else if(snakeXs[snakeSize] < snakeXs[snakeSize - 1]
-					&& snakeYs[snakeSize] == snakeYs[snakeSize - 1]) {
+			} else if(snakeXs[snakeSize - 1] < snakeXs[snakeSize - 2]
+					&& snakeYs[snakeSize - 1] == snakeYs[snakeSize - 2]) {
 				
 				g2.drawImage(snakeTailRight, snakeXs[i], snakeYs[i], this);
 				
-			} else if(snakeXs[snakeSize] == snakeXs[snakeSize - 1]
-					&& snakeYs[snakeSize] > snakeYs[snakeSize - 1]) {
+			} else if(snakeXs[snakeSize - 1] == snakeXs[snakeSize - 2]
+					&& snakeYs[snakeSize - 1] > snakeYs[snakeSize - 2]) {
 				
 				g2.drawImage(snakeTailUp, snakeXs[i], snakeYs[i], this);
 				
-			} else if(snakeXs[snakeSize] == snakeXs[snakeSize - 1]
-					&& snakeYs[snakeSize] < snakeYs[snakeSize - 1]) {
+			} else if(snakeXs[snakeSize - 1] == snakeXs[snakeSize - 2]
+					&& snakeYs[snakeSize - 1] < snakeYs[snakeSize - 2]) {
 				
 				g2.drawImage(snakeTailDown, snakeXs[i], snakeYs[i], this);
 			} 
