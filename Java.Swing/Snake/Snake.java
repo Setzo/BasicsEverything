@@ -77,7 +77,7 @@ public class Snake extends JPanel implements ActionListener {
 
 	private BufferedImage buffer;
 	
-	public Snake(int width, int height, int dotSize, int velocity) {
+	protected Snake(int width, int height, int dotSize, int velocity) {
 
 		FIELD_SIZEX = width;
 		FIELD_SIZEY = height;
@@ -144,7 +144,7 @@ public class Snake extends JPanel implements ActionListener {
 		startGame();
 	}
 
-	public void setDirection(int e) {
+	private void setDirection(int e) {
 		
 		if(e < LEFT_DIRECTION || e > DOWN_DIRECTION) {
 			return;
@@ -190,7 +190,7 @@ public class Snake extends JPanel implements ActionListener {
 		}
 	}
 	
-	public boolean checkLastDirection(int iter) {
+	private boolean checkLastDirection(int iter) {
 		
 		for(int i = lastDirection.size() - 1; i >= 0; i--) {
 			
@@ -213,7 +213,7 @@ public class Snake extends JPanel implements ActionListener {
 		return true;
 	}
 	
-	public void zeroDirection() {
+	private void zeroDirection() {
 		
 		upDirection = 0;
 		downDirection = 0;
@@ -221,7 +221,7 @@ public class Snake extends JPanel implements ActionListener {
 		rightDirection = 0;
 	}
 	
-	public void makeFood() {
+	private void makeFood() {
 		
 		Random rng = new Random();
 		
@@ -229,7 +229,7 @@ public class Snake extends JPanel implements ActionListener {
 		foodY = rng.nextInt(GRID_SIZE) * DOT_SIZEXY;
 	}
 	
-	public static Image createIcon(String path) {
+	private static Image createIcon(String path) {
 
 		if (System.class.getResource(path) == null) {
 			System.out.println("Wrong path");
@@ -238,7 +238,7 @@ public class Snake extends JPanel implements ActionListener {
 		return new ImageIcon(System.class.getResource(path)).getImage();
 	}
 	
-	public void startGame() {
+	private void startGame() {
 
 		for (int i = 0; i < snakeSize; i++) {
 
