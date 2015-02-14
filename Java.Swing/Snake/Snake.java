@@ -240,8 +240,6 @@ public class Snake extends JPanel implements ActionListener {
 	
 	public void startGame() {
 		
-		snakeSize = 3;
-
         for (int i = 0; i < snakeSize; i++) {
         	
         	snakeXs[i] = (FIELD_SIZEX / 2 % DOT_SIZEXY) * DOT_SIZEXY - i * DOT_SIZEXY;
