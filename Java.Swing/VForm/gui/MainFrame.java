@@ -1,18 +1,15 @@
 package gui;
 
-import gui.listeners.FormListener;
-import gui.listeners.PersonTableListener;
-import gui.listeners.PreferencesListener;
 import gui.listeners.ToolbarListener;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -29,17 +26,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import controller.Controller;
-import data.listeners.CntChangeListener;
-import de.javasoft.plaf.synthetica.SyntheticaBlackStarLookAndFeel;
 
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 3383150008662809288L;
 	
 	private Controller controller;
-	//private TextPanel textPanel;
 	private FormPanel formPanel;
 	private TablePanel tablePanel;
 	private Toolbar toolbar;
@@ -53,22 +48,15 @@ public class MainFrame extends JFrame {
 	public MainFrame(String title) {
 		
 		super(title);
-		
-		/*try {
-		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
-		            UIManager.setLookAndFeel(info.getClassName());
-		            break;
-		        }
-		    }
-		} catch (Exception e) {
-		    // If Nimbus is not available, you can set the GUI to another look and feel.
-		}*/
-		
+
 		try {
-			UIManager.setLookAndFeel(new SyntheticaBlackStarLookAndFeel());
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		
 		controller = new Controller();
@@ -76,15 +64,21 @@ public class MainFrame extends JFrame {
 		setLayout(new BorderLayout());
 		
 		toolbar = new Toolbar();
-		//textPanel = new TextPanel();
 		formPanel = new FormPanel();
 		tablePanel = new TablePanel();
 		preferencesDialog = new PreferencesDialog(this);
 		tabbedPane = new JTabbedPane();
-		messagePanel = new MessagePanel();
+		messagePanel = new MessagePanel(this);
 		
 		tabbedPane.addTab("Person Database", tablePanel);
 		tabbedPane.addTab("Messages", messagePanel);
+		
+		tabbedPane.addChangeListener((e) -> {
+			
+			if(tabbedPane.getSelectedIndex() == 1) {
+				messagePanel.refresh();
+			}
+		});
 		
 		prefs = Preferences.userRoot().node("db");
 		
@@ -93,20 +87,13 @@ public class MainFrame extends JFrame {
 		fileChooser = new JFileChooser();
 		fileChooser.addChoosableFileFilter(new PersonFileFilter());
 		
-		tablePanel.setPersonTableListener(new PersonTableListener() {
-			public void rowDeleted(int row) {
-				
-				controller.removePerson(row);
-			}
-		});
+		tablePanel.setPersonTableListener((row) -> controller.removePerson(row));
 		
-		preferencesDialog.setPreferencesListener(new PreferencesListener() {
-			public void preferencesSet(String username, String password, int port) {
-				
-				prefs.put("username", username);
-				prefs.put("password", password);
-				prefs.putInt("port", port);
-			}
+		preferencesDialog.setPreferencesListener((username, password, port) -> {
+			
+			prefs.put("username", username);
+			prefs.put("password", password);
+			prefs.putInt("port", port);
 		});
 		
 		preferencesDialog.setDefault(prefs.get("username", null),
@@ -147,46 +134,40 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
-		formPanel.setFormListener(new FormListener() {
-			public void formEventOccured(FormEvent e) {
+		formPanel.setFormListener((e) -> {
 				
-				/*String name = e.getName();
-				String occupation = e.getOccupation();
-				int age = e.getAge();
-				String employment = e.getEmployment();
-				boolean ispl = e.isPlCitizen();
-				String docID = e.getNrDow();
-				String gender = e.getGender();
-				
-				textPanel.appendText("Name: "
-				+ name + "\nOccupation: "
-				+ occupation + "\nAge Category: "
-				+ age + "\nEmployment: "
-				+ employment + "\nIs polish citizen: "
-				+ ispl + "\nDocument ID: "
-				+ docID + "\nGender: "
-				+ gender +"\n\n");*/
-				
-				controller.addPerson(e);
-				tablePanel.refresh();
-			}
+			/*String name = e.getName();
+			String occupation = e.getOccupation();
+			int age = e.getAge();
+			String employment = e.getEmployment();
+			boolean ispl = e.isPlCitizen();
+			String docID = e.getNrDow();
+			String gender = e.getGender();
+			
+			textPanel.appendText("Name: "
+			+ name + "\nOccupation: "
+			+ occupation + "\nAge Category: "
+			+ age + "\nEmployment: "
+			+ employment + "\nIs polish citizen: "
+			+ ispl + "\nDocument ID: "
+			+ docID + "\nGender: "
+			+ gender +"\n\n");*/
+			
+			controller.addPerson(e);
+			tablePanel.refresh();
 		});
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				
 				controller.disconnect();
+				messagePanel.cancelButtonPressed();
 				dispose();
 				System.gc();
 			}
 		});
 		
-		controller.setCntChangeListener(new CntChangeListener() {
-			public void firePersonChangeEvent() {
-				
-				tablePanel.refresh();
-			}
-		});
+		controller.setCntChangeListener(() -> tablePanel.refresh());
 		
 		add(tabbedPane, BorderLayout.CENTER);
 		add(formPanel, BorderLayout.WEST);
@@ -194,7 +175,7 @@ public class MainFrame extends JFrame {
 		
 		setLocationByPlatform(true);
 		setVisible(true);
-		setSize(1000, 500);
+		setSize(1500, 750);
 		setMinimumSize(new Dimension(600, 450));
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	}
@@ -215,7 +196,6 @@ public class MainFrame extends JFrame {
 		fileMenu.addSeparator();
 		fileMenu.add(exitItem);
 		
-		JMenuItem chooseSkin = new JMenu("Skins");
 		JMenu showMenu = new JMenu("Show");
 		JMenuItem showFormItem = new JCheckBoxMenuItem("Form Panel");
 		JMenuItem showToolbarItem = new JCheckBoxMenuItem("Toolbar");
@@ -228,109 +208,99 @@ public class MainFrame extends JFrame {
 		showMenu.add(showFormItem);
 		
 		windowMenu.add(showMenu);
-		windowMenu.add(chooseSkin);
 		windowMenu.addSeparator();
 		windowMenu.add(preferences);
 		
 		menuBar.add(fileMenu);
 		menuBar.add(windowMenu);
 		
-		preferences.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				preferencesDialog.setVisible(true);
-			}
-		});
+		preferences.addActionListener((e) -> preferencesDialog.setVisible(true));
 		
-		showFormItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				
-				if((JCheckBoxMenuItem)ev.getSource() != null) {
-					JCheckBoxMenuItem menuItem =(JCheckBoxMenuItem)ev.getSource();
-				
-					formPanel.setVisible(menuItem.isSelected());
-				}
-			}
-		});
-		
-		showToolbarItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				
-				if((JCheckBoxMenuItem)ev.getSource() != null) {
-					JCheckBoxMenuItem menuItem =(JCheckBoxMenuItem)ev.getSource();
-				
-					toolbar.setVisible(menuItem.isSelected());
-				}
-			}
-		});
-		
-		importDataItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		showFormItem.addActionListener((ev) -> {
 
-				if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+			if((JCheckBoxMenuItem)ev.getSource() != null) {
+				JCheckBoxMenuItem menuItem =(JCheckBoxMenuItem)ev.getSource();
+			
+				formPanel.setVisible(menuItem.isSelected());
+			}
+		});
+		
+		showToolbarItem.addActionListener((ev) -> {
+				
+			if((JCheckBoxMenuItem)ev.getSource() != null) {
+				JCheckBoxMenuItem menuItem =(JCheckBoxMenuItem)ev.getSource();
+			
+				toolbar.setVisible(menuItem.isSelected());
+			}
+		});
+		
+		importDataItem.addActionListener((e) -> {
+			if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+				
+				try {
+					controller.loadFromFile(fileChooser.getSelectedFile());
+					tablePanel.refresh();
 					
-					try {
-						controller.loadFromFile(fileChooser.getSelectedFile());
-						tablePanel.refresh();
-						
-					} catch (FileNotFoundException e1) {
-						JOptionPane.showMessageDialog(MainFrame.this, "File not found.", "Error", JOptionPane.ERROR_MESSAGE);
-						
-					} catch (ClassNotFoundException e1) {
-						JOptionPane.showMessageDialog(MainFrame.this, "File is corrupted.", "Error", JOptionPane.ERROR_MESSAGE);
-						
-					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(MainFrame.this, "Couldn't open file.", "Error", JOptionPane.ERROR_MESSAGE);
-					}
+				} catch (FileNotFoundException e1) {
+					JOptionPane.showMessageDialog(MainFrame.this, "File not found.", "Error", JOptionPane.ERROR_MESSAGE);
+					
+				} catch (ClassNotFoundException e1) {
+					JOptionPane.showMessageDialog(MainFrame.this, "File is corrupted.", "Error", JOptionPane.ERROR_MESSAGE);
+					
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(MainFrame.this, "Couldn't open file.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 		
-		exportDataItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		exportDataItem.addActionListener((e) -> {
 
-				if(fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+			if(fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 
-					try {
+				try {
+					
+					if (Uti.getExtension(fileChooser.getSelectedFile().getName()).equals("per")) {
 						controller.saveToFile(fileChooser.getSelectedFile());
 						
-					} catch (FileNotFoundException e1) {
-						JOptionPane.showMessageDialog(MainFrame.this, "File not found.", "Error", JOptionPane.ERROR_MESSAGE);
-						
-					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(MainFrame.this, "Couldn't open file.", "Error", JOptionPane.ERROR_MESSAGE);
+					} else if (!Uti.getExtension(fileChooser.getSelectedFile().getName()).equals("per")) {
+						controller.saveToFile(new File(fileChooser.getSelectedFile().toString() + ".per"));
 					}
+					
+					
+				} catch (FileNotFoundException e1) {
+					JOptionPane.showMessageDialog(MainFrame.this, "File not found.", "Error", JOptionPane.ERROR_MESSAGE);
+					
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(MainFrame.this, "Couldn't open file.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 		
-		exitItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		exitItem.addActionListener((e) -> {
 				
-				/*String text = JOptionPane.showInputDialog(MainFrame.this,
-						"Enter nickname",
-						"Enter Nickname",
-						JOptionPane.OK_OPTION|JOptionPane.INFORMATION_MESSAGE);
-				
-				System.out.println(text);*/
-				
-				int action = JOptionPane.showConfirmDialog(MainFrame.this,
-						"Do you wish to exit?",
-						"Confirm Exit",
-						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.INFORMATION_MESSAGE,
-						new ImageIcon(getClass().getResource("/images/warn46.png"), "Warning"));
-				
-				if(action == JOptionPane.OK_OPTION) {
-					WindowListener[] listeners = getWindowListeners();
-					for(WindowListener listener : listeners) {
-						listener.windowClosing(new WindowEvent(MainFrame.this, 0));
-					}
+			/*String text = JOptionPane.showInputDialog(MainFrame.this,
+					"Enter nickname",
+					"Enter Nickname",
+					JOptionPane.OK_OPTION|JOptionPane.INFORMATION_MESSAGE);
+			
+			System.out.println(text);*/
+			
+			int action = JOptionPane.showConfirmDialog(MainFrame.this,
+					"Do you wish to exit?",
+					"Confirm Exit",
+					JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.INFORMATION_MESSAGE,
+					new ImageIcon(getClass().getResource("/images/warn46.png"), "Warning"));
+			
+			if(action == JOptionPane.OK_OPTION) {
+				WindowListener[] listeners = getWindowListeners();
+				for(WindowListener listener : listeners) {
+					listener.windowClosing(new WindowEvent(MainFrame.this, 0));
 				}
-				//else if(action == JOptionPane.CANCEL_OPTION) {
-				//	return;
-				//}
 			}
+			//else if(action == JOptionPane.CANCEL_OPTION) {
+			//	return;
+			//}
 		});
 		
 		preferences.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
