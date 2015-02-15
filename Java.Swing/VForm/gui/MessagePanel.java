@@ -1,74 +1,162 @@
 package gui;
 
-import java.awt.BorderLayout;
+import java.util.List;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreeSelectionModel;
+import javax.swing.table.AbstractTableModel;
 
-public class MessagePanel extends JPanel{
-	
-	private static final long serialVersionUID = -4998576709728752117L;
-	
-	private JTree serverTree;
-	private DefaultTreeCellRenderer treeRenderer;
-	
-	protected MessagePanel() {
+import data.AgeCategoryEnumerated;
+import data.EmploymentCategory;
+import data.GenderCategory;
+import data.Person;
 
-		treeRenderer = new DefaultTreeCellRenderer();
-		
-		treeRenderer.setLeafIcon(Uti.createIcon("/images/database20.png", null));
-		treeRenderer.setOpenIcon(Uti.createIcon("/images/minusServer.png", null));
-		treeRenderer.setClosedIcon(Uti.createIcon("/images/plusServer.png", null));
-		
-		serverTree = new JTree(createTree());
-		serverTree.setCellRenderer(treeRenderer);
-		
-		serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		
-		serverTree.addTreeSelectionListener(new TreeSelectionListener() {
-			public void valueChanged(TreeSelectionEvent e) {
-				
-				try {
-					Object userObject = 
-							((DefaultMutableTreeNode)serverTree.getLastSelectedPathComponent()).getUserObject();
-				
-					if(userObject instanceof ServerInfo) {
-						System.out.println(((ServerInfo)userObject).getId());
-					}
-				} catch (Exception ex) {
-				}
-			}
-		});
-		
-		setLayout(new BorderLayout());
-		
-		add(new JScrollPane(serverTree), BorderLayout.CENTER);
+public class PersonTableModel extends AbstractTableModel {
+
+	private static final long serialVersionUID = -644898091938774026L;
+
+	private List<Person> data;
+	
+	private String[] colNames = {"ID", "Name", "Occupation", "Age Category", "Employment", "Polish Citizen", "Document ID", "Gender", "Phone Number"};
+	
+	public PersonTableModel(){
 	}
 	
-	private DefaultMutableTreeNode createTree() {
+	public boolean isCellEditable(int row, int col) {
 		
-		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Servers");
-		
-		DefaultMutableTreeNode branch0 = new DefaultMutableTreeNode("Poland");
-		
-		branch0.add(new DefaultMutableTreeNode(new ServerInfo(0, "Reda")));
-		branch0.add(new DefaultMutableTreeNode(new ServerInfo(1, "Gdynia")));
-		branch0.add(new DefaultMutableTreeNode(new ServerInfo(2, "Gdansk")));
-		
-		DefaultMutableTreeNode branch1 = new DefaultMutableTreeNode("UK");
-		
-		branch1.add(new DefaultMutableTreeNode(new ServerInfo(3, "London")));
-		branch1.add(new DefaultMutableTreeNode(new ServerInfo(4, "Edinburgh")));
-		
-		top.add(branch0);
-		top.add(branch1);
-		
-		return top;
+		if(col == 0) {
+			return false;
+		} else if (col == 6 && (!((Person)data.get(row)).isPLCitizen())) {
+			return false;
+		} else {
+			return true;
+		}
 	}
+
+	public void setValueAt(Object value, int row, int col) {
+		
+		if(data == null) {
+			return;
+		}
+		
+		switch(col) {
+		case 0 : {
+			return;
+		} case 1 : {
+			data.get(row).setName((String)value);
+			return;
+		} case 2 : {
+			data.get(row).setOccupation((String)value);
+			return;
+		} case 3 : {
+			data.get(row).setAge((AgeCategoryEnumerated)value);
+			return;
+		} case 4 : {
+			data.get(row).setEmployment((EmploymentCategory)value);
+			return;
+		} case 5 : {
+			data.get(row).setPLCitizen((boolean)value);
+			return;
+		} case 6 : {
+			data.get(row).setDocID((String)value);
+			return;
+		} case 7 : {
+			data.get(row).setGender((GenderCategory)value);
+			return;
+		} case 8 : {
+			data.get(row).setPhoneNumber((String)value);
+			return;
+		} default : {
+			return;
+		}
+		}
+	}
+	
+	public Class<?> getColumnClass(int col) {
+		
+		switch(col) {
+		case 0: {
+			return Integer.class;
+		}
+		case 1: {
+			return String.class;
+		}
+		case 2: {
+			return String.class;
+		}
+		case 3: {
+			return AgeCategoryEnumerated.class;
+		}
+		case 4: {
+			return EmploymentCategory.class;
+		}
+		case 5: {
+			return Boolean.class;
+		}
+		case 6: {
+			return String.class;
+		}
+		case 7: {
+			return GenderCategory.class;
+		}
+		case 8: {
+			return String.class;
+		}
+		default : {
+			return null;
+		}
+		}
+	}
+
+	public void setData(List<Person> data) {
+		this.data = data;
+	}
+	
+	public int getColumnCount() {
+		return 9;
+	}
+
+	public int getRowCount() {
+		return data.size();
+	}
+
+	public String getColumnName(int column) {
+		return colNames[column];
+	}
+
+	public Object getValueAt(int row, int col) {
+
+		Person person = data.get(row);
+		
+		switch(col) {
+		case 0: {
+			return person.getId();
+		}
+		case 1: {
+			return person.getName();
+		}
+		case 2: {
+			return person.getOccupation();
+		}
+		case 3: {
+			return person.getAge();
+		}
+		case 4: {
+			return person.getEmployment();
+		}
+		case 5: {
+			return person.isPLCitizen();
+		}
+		case 6: {
+			return person.getDocID();
+		}
+		case 7: {
+			return person.getGender();
+		}
+		case 8: {
+			return person.getPhoneNumber();
+		}
+		}
+		
+		return null;
+	}
+
 }
