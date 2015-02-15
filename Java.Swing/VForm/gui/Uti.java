@@ -1,5 +1,9 @@
 package gui;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+
 import javax.swing.ImageIcon;
 
 public class Uti {
@@ -26,5 +30,14 @@ public class Uti {
 		}
 		
 		return new ImageIcon(System.class.getResource(path), description);
+	}
+	
+	public static Font createFont(String path) throws FontFormatException, IOException {
+		
+		if(System.class.getResource(path) == null) {
+			System.out.println("Wrong path");
+		}
+		
+		return Font.createFont(Font.TRUETYPE_FONT, System.class.getResource(path).openStream());
 	}
 }
