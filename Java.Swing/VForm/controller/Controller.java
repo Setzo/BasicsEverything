@@ -17,8 +17,12 @@ import data.listeners.CntChangeListener;
 
 public class Controller {
 	
-	private Database db = new Database();
+	private Database db;
 
+	public Controller() {
+		db = new Database();
+	}
+	
 	public void addPerson(FormEvent e) {
 		
 		String name = e.getName();
@@ -71,9 +75,7 @@ public class Controller {
 			genCatEnum = GenderCategory.FEMALE;
 		}
 
-		Person person = new Person(name, occupation, ageCategoryEnum, empCatEnum, ispl, docID, genCatEnum, phoneNumber);
-		
-		db.addPerson(person);
+		db.addPerson(new Person(name, occupation, ageCategoryEnum, empCatEnum, ispl, docID, genCatEnum, phoneNumber));
 	}
 	
 	public List<Person> getPeople() {
