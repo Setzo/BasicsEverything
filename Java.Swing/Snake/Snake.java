@@ -112,10 +112,9 @@ public class Snake extends JPanel implements ActionListener {
 		
 		timer = new Timer(VELOCITY, this);
 		
-		velocityUpTimer = new Timer(5000, (e) -> {
-			
-			timer.setDelay(timer.getDelay() <= 40 ? 40 : timer.getDelay() - 5);
-		});
+		velocityUpTimer = new Timer(5000, (e) ->		
+			timer.setDelay(timer.getDelay() <= 40 ? 40 : timer.getDelay() - 5)
+		);
 		
 		snakeXs = new int[DOT_LIMIT];
 		snakeYs = new int[DOT_LIMIT];
@@ -309,10 +308,9 @@ public class Snake extends JPanel implements ActionListener {
 		
 		timer = new Timer(VELOCITY, this);
 		
-		velocityUpTimer = new Timer(5000, (e) -> {
-			
-			timer.setDelay(timer.getDelay() < 40 ? 40 : timer.getDelay() - 5);
-		});
+		velocityUpTimer = new Timer(5000, (e) ->		
+			timer.setDelay(timer.getDelay() < 40 ? 40 : timer.getDelay() - 5)
+		);
 		
 		snakeXs = new int[DOT_LIMIT];
 		snakeYs = new int[DOT_LIMIT];
