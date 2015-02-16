@@ -234,9 +234,23 @@ public class Snake extends JPanel implements ActionListener {
 	private void makeFood() {
 		
 		Random rng = new Random();
+		boolean check = false;
 		
-		foodX = rng.nextInt(GRID_SIZE) * DOT_SIZEXY;
-		foodY = rng.nextInt(GRID_SIZE) * DOT_SIZEXY;
+		while(!check) {
+			
+			foodX = rng.nextInt(GRID_SIZE) * DOT_SIZEXY;
+			foodY = rng.nextInt(GRID_SIZE) * DOT_SIZEXY;
+			
+			for (int i = snakeSize; i > 0; i--) {
+				if (foodX == snakeXs[i] && foodY == snakeYs[i]) {
+					break;
+				}
+				
+				if(i == 1) {
+					check = true;
+				}
+			}
+		}
 	}
 	
 	private static Image createIcon(String path) {
