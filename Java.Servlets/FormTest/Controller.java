@@ -16,12 +16,16 @@ public class Controller extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.getWriter().println("<html>" + request.getParameter("user") + " [get]" + "</html>");
+		response.getWriter().println("<html>" + request.getParameter("email") + " [get]" + "</html>");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.getWriter().println("<html>" + request.getParameter("user") + " [post]" + "</html>");
+		response.getWriter().println("<html>" +
+		request.getParameter("email") +
+		" " +
+		request.getParameter("password") +
+		" [post]" + "</html>");
 	}
 
 }
