@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -11,6 +10,8 @@ public class Toolbar extends JToolBar {
 	private static final long serialVersionUID = -4481091577239946236L;
 	
 	private JButton bSTButton;
+	private JButton aVLButton;
+	private JButton aStarButton;
 	
 	public Toolbar() {
 		
@@ -22,19 +23,22 @@ public class Toolbar extends JToolBar {
 	private void instantiate() {
 		
 		bSTButton = new JButton("BST");
+		aVLButton = new JButton("AVL");
+		aStarButton = new JButton("A*");
 	}
 	
 	private void setParams() {
 
-		setFloatable(false);
+		setFloatable(true);
 		setVisible(true);
-		setPreferredSize(new Dimension(200, 500));
 	}
 	
 	private void setLayoutStuff() {
 		
-		setLayout(new FlowLayout());
+		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
 		add(bSTButton);
+		add(aVLButton);
+		add(aStarButton);
 	}
 }
