@@ -1,21 +1,22 @@
 package view;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
-import javax.swing.JPanel;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 
-public class DisplayPanel extends JPanel {
+public class DisplayPanel extends JComponent {
 	
 	private static final long serialVersionUID = 1446427779646464021L;
 
 	public  DisplayPanel() {
 		
-		setPreferredSize(new Dimension(400, 400));
 		setLayoutStuff();
 		setParams();
 	}
-	
+
 	private void setParams() {
 
 		setVisible(true);
@@ -23,6 +24,16 @@ public class DisplayPanel extends JPanel {
 	
 	private void setLayoutStuff() {
 		
-		setLayout(new FlowLayout());
+		setLayout(new GridBagLayout());
+		GridBagConstraints gc = new GridBagConstraints();
+		
+		gc.fill = GridBagConstraints.BOTH;
+		gc.weightx = 1;
+		gc.weighty = 1;
+		gc.gridx = 0;
+		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.insets = new Insets(0, 460, 0, 0);
+		add(new JLabel("Hello"), gc);
 	}
 }
