@@ -10,7 +10,11 @@
 
 <%@ page import="beans.Phone" %>
 
-Phone number: <%= ((Phone)session.getAttribute("phone")).getPhone() %>
+Phone number: <%= (Phone)session.getAttribute("phone") == null ?
+		"Error" :
+		((Phone)session.getAttribute("phone")).getPhone() %>
+
+<a href="<%= response.encodeURL(request.getContextPath() + "/phonenum-no-cookies.jsp") %>">Cookies test</a>
 
 </body>
 </html>
