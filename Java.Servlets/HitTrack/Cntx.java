@@ -29,7 +29,11 @@ public class Cntx extends HttpServlet {
 			servletContext.setAttribute("hits", hits);
 		}
 		
-		response.getWriter().print("<html>" + hits + "</html>");
+		String adminNickname = servletContext.getInitParameter("adminlogin");
+		
+		response.getWriter().print("<html>"
+				+ String.format("hits: <strong>%d</strong><br>admin: <strong>%s</strong>",hits, adminNickname)
+				+ "</html>");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
