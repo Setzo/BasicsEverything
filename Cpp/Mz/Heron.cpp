@@ -12,16 +12,16 @@ __int64 CounterStart = 0;
 
 int main() {
 	 
-	double sqrtNum, divider = 0, num;
-
+	double sqrtNum, divider = 0, num, e;
 	std::cin >> num;
+	std::cin >> e;
 
 	startCounter();
 	double startTime = getCounter();
 
 	sqrtNum = sqrt(num);
 
-	while(! (abs(divider - sqrtNum) < 1E-10)) {
+	while(! (abs(divider - sqrtNum) < e)) {
 	
 		divider = sqrtNum;
 		sqrtNum = (num / divider + divider) / 2;
