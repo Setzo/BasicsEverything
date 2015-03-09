@@ -29,7 +29,7 @@ int main() {
 
 	double stopTime = getCounter();
 
-	printf("\n\nWynik:       %10.10f\nCzas startu: %.10f\nCzas stopu:  %.10f\nCzas:        %.10f\n\n"
+	printf("\n\nWynik:       %.16f\nCzas startu: %.16f\nCzas stopu:  %.16f\nCzas:        %.16f\n\n"
 		, sqrtNum, startTime, stopTime, stopTime - startTime);
 
 	system("pause");
