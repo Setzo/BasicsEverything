@@ -11,7 +11,7 @@ __int64 CounterStart = 0;
 
 int main() {
 
-	double sqrtNum, divider = 0, num, e, n;
+	double sqrtNum, num, e, n;
 
 	std::cout << "Liczba:              "; std::cin >> num;
 	std::cout << "Przyblizenie:        "; std::cin >> e;
