@@ -13,18 +13,28 @@ __int64 CounterStart = 0;
 int main() {
 	 
 	double sqrtNum, divider = 0, num, e;
-	std::cin >> num;
-	std::cin >> e;
+	int n;
+
+	std::cout<<"Liczba:              "; std::cin >> num;
+	std::cout<<"Przyblizenie:        "; std::cin >> e;
+	std::cout<<"Stopien pierwiastka: "; std::cin >> n;
 
 	startCounter();
 	double startTime = getCounter();
 
-	sqrtNum = sqrt(num);
+	/*sqrtNum = sqrt(num);
 
 	while(! (abs(divider - sqrtNum) < e)) {
 	
 		divider = sqrtNum;
 		sqrtNum = (num / divider + divider) / 2;
+	}*/
+
+	sqrtNum = num;
+
+	while(abs(num - pow(sqrtNum, n)) > e) {
+
+		sqrtNum = (1 / n) * (((n - 1) * sqrtNum) + num / pow(sqrtNum, n - 1));
 	}
 
 	double stopTime = getCounter();
