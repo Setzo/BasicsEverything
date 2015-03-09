@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <cstdio>
 #include <math.h>
@@ -11,30 +10,22 @@ double PCFreq = 0.0;
 __int64 CounterStart = 0;
 
 int main() {
-	 
+
 	double sqrtNum, divider = 0, num, e;
 	int n;
 
-	std::cout<<"Liczba:              "; std::cin >> num;
-	std::cout<<"Przyblizenie:        "; std::cin >> e;
-	std::cout<<"Stopien pierwiastka: "; std::cin >> n;
+	std::cout << "Liczba:              "; std::cin >> num;
+	std::cout << "Przyblizenie:        "; std::cin >> e;
+	std::cout << "Stopien pierwiastka: "; std::cin >> n;
 
 	startCounter();
 	double startTime = getCounter();
 
-	/*sqrtNum = sqrt(num);
-
-	while(! (abs(divider - sqrtNum) < e)) {
-	
-		divider = sqrtNum;
-		sqrtNum = (num / divider + divider) / 2;
-	}*/
-
 	sqrtNum = num;
 
-	while(abs(num - pow(sqrtNum, n)) > e) {
-
-		sqrtNum = (1 / n) * (((n - 1) * sqrtNum) + num / pow(sqrtNum, n - 1));
+	while (abs(num - pow(sqrtNum, n)) > e) {
+		
+		sqrtNum = (1.0 / n) * ((n - 1.0) * sqrtNum + (num / (pow(sqrtNum, n - 1.0))));
 	}
 
 	double stopTime = getCounter();
@@ -48,20 +39,21 @@ int main() {
 
 void startCounter() {
 
-    LARGE_INTEGER li;
+	LARGE_INTEGER li;
 
-    if(!QueryPerformanceFrequency(&li)) {
+	if (!QueryPerformanceFrequency(&li)) {
 		printf("Assert\n");
 	}
 
-    PCFreq = double(li.QuadPart)/1000.0;
+	PCFreq = double(li.QuadPart) / 1000.0;
 
-    QueryPerformanceCounter(&li);
-    CounterStart = li.QuadPart;
+	QueryPerformanceCounter(&li);
+	CounterStart = li.QuadPart;
 }
+
 double getCounter() {
 
-    LARGE_INTEGER li;
-    QueryPerformanceCounter(&li);
-    return double(li.QuadPart-CounterStart)/PCFreq;
+	LARGE_INTEGER li;
+	QueryPerformanceCounter(&li);
+	return double(li.QuadPart - CounterStart) / PCFreq;
 }
