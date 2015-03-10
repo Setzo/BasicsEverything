@@ -15,8 +15,10 @@ namespace Consoleeee
 			int b = int.Parse(Console.ReadLine());
 
 			Console.WriteLine("Max: " + Niezbednik.max(a, b));
-			Console.WriteLine("Silnia: " + Niezbednik.factorialIterate(a));
-			Console.WriteLine("Silnia Rekursja: " + Niezbednik.factorialRecursive(a));
+			Console.WriteLine("Silnia (a): " + Niezbednik.factorialIterate(a));
+			Console.WriteLine("Silnia (b): " + Niezbednik.factorialIterate(b));
+			Console.WriteLine("Silnia Rekursja(a): " + Niezbednik.factorialRecursive(a));
+			Console.WriteLine("Silnia Rekursja(b): " + Niezbednik.factorialRecursive(b));
 
 			Console.ReadLine();
 		}
