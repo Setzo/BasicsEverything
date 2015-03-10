@@ -13,7 +13,7 @@ namespace Consoleeee
 			return Math.Max(a, b);
 		}
 
-		public static void swap(int a, int b)
+		public static void swap(ref int a, ref int b)
 		{
 			int tmp = a;
 			a = b;
