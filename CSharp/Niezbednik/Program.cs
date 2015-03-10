@@ -10,6 +10,9 @@ namespace Consoleeee
 	{
 		static void Main(string[] args)
 		{
+			HelloWorld hello = new HelloWorld();
+
+			hello.Hello();
 
 			int a = int.Parse(Console.ReadLine());
 			int b = int.Parse(Console.ReadLine());
