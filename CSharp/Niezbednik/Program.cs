@@ -20,6 +20,10 @@ namespace Consoleeee
 			Console.WriteLine("Silnia Rekursja(a): " + Niezbednik.factorialRecursive(a));
 			Console.WriteLine("Silnia Rekursja(b): " + Niezbednik.factorialRecursive(b));
 
+			Console.WriteLine(a + " : " + b);
+			Niezbednik.swap(ref a, ref b);
+			Console.WriteLine(a + " : " + b);
+
 			Console.ReadLine();
 		}
 	}
