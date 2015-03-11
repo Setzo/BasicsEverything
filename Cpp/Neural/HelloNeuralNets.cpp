@@ -59,7 +59,7 @@ private:
 Neuron::Neuron(unsigned numOfOutputs, unsigned index) {
 
 	//Fill weights with connection objects
-	for(unsigned numOfConnections; numOfConnections < numOfOutputs; ++numOfConnections) {
+	for(unsigned numOfConnections = 0; numOfConnections < numOfOutputs; ++numOfConnections) {
 
 		outputWeights.push_back(Connection());
 	}
