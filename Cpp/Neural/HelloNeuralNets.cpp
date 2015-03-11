@@ -1,7 +1,7 @@
 /*
  * Neural.cpp
  *
- *  Created on: 10 mar 2015
+ *  Created on: 11 mar 2015
  *      Author: Setzo
  */
 
@@ -61,9 +61,9 @@ void TrainingData::getTopology(std::vector<unsigned> &topology) {
 
 	while (!ss.eof()) {
 
-		unsigned nNeuron;
-		ss >> nNeuron;
-		topology.push_back(nNeuron);
+		unsigned n;
+		ss >> n;
+		topology.push_back(n);
 	}
 
 	return;
