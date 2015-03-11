@@ -9,7 +9,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cassert>
-#include <cmath>
+#include <math.h>
 #include <fstream>
 #include <sstream>
 
