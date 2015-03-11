@@ -181,7 +181,6 @@ Net::Net (const std::vector<unsigned> &topology) {
 		for(unsigned currentNeuron = 0; currentNeuron <= topology[currentLayer]; ++currentNeuron) {
 
 			layers.back().push_back(Neuron(numOfOutputs, currentNeuron));
-			std::cout<<"Neuron"<<std::endl;
 			//Filling newly created layer with neurons
 		}
 
