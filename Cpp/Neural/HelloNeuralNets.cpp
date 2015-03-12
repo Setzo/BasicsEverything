@@ -458,8 +458,6 @@ int main() {
 		printf("Net error on this pass: %1.5f\n",  currentError);
 	}
 
-	std::cout << std::endl << "Done" << std::endl;
-
 	//system("pause");
 	return 0;
 }
