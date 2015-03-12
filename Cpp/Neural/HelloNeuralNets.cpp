@@ -1,9 +1,9 @@
 /*
- * Neural.cpp
- *
- *  Created on: 11 mar 2015
- *      Author: Setzo
- */
+* Neural.cpp
+*
+*  Created on: 10 mar 2015
+*      Author: Setzo
+*/
 
 #include <vector>
 #include <iostream>
@@ -28,11 +28,29 @@ public:
 	void getTopology(std::vector<unsigned> &topology);
 	unsigned getNextInputs(std::vector<double> &inputVals);		// Returns the number of input values read from the file:
 	unsigned getTargetOutputs(std::vector<double> &targetOutputVals);
+	void test();
 
 private:
 
 	std::ifstream trainingDataFile;
 };
+
+void TrainingData::test() {
+
+	std::string line;
+
+	while (!this->isEof() && std::getline(trainingDataFile, line)) {
+
+		std::cout << line << std::endl;
+
+		if (this->isEof()) {
+
+			abort();
+		}
+	}
+
+	return;
+}
 
 TrainingData::TrainingData(const std::string filename) {
 
@@ -186,7 +204,7 @@ void Neuron::feedForward(const Layer &prevLayer) {
 	for (unsigned nNeuron = 0; nNeuron < prevLayer.size(); ++nNeuron) {
 
 		sigma += prevLayer[nNeuron].getOutputValue()
-				* prevLayer[nNeuron].outputWeights[myIndex].weight;
+			* prevLayer[nNeuron].outputWeights[myIndex].weight;
 	}
 
 	outputValue = Neuron::transferFunction(sigma);
@@ -212,8 +230,8 @@ void Neuron::updateInputWeights(Layer &prevLayer) {
 		double oldDeltaWeight = neuron.outputWeights[myIndex].deltaWeight;
 
 		double newDeltaWeight =
-				eta * neuron.getOutputValue() * gradient
-				+ alpha * oldDeltaWeight;
+			eta * neuron.getOutputValue() * gradient
+			+ alpha * oldDeltaWeight;
 
 		neuron.outputWeights[myIndex].deltaWeight = newDeltaWeight;
 		neuron.outputWeights[myIndex].weight += newDeltaWeight;
@@ -324,8 +342,8 @@ void Net::backPropagation(const std::vector<double> &desiredValues) {
 	error = sqrt(error);
 
 	recentAverageError = (recentAverageError
-			* recentAverageSmoothingFactor + error)
-			/ (recentAverageSmoothingFactor + 1.0);
+		* recentAverageSmoothingFactor + error)
+		/ (recentAverageSmoothingFactor + 1.0);
 
 	// Calculate output layer gradients
 	for (unsigned nNeuron = 0; nNeuron < outputLayer.size() - 1; ++nNeuron) {
@@ -392,7 +410,9 @@ void showVectorValues(std::string label, std::vector<double> &values) {
 
 int main() {
 
-	TrainingData trainData("/tmp/xor.txt");
+	TrainingData trainData("C:\\Users\\Setzo\\Desktop\\tmp.txt");
+
+	//trainData.test();
 
 	std::vector<unsigned> topology;
 	trainData.getTopology(topology);
@@ -424,9 +444,11 @@ int main() {
 
 		myNet.backPropagation(targetVals);
 
-		std::cout << "Net recent average error: "
-				<< myNet.getRecentAverageError() << std::endl;
+		std::cout << "Net recent average error: " << myNet.getRecentAverageError() << std::endl;
 	}
 
 	std::cout << std::endl << "Done" << std::endl;
+
+	system("pause");
+	return 0;
 }
