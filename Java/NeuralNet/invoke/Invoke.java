@@ -12,7 +12,8 @@ public class Invoke {
 		
 		CreateSampleData csd = new CreateSampleData("adding.txt"
 				, CreateSampleData.xor
-				, "2 3 1");
+				, "2 3 1"
+				, 5000);
 		
 		TrainingData trainingData = new TrainingData(csd.getSampleFile());
 		
