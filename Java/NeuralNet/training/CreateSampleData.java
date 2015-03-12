@@ -12,17 +12,9 @@ public class CreateSampleData {
 	
 	private File sampleFile;
 	
-	private BufferedWriter bw;
-	
 	public CreateSampleData(String title, final int num, String topology) {
 		
 		sampleFile = new File(title);
-		
-		try {
-			bw = new BufferedWriter(new FileWriter(sampleFile));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 		setTopology(topology.split(" "));
 		
@@ -40,7 +32,8 @@ public class CreateSampleData {
 	
 	private void setTopology(String[] topology) {
 		
-		try {
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(sampleFile))) {
+			
 			bw.write("topology: ");
 			
 			for(int i = 0; i < topology.length; i++) {
@@ -58,27 +51,32 @@ public class CreateSampleData {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		for(int i = 0; i < 2000; i++) {
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(sampleFile, true))) {
 			
-			int in0 = (int)(2 * Math.random());
-			int in1 = (int)(2 * Math.random());
-			
-			int out = in0 ^ in1;
-			
-			try {
+			for(int i = 0; i < 2000; i++) {
+				
+				int in0 = (int)(2 * Math.random());
+				int in1 = (int)(2 * Math.random());
+				
+				int out = in0 ^ in1;
 				
 				sb.append("in: ").append(in0).append(" ").append(in1).append(" \n");
 				bw.write(sb.toString());
 				
 				sb.delete(0, sb.length());
 				
-				sb.append("out: ").append(out).append(" \n");
+				if(i + 1 != 2000) {
+					sb.append("out: ").append(out).append(" \n");
+				} else {
+					sb.append("out: ").append(out).append(" ");
+				}
 				bw.write(sb.toString());
 				
 				sb.delete(0, sb.length());
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+			
+		} catch(IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -86,8 +84,9 @@ public class CreateSampleData {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		try {
-			for(int i = 0; i < 10000; i++) {
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(sampleFile, true))) {
+			
+			for(int i = 0; i < 4000; i++) {
 	
 				int[] in0 = new int[2];
 				in0[0] = (int)(2.0 * Math.random());
@@ -196,13 +195,23 @@ public class CreateSampleData {
 					out[3] = 0;
 				}
 	
-				
-				sb.append("out: ")
-				.append(out[0]).append(".0 ")
-				.append(out[1]).append(".0 ")
-				.append(out[2]).append(".0 ")
-				.append(out[3]).append(".0 ")
-				.append("\n");
+				if( i + 1 !=  4000) {
+					
+					sb.append("out: ")
+					.append(out[0]).append(".0 ")
+					.append(out[1]).append(".0 ")
+					.append(out[2]).append(".0 ")
+					.append(out[3]).append(".0 ")
+					.append("\n");
+					
+				} else {
+					
+					sb.append("out: ")
+					.append(out[0]).append(".0 ")
+					.append(out[1]).append(".0 ")
+					.append(out[2]).append(".0 ")
+					.append(out[3]).append(".0 ");
+				}
 				
 				bw.write(sb.toString());
 				sb.delete(0, sb.length());
@@ -210,5 +219,9 @@ public class CreateSampleData {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public File getSampleFile() {
+		return sampleFile;
 	}
 }
