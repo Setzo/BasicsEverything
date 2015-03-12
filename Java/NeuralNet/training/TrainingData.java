@@ -19,6 +19,16 @@ public class TrainingData {
 		}
 	}
 	
+	public TrainingData(File file) {
+		
+		try {
+			sc = new Scanner(file);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public boolean isEof() {
 		
 		return !sc.hasNextLine();
