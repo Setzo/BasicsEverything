@@ -10,11 +10,15 @@ public class CreateSampleData {
 	public static final int xor = 0;
 	public static final int add = 1;
 	
+	private int numOfSamples;
+	
 	private File sampleFile;
 	
-	public CreateSampleData(String title, final int num, String topology) {
+	public CreateSampleData(String title, final int num, String topology, final int numOfSamples) {
 		
 		sampleFile = new File(title);
+		
+		this.numOfSamples = numOfSamples;
 		
 		setTopology(topology.split(" "));
 		
@@ -53,7 +57,7 @@ public class CreateSampleData {
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(sampleFile, true))) {
 			
-			for(int i = 0; i < 2000; i++) {
+			for(int i = 0; i < numOfSamples; i++) {
 				
 				int in0 = (int)(2 * Math.random());
 				int in1 = (int)(2 * Math.random());
@@ -65,7 +69,7 @@ public class CreateSampleData {
 				
 				sb.delete(0, sb.length());
 				
-				if(i + 1 != 2000) {
+				if(i + 1 != numOfSamples) {
 					sb.append("out: ").append(out).append(" \n");
 				} else {
 					sb.append("out: ").append(out).append(" ");
@@ -86,7 +90,7 @@ public class CreateSampleData {
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(sampleFile, true))) {
 			
-			for(int i = 0; i < 4000; i++) {
+			for(int i = 0; i < numOfSamples; i++) {
 	
 				int[] in0 = new int[2];
 				in0[0] = (int)(2.0 * Math.random());
@@ -195,7 +199,7 @@ public class CreateSampleData {
 					out[3] = 0;
 				}
 	
-				if( i + 1 !=  4000) {
+				if( i + 1 !=  numOfSamples) {
 					
 					sb.append("out: ")
 					.append(out[0]).append(".0 ")
