@@ -2,14 +2,19 @@ package invoke;
 import java.util.Vector;
 
 import neural.Net;
+import training.CreateSampleData;
 import training.TrainingData;
 
 
 public class Invoke {
 
 	public static void main(String[] args) {
-
-		TrainingData trainingData = new TrainingData("C:\\Users\\Setzo\\Desktop\\tmp.txt");
+		
+		CreateSampleData csd = new CreateSampleData("adding.txt"
+				, CreateSampleData.xor
+				, "2 3 1");
+		
+		TrainingData trainingData = new TrainingData(csd.getSampleFile());
 		
 		Vector<Integer> topology = trainingData.getTopology();
 		
