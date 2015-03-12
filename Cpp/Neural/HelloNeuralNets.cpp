@@ -35,23 +35,6 @@ private:
 	std::ifstream trainingDataFile;
 };
 
-void TrainingData::test() {
-
-	std::string line;
-
-	while (!this->isEof() && std::getline(trainingDataFile, line)) {
-
-		std::cout << line << std::endl;
-
-		if (this->isEof()) {
-
-			abort();
-		}
-	}
-
-	return;
-}
-
 TrainingData::TrainingData(const std::string filename) {
 
 	trainingDataFile.open(filename.c_str());
@@ -131,6 +114,23 @@ unsigned TrainingData::getTargetOutputs(std::vector<double> &targetOutputVals) {
 	}
 
 	return targetOutputVals.size();
+}
+
+void TrainingData::test() {
+
+	std::string line;
+
+	while (!this->isEof() && std::getline(trainingDataFile, line)) {
+
+		std::cout << line << std::endl;
+
+		if (this->isEof()) {
+
+			abort();
+		}
+	}
+
+	return;
 }
 
 //******************		CONNECTION		******************
@@ -396,12 +396,21 @@ double Net::recentAverageSmoothingFactor = 100.0;
 
 //******************		MAIN		******************
 
-void showVectorValues(std::string label, std::vector<double> &values) {
+void showVectorValues(std::string label, std::vector<double> &values, double &currentError, bool countError) {
 
 	std::cout << label << " ";
 
 	for (unsigned i = 0; i < values.size(); ++i) {
 
+		if(!countError) {
+			currentError = values[i];
+
+		} else {
+			currentError = currentError - values[i];
+			if(currentError < 0) {
+				currentError *= -1;
+			}
+		}
 		std::cout << values[i] << " ";
 	}
 
@@ -419,36 +428,38 @@ int main() {
 
 	Net myNet(topology);
 
-	std::vector<double> inputVals, targetVals, resultVals;
+	std::vector<double> inputValues, desiredValues, resultValues;
 	int trainingPass = 0;
 
 	while (!trainData.isEof()) {
 
+		double currentError;
+
 		++trainingPass;
 		std::cout << std::endl << "Pass " << trainingPass;
 
-		if (trainData.getNextInputs(inputVals) != topology[0]) {
+		if (trainData.getNextInputs(inputValues) != topology[0]) {
 			break;
 		}
 
-		showVectorValues(": Inputs:", inputVals);
-		myNet.feedForward(inputVals);
+		showVectorValues(": Input:", inputValues, currentError, false);
+		myNet.feedForward(inputValues);
 
-		myNet.getResultValues(resultVals);
-		showVectorValues("Outputs:", resultVals);
+		myNet.getResultValues(resultValues);
+		showVectorValues("Output:", resultValues, currentError, false);
 
-		trainData.getTargetOutputs(targetVals);
-		showVectorValues("Targets:", targetVals);
+		trainData.getTargetOutputs(desiredValues);
+		showVectorValues("Target:", desiredValues, currentError, true);
 
-		assert(targetVals.size() == topology.back());
+		assert(desiredValues.size() == topology.back());
 
-		myNet.backPropagation(targetVals);
+		myNet.backPropagation(desiredValues);
 
-		std::cout << "Net recent average error: " << myNet.getRecentAverageError() << std::endl;
+		printf("Net error on this pass: %1.5f\n",  currentError);
 	}
 
 	std::cout << std::endl << "Done" << std::endl;
 
-	system("pause");
+	//system("pause");
 	return 0;
 }
