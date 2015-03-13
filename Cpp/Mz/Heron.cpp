@@ -1,9 +1,9 @@
 /*
- * Heron.cpp
- *
- *  Created on: 13 mar 2015
- *      Author: Setzo
- */
+* Heron.cpp
+*
+*  Created on: 13 mar 2015
+*      Author: Wojciech Pruszak
+*/
 
 #include <iostream>
 #include <cstdio>
@@ -79,7 +79,7 @@ int main() {
 	cnt.startCounter();
 
 	// Pętla wykonywująca program SAMPLE_SIZE razy
-	for(unsigned i = 0; i < SAMPLE_SIZE; ++i) {
+	for (unsigned i = 0; i < SAMPLE_SIZE; ++i) {
 
 		// Pobranie czasu startu
 		double startTime = cnt.getCounter();
@@ -106,8 +106,9 @@ int main() {
 	sigma /= SAMPLE_SIZE;
 
 	// Wydruk wyniku
-	printf("\n\n%22s%.16f\n%22s%.16f"
-			, "Wynik: ", sqrtNum, "Sredni czas: ", sigma);
+	printf("\n\n%22s%.16f\n%22s%.16f\n\n"
+		, "Wynik: ", sqrtNum, "Sredni czas: ", sigma);
 
+	system("pause");
 	return 0;
 }
