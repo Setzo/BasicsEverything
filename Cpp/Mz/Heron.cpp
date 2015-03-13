@@ -1,42 +1,36 @@
+/*
+ * Heron.cpp
+ *
+ *  Created on: 13 mar 2015
+ *      Author: Setzo
+ */
+
 #include <iostream>
 #include <cstdio>
 #include <math.h>
 #include <Windows.h>
 
-void startCounter();
-double getCounter();
+// Ilość testów, jakie wykonamy w celu zmierzenia
+// średniej wartości czasu wykonania programu
+#define SAMPLE_SIZE 100
 
-double PCFreq = 0.0;
-__int64 CounterStart = 0;
+// Klasa odpowiedzialna za wszystkie pomiary czasu
+class Counter {
 
-int main() {
+public:
 
-	double sqrtNum, num, e, n;
+	void startCounter();
+	double getCounter();
 
-	std::cout << "Liczba:              "; std::cin >> num;
-	std::cout << "Przyblizenie:        "; std::cin >> e;
-	std::cout << "Stopien pierwiastka: "; std::cin >> n;
+private:
 
-	startCounter();
-	double startTime = getCounter();
+	static double PCFreq;
+	static __int64 CounterStart;
 
-	sqrtNum = num;
+};
 
-	while (abs(num - pow(sqrtNum, n)) > e) {
-		
-		sqrtNum = (1.0 / n) * ((n - 1.0) * sqrtNum + (num / (pow(sqrtNum, n - 1.0))));
-	}
-
-	double stopTime = getCounter();
-
-	printf("\n\nWynik:       %.16f\nCzas startu: %.16f\nCzas stopu:  %.16f\nCzas:        %.16f\n\n"
-		, sqrtNum, startTime, stopTime, stopTime - startTime);
-
-	system("pause");
-	return 0;
-}
-
-void startCounter() {
+// Metoda rozpoczynająca odliczanie czasu
+void Counter::startCounter() {
 
 	LARGE_INTEGER li;
 
@@ -50,9 +44,70 @@ void startCounter() {
 	CounterStart = li.QuadPart;
 }
 
-double getCounter() {
+// Metoda pobierająca aktualny stan zegara,
+// zwraca wartość w double'u
+double Counter::getCounter() {
 
 	LARGE_INTEGER li;
 	QueryPerformanceCounter(&li);
 	return double(li.QuadPart - CounterStart) / PCFreq;
+}
+
+double Counter::PCFreq = 0.0;
+
+__int64 Counter::CounterStart = 0;
+
+// Główna metoda programu
+int main() {
+
+	// sqrtNum - nasz przyszły wynik
+	// num - liczba którą pobierzemy do pierwiastkowania
+	// e - przybliżenie
+	// n - stopień pierwiastka
+	// sigma - średni czas wykonania programu, dla SAMPLE_SIZE wykonań
+	double sqrtNum, num, e, n, sigma = 0;
+
+	// cnt - instancja klasy Counter, odpowiadająca za mierzenie pomiarów czasu
+	Counter cnt;
+
+	// Wczytywanie startowych wartości
+	printf("%22s", "Liczba: "); 				std::cin >> num;
+	printf("%22s", "Przyblizenie: "); 			std::cin >> e;
+	printf("%22s", "Stopien pierwiastka: "); 	std::cin >> n;
+
+	// Rozpoczęcie odliczania
+	cnt.startCounter();
+
+	// Pętla wykonywująca program SAMPLE_SIZE razy
+	for(unsigned i = 0; i < SAMPLE_SIZE; ++i) {
+
+		// Pobranie czasu startu
+		double startTime = cnt.getCounter();
+
+		sqrtNum = num;
+
+		// Liczenie pierwiastka n-tego stopnia
+		// z liczby num, z dokładnością e
+		while (abs(num - pow(sqrtNum, n)) > e) {
+
+			sqrtNum = (1.0 / n) * ((n - 1.0) * sqrtNum + (num / (pow(sqrtNum, n - 1.0))));
+		}
+
+		// Pobranie czasu stopu
+		double stopTime = cnt.getCounter();
+
+		// Dodanie czasu aktualnego przejścia do
+		// przyszłego średniego czasu wykonania programu
+		sigma += (stopTime - startTime);
+	}
+
+	// Podzielenie wartości sumy wszystkich czasów
+	// wykonania programu przez ilość wykonań pętli
+	sigma /= SAMPLE_SIZE;
+
+	// Wydruk wyniku
+	printf("\n\n%22s%.16f\n%22s%.16f"
+			, "Wynik: ", sqrtNum, "Sredni czas: ", sigma);
+
+	return 0;
 }
