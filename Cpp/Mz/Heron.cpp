@@ -2,7 +2,7 @@
 * Heron.cpp
 *
 *  Created on: 13 mar 2015
-*      Author: Wojciech Pruszak
+*      Author: Setzo
 */
 
 #include <iostream>
