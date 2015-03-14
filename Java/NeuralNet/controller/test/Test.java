@@ -1,6 +1,6 @@
-package test;
+package controller.test;
 
-import training.CreateSampleData;
+import controller.training.CreateSampleData;
 
 public class Test {
 	public static void main(String[] args) {
