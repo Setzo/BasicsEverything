@@ -1,4 +1,4 @@
-package neural;
+package controller.neural;
 
 public class Connection {
 
