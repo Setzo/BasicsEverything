@@ -1,4 +1,4 @@
-package training;
+package controller.training;
 
 import java.io.BufferedWriter;
 import java.io.File;
