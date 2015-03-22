@@ -4,7 +4,7 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
-import uti.Utilitiess;
+import controller.uti.Utilitiess;
 
 public class TextFileFilter extends FileFilter {
 
@@ -14,7 +14,7 @@ public class TextFileFilter extends FileFilter {
 			return true;
 		}
 		
-		if(Utilitiess.getExtension(file.getName()) == "txt") {
+		if(Utilitiess.getExtension(file.getName()).equals("txt")) {
 			return true;
 		}
 		

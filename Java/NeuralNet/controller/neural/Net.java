@@ -5,11 +5,13 @@ import java.util.Vector;
 public class Net {
 
 	private static double recentAverageSmoothingFactor = 100.0;
-	private double recentAverageError;
+	private double recentAverageError = 0.5;
 	
 	private double error;
 	
 	private Vector<Layer> layers;
+	
+	private Vector<Integer> topologyy;
 	
 	public Net(Vector<Integer> topology) {
 
@@ -22,14 +24,12 @@ public class Net {
 			layers.add(new Layer());
 
 			int numOutputs = layerNum == topology.size() - 1 ? 0 : topology.get(layerNum + 1);
-
-			// Fill newly created layer with neurons
+			
 			for (int nNeuron = 0; nNeuron <= topology.get(layerNum); ++nNeuron) {
 
 				layers.lastElement().add(new Neuron(numOutputs, nNeuron));
 			}
 
-			// Set bias node out to 1.0
 			layers.lastElement().lastElement().setOutputValue(1.0);
 		}
 	}
@@ -61,24 +61,21 @@ public class Net {
 		for (int nNeuron = 0; nNeuron < outputLayer.size() - 1; ++nNeuron) {
 
 			double delta = desiredValues.get(nNeuron) - outputLayer.get(nNeuron).getOutputValue();
-			error += delta * delta;
+			error += (delta * delta);
 		}
 
 		error /= outputLayer.size() - 1;
-		// RMS
 		error = Math.sqrt(error);
 
 		recentAverageError = (recentAverageError
 			* recentAverageSmoothingFactor + error)
 			/ (recentAverageSmoothingFactor + 1.0);
 
-		// Calculate output layer gradients
 		for (int nNeuron = 0; nNeuron < outputLayer.size() - 1; ++nNeuron) {
 
 			outputLayer.get(nNeuron).calculateOutputGradients(desiredValues.get(nNeuron));
 		}
 
-		// Calculate hidden layer gradients
 		for (int layerNum = layers.size() - 2; layerNum > 0; --layerNum) {
 
 			Layer hiddenLayer = layers.get(layerNum);
@@ -90,7 +87,6 @@ public class Net {
 			}
 		}
 
-		// For all layers from outputs to first hidden layer, update connection weights
 		for (int layerNum = layers.size() - 1; layerNum > 0; --layerNum) {
 
 			Layer layer = layers.get(layerNum);
@@ -114,9 +110,43 @@ public class Net {
 		
 		return resultValues;
 	}
+	
+	public Vector<Vector<Vector<Connection>>> getConnectionWeights() {
+		
+		Vector<Vector<Vector<Connection>>> connections = new Vector<Vector<Vector<Connection>>>();
+		
+		for(int layNum = 0; layNum < layers.size() - 1; layNum++) {
+			
+			connections.add(new Vector<Vector<Connection>>());
+			
+			for(int nNeuron = 0; nNeuron < layers.get(layNum).size(); nNeuron++) {
+				
+				connections.get(layNum).add(layers.get(layNum).get(nNeuron).getOutputWeights());
+			}
+		}
+		
+		return connections;
+	}
+	
+	public void setConnectionWeights(Vector<Integer> topology, Vector<Vector<Vector<Connection>>> connectionWeights) {
+
+		int numLayers = topology.size();
+		
+		for(int layNum = 0; layNum < numLayers - 1; ++layNum) {
+			
+			for(int nNeuron = 0; nNeuron <= topology.get(layNum); ++nNeuron) {
+				
+				layers.get(layNum).get(nNeuron).setOutputWeights(connectionWeights.get(layNum).get(nNeuron));
+			}
+		}
+	}
 
 	public double getRecentAverageError() {
 
 		return recentAverageError;
+	}
+	
+	public Vector<Integer> getTopologyy() {
+		return this.topologyy;
 	}
 }

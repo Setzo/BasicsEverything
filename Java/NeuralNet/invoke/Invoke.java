@@ -1,8 +1,8 @@
 package invoke;
 
-import javax.swing.SwingUtilities;
-
 import gui.main.MainFrame;
+
+import javax.swing.SwingUtilities;
 
 public class Invoke {
 
@@ -10,7 +10,7 @@ public class Invoke {
 		
 		SwingUtilities.invokeLater(() -> {
 			
-			MainFrame.getInstance("Neural Network Simulator alpha v0.0.1");
+			MainFrame.getInstance("Neural Network Simulator alpha v0.1.1");
 		});
 	}
 }

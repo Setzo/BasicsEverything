@@ -6,7 +6,7 @@ import javax.swing.filechooser.FileFilter;
 
 import controller.uti.Utilitiess;
 
-public class NeuralNetFileFilter extends FileFilter {
+public class BinaryFileFilter extends FileFilter {
 
 	public boolean accept(File file) {
 		
@@ -14,7 +14,7 @@ public class NeuralNetFileFilter extends FileFilter {
 			return true;
 		}
 		
-		if(Utilitiess.getExtension(file.getName()).equals("nnet")) {
+		if(Utilitiess.getExtension(file.getName()).equals("bin")) {
 			return true;
 		}
 		
@@ -23,6 +23,6 @@ public class NeuralNetFileFilter extends FileFilter {
 
 	public String getDescription() {
 		
-		return "Neural network training files (.nnet)";
+		return "Binary file (.bin)";
 	}
 }

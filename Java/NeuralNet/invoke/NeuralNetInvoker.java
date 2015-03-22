@@ -1,8 +1,10 @@
 package invoke;
 import gui.listeners.OutputLineListener;
 
+import java.io.File;
 import java.util.Vector;
 
+import controller.Controller;
 import controller.neural.Net;
 import controller.training.CreateSampleData;
 import controller.training.TrainingData;
@@ -11,6 +13,15 @@ import controller.training.TrainingData;
 public class NeuralNetInvoker {
 
 	private OutputLineListener outputListener;
+
+	private Vector<Integer> topology;
+	
+	private Net neuralNetwork;
+	private NetHandler netHandler;
+	
+	private File trainingFile = null;
+	
+	//private Vector<Vector<Vector<Connection>>> connectionWeights;
 	
 	public void setOutputLineListener(OutputLineListener listener) {
 		this.outputListener = listener;
@@ -21,13 +32,16 @@ public class NeuralNetInvoker {
 		CreateSampleData csd = new CreateSampleData("xor.txt"
 				, CreateSampleData.xor
 				, "2 3 1"
-				, 5000);
+				, 1500);
+		
+		Controller.showInputFile(csd.getSampleFile());
 		
 		TrainingData trainingData = new TrainingData(csd.getSampleFile());
 		
-		Vector<Integer> topology = trainingData.getTopology();
+		topology = trainingData.getTopology();
 		
-		Net myNet = new Net(topology);
+		netHandler = new NetHandler(topology);
+		neuralNetwork = NetHandler.getNet();
 		
 		int trainingPass = 0;
 		StringBuilder sb = new StringBuilder();
@@ -45,9 +59,9 @@ public class NeuralNetInvoker {
 			
 			//System.out.println("Input: " + input.toString());
 			outputListener.lineToAppend(String.format("Input: %s\n", input.toString()));
-			myNet.feedForward(input);
+			neuralNetwork.feedForward(input);
 			
-			Vector<Double> result = myNet.getResultValues();
+			Vector<Double> result = neuralNetwork.getResultValues();
 			//System.out.print("Result: [");
 			sb.append("Result: [");
 			
@@ -67,10 +81,22 @@ public class NeuralNetInvoker {
 			//System.out.println("Target: " + desiredOutput.toString());
 			outputListener.lineToAppend(String.format("Target: %s\n", desiredOutput.toString()));
 			
-			myNet.backPropagation(desiredOutput);
+			neuralNetwork.backPropagation(desiredOutput);
 			
 			sb.delete(0, sb.length());
 		}
+		
+		/*
+		connectionWeights = myNet.getConnectionWeights();
+		File file = new File("conn.bin");
+		System.out.println(connectionWeights);
+		Controller.saveConnectionWeightsToFile(file, connectionWeights);
+		System.out.println(Controller.loadConnectionWeightsFromFile(file));
+		*/
 	}
 	
+	public Net getNeuralNetwork() {
+		
+		return this.neuralNetwork;
+	}
 }

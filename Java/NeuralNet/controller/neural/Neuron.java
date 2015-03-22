@@ -79,13 +79,11 @@ public class Neuron {
 	
 	private double transferFunction(double delta) {
 
-		// Tanh - <0; 1>ss
 		return Math.tanh(delta);
 	}
 
 	private double transferFunctionDerivative(double delta) {
 
-		// Tanh derivative
 		return 1.0 - delta * delta;
 	}
 
@@ -93,12 +91,37 @@ public class Neuron {
 
 		double sigma = 0.0;
 
-		// Sum our contributions of the errors at the nodes we feed
 		for (int nNeuron = 0; nNeuron < nextLayer.size() - 1; ++nNeuron) {
 
 			sigma += outputWeights.get(nNeuron).weight * nextLayer.get(nNeuron).gradient;
 		}
 
 		return sigma;
+	}
+	
+	public Vector<Connection> getOutputWeights() {
+		
+		return this.outputWeights;
+	}
+	
+	public void setOutputWeights(Vector<Connection> outputWeights) {
+		
+		this.outputWeights = outputWeights;
+	}
+
+	public static double getEta() {
+		return eta;
+	}
+
+	public static double getAlpha() {
+		return alpha;
+	}
+
+	public static void setEta(double eta) {
+		Neuron.eta = eta;
+	}
+
+	public static void setAlpha(double alpha) {
+		Neuron.alpha = alpha;
 	}
 }
