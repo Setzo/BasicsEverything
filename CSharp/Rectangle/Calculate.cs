@@ -14,9 +14,12 @@ namespace Rectangles
 				* Math.Abs(Math.Max(r0.y0, r0.y1) - Math.Min(r0.y0, r0.y1));
 		}
 
-		public static Rectangle commonField(Rectangle r0, Rectangle r1)
+		public static int commonField(ref Rectangle r0, ref Rectangle r1)
 		{
-			
+			int dx = Math.Max(0, Math.Min(Math.Max(r0.x0, r0.x1), Math.Max(r1.x0, r1.x1)) - Math.Max(Math.Min(r0.x0, r0.x1), Math.Min(r1.x0, r1.x1)));
+			int dy = Math.Max(0, Math.Min(Math.Max(r0.y0, r0.y1), Math.Max(r1.y0, r1.y1)) - Math.Max(Math.Min(r0.y0, r0.y1), Math.Min(r1.y0, r1.y1)));
+
+			return dx * dy;
 		}
 	}
 }
