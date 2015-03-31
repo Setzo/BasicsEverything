@@ -8,7 +8,7 @@ namespace Worker
 {
 	class Teacher : Worker
 	{
-		private static int cnt;
+		private static int cnt = 0;
 
 		private int id;
 		private double bonus;
