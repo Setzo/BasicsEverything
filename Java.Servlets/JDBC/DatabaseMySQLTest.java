@@ -28,6 +28,7 @@ public class Connect extends HttpServlet {
 			e.printStackTrace();
 			out.print(e.getStackTrace().toString());
 			out.print("<br>");
+			return;
 		}
 		
 		Connection con = null;
@@ -38,6 +39,7 @@ public class Connect extends HttpServlet {
 			e.printStackTrace();
 			out.print(e.getStackTrace().toString());
 			out.print("<br>");
+			return;
 		}
 		
 		out.println("Connected! :D");
