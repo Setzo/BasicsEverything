@@ -29,10 +29,15 @@ object Methods extends App {
 	val add3: (Int, Int) => Int = _ + _ 
 	val add4 = (_ + _): (Int, Int) => Int
 
-	println(add1(1, 2))
+	println(add1(1, 2) toDouble)
 	println(add2(1, 2))
 	println(add3(1, 2))
 	println(add4(1, 2))
 	println(add2(2, 3))
-
+	
+	var xx = """ \n\n\n\n\n\\n\n\ """
+	println(xx)
+	
+	val age = 5;
+	println(s"this is string $age")
 }
