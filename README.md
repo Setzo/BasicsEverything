@@ -1,14 +1,14 @@
 * * *
 
-##Hello, 
+###Hello, 
 
-###In this repository I'm storing everything I might consider useful in the future. Basically everything here was a test program written by me to learn the syntax of java. Anything that's not written in java is probably my task program for my uni.
+####In this repository I'm storing everything I might consider useful in the future. Basically everything here was a test program written by me to learn the syntax of java. Anything that's not written in java is probably my task program for my uni.
 
 ###Peace.
 
 * * *
 
-##Languages & frameworks used: 
+###Languages & frameworks used: 
 
 <ul><li><h4>Java</h4></li>
 <ul><li><h6>Swing</h6></li>
