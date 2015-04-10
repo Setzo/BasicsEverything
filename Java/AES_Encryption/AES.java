@@ -60,10 +60,13 @@ public class AES {
 	public String decryptAES(byte[] cipherText, String encryptionKey) {
 		
 		try {
+			
 			Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
+			
 			SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
 			
-			cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(initializationVector.getBytes("UTF-8")));
+			cipher.init(Cipher.DECRYPT_MODE, key,
+					new IvParameterSpec(initializationVector.getBytes("UTF-8")));
 			
 			return new String(cipher.doFinal(cipherText), "UTF-8");
 			
