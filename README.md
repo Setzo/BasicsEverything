@@ -11,6 +11,7 @@
 <h3>Languages, frameworks, plugins & servers used:</h3>
 
 - <h4>Java</h4>
+  - <h5>Spring</h5>
   - <h5>Swing</h5>
   - <h5>Maven</h5>
   - <h5>JUnit</h5>
