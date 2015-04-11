@@ -23,6 +23,9 @@
 	
 	<c:out value='${map1["key"]}'/> <br>
 	<c:out value='${map1["key0"]}'/> <br>
+	<c:out value='${link}'/> <br>
+	
+	${link}
 	
 </body>
 </html>
