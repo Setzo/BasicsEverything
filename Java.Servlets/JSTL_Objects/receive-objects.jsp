@@ -14,6 +14,12 @@
 	<c:out value="${user1.name}"/> <br>
 	<c:out value="${user2.name}"/> <br>
 	<c:out value="${user3.name}"/> <br>
-
+	
+	<c:out value="${sessionScope.user2.name}"/> <br>
+	
+	<%--  ACCESSING SERVLET THINGS
+	<c:out value="${pageContext.}"/> <br>
+	--%>
+	
 </body>
 </html>
