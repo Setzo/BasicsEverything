@@ -2,6 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -41,6 +43,13 @@ public class PassObjects extends HttpServlet {
 		request.setAttribute("map1", map);
 		
 		request.setAttribute("link", "<a href='https://projecteuler.net/'>click</a>");
+		
+		List<User> list = new LinkedList<User>();
+		list.add(new User("user1", 1));
+		list.add(new User("user2", 2));
+		list.add(new User("user3", 3));
+		
+		request.getSession().setAttribute("list1", list);
 		
 		request.getRequestDispatcher("/receive-objects.jsp").forward(request, response);
 	}
