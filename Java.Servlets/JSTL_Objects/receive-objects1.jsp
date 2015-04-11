@@ -25,7 +25,13 @@
 	<c:out value='${map1["key0"]}'/> <br>
 	<c:out value='${link}'/> <br>
 	
-	${link}
+	${link} <br>
+		
+	<table style="border: 1px solid blue;">
+		<c:forEach var="usr" items="${list1}">
+			<tr><td><c:out value='${usr.name} + ${usr.id}'/> </td></tr>
+		</c:forEach>
+	</table>
 	
 </body>
 </html>
