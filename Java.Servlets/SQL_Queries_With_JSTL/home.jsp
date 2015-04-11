@@ -8,14 +8,13 @@
 
 <sql:setDataSource var="ds" dataSource="jdbc/testdatabase" />
 
-<sql:query dataSource="${ds}" sql="select * from users limit 10" var="result"/>
+<sql:query dataSource="${ds}" sql="select * from images limit 10" var="result"/>
 
-<c:forEach var="person" items="${result.rows}">
+<c:forEach var="image" items="${result.rows}">
 
-	<p>
-		${person.id} ${person.email} ${person.password}
-	</p>
-
+	<c:set scope="page" var="img" value="${image.stem}.${image.image_extension}"></c:set>
+	<p><img src="${pageContext.request.contextPath}/pics/${img}"/></p>
+	
 </c:forEach>
 
 <c:import url="mid.jsp"></c:import>
