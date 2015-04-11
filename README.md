@@ -16,7 +16,11 @@
   - <h5>Maven</h5>
   - <h5>JUnit</h5>
   - <h5>Servlets</h5>
+    - <h6>JDBC</h6>
+    - <h6>JNDI</h6>
   - <h5>Java Server Pages</h5>
+    - <h6>JSTL</h6>
+    - <h6>EL</h6>
   - <h5>Collections</h5>
   - <h5>Multithreading</h5>
   - <h5>Tomcat 8</h5>
