@@ -9,13 +9,10 @@
 <sql:setDataSource var="ds" dataSource="jdbc/testdatabase" />
 
 <sql:query dataSource="${ds}" sql="select * from images where id=?" var="result">
-<sql:param>${param.img}</sql:param>
+	<sql:param>${param.img}</sql:param>
 </sql:query>
 
-<c:set var="wid" value ="5"/>
-	
-<c:set scope="page" var="image" value="${result.rows[0]}"></c:set>
-<c:set scope="page" var="img" value="${image.stem}.${image.image_extension}"></c:set>
+<c:set scope="page" var="img" value="${result.rows[0].stem}.${result.rows[0].image_extension}"></c:set>
 	
 <img width="500" src="${pageContext.request.contextPath}/pics/${img}"/>
 
