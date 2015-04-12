@@ -13,6 +13,7 @@
 <c:set var="wid" value ="5"/>
 
 <table>
+			<tr>
 	<c:forEach var="image" items="${result.rows}" varStatus="row">
 	
 		<c:if test='${row.index % wid == 0}'>
