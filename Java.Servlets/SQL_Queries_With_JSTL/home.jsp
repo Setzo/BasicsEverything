@@ -10,12 +10,24 @@
 
 <sql:query dataSource="${ds}" sql="select * from images limit 10" var="result"/>
 
-<c:forEach var="image" items="${result.rows}">
+<c:set var="wid" value ="5"/>
 
-	<c:set scope="page" var="img" value="${image.stem}.${image.image_extension}"></c:set>
-	<p><img src="${pageContext.request.contextPath}/pics/${img}"/></p>
+<table>
+	<c:forEach var="image" items="${result.rows}" varStatus="row">
 	
-</c:forEach>
+		<c:if test='${row.index % wid == 0}'>
+			<tr>
+		</c:if>
+	
+		<c:set scope="page" var="img" value="${image.stem}.${image.image_extension}"></c:set>
+		<td><img width="200" src="${pageContext.request.contextPath}/pics/${img}"/></td>
+		
+		<c:if test='${row.index + 1 % wid == 0}'>
+			</tr>
+		</c:if>
+		
+	</c:forEach>
+</table>
 
 <c:import url="mid.jsp"></c:import>
 
