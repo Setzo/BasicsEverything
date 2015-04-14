@@ -2,7 +2,7 @@
  * Sort2.cpp
  *
  *  Created on: 14 kwi 2015
- *      Author: Wojciech Pruszak
+ *      Author: Setzo
  */
 
 #include <iostream>
@@ -97,7 +97,7 @@ void Quicksort::quicksort(std::vector<unsigned> &numVector, int p, int r) {
 	if(p < r) {
 
 		// q - piwot
-		int q = partition(numVector, p, r);
+		int q = Quicksort::partition(numVector, p, r);
 
 		// Rekurencyjne wywołanie metody
 		// quicksort(początek, piwot).
@@ -170,7 +170,7 @@ void SortCount::countSort(std::vector<unsigned> &numVector) {
 
 	// Przypisanie zmiennej [max] wartości największego elementu
 	// wektora [numVector].
-	unsigned max = findMaximum(numVector);
+	unsigned max = SortCount::findMaximum(numVector);
 
 	// Utworzenie tablicy która przechowa nasze elementy.
 	// Tablica ma [max + 1] elementów, bo maksymalny element
@@ -270,7 +270,7 @@ public:
 
 private:
 
-	// Liczba kubełków
+	// Liczba kubełków.
 	static const unsigned numOfBuckets = 10;
 
 };
@@ -280,7 +280,7 @@ private:
 void SortBucket::bucketSort(std::vector<double> &numVector) {
 
 	// Tworzenie [numOfBuckets] wektorów (naszych kubełków).
-	std::vector<double> buckets[numOfBuckets];
+	std::vector<double> buckets[SortBucket::numOfBuckets];
 
 	// Pętla układająca wszystkie elementy wektora [numVector] do odpowiednich
 	// kubełków na podstawie ich pierwszej liczbie po przecinku.
@@ -289,14 +289,14 @@ void SortBucket::bucketSort(std::vector<double> &numVector) {
 	// = floor(0.442 * 10) = floor(4.42) = 4
 	for(unsigned currentIteration = 0; currentIteration < numVector.size(); currentIteration++) {
 
-		buckets[static_cast<int> (floor(numVector[currentIteration] * numOfBuckets))]
+		buckets[static_cast<int> (floor(numVector[currentIteration] * SortBucket::numOfBuckets))]
 				.push_back(numVector[currentIteration]);
 	}
 
-	// Usunięcie już niepotrzebnych elementów wektora [numVector]
+	// Usunięcie już niepotrzebnych elementów wektora [numVector].
 	numVector.clear();
 
-	for(unsigned currentIteration = 0; currentIteration < numOfBuckets; currentIteration++) {
+	for(unsigned currentIteration = 0; currentIteration < SortBucket::numOfBuckets; currentIteration++) {
 
 		// Sortowanie kubełka o indeksie [currentIteration].
 		std::sort(buckets[currentIteration].begin(), buckets[currentIteration].end());
@@ -311,7 +311,7 @@ void SortBucket::bucketSort(std::vector<double> &numVector) {
 
 // *******************		MAIN		*******************
 
-// Główna metoda programu
+// Główna metoda programu.
 int main() {
 
 	// Instancja klasy Counter, odpowiadająca za licznie czasu.
