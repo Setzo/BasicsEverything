@@ -8,7 +8,7 @@
 
 * * *
 
-<h3>Languages, frameworks, plugins & servers used:</h3>
+<h3>Technologies used:</h3>
 
 - <h4>Java</h4>
   - <h5>Spring</h5>
