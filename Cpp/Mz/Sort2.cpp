@@ -179,13 +179,13 @@ void SortCount::countSort(std::vector<unsigned> &numVector) {
 	// w pole tmp[max], gdyby tmp miało długość = [max].
 	int tmp[max + 1];
 
-	// Wyzerowanie tmp
+	// Wyzerowanie [tmp]
 	for(unsigned currentIteration = 0; currentIteration < max + 1; currentIteration++) {
 
 		tmp[currentIteration] = 0;
 	}
 
-	// Zliczanie elementów wektora numVector do tablicy [tmp].
+	// Zliczanie elementów wektora [numVector] do tablicy [tmp].
 	for(unsigned currentIteration = 0; currentIteration < numVector.size(); currentIteration++) {
 
 		tmp[numVector[currentIteration]]++;
@@ -329,14 +329,10 @@ int main() {
 	// cnt - Counting Sort
 	// bbl - Bubble Sort
 	// bck - Bucket Sort
-	double qckSortStart;
-	double qckSortEnd;
-	double cntSortStart;
-	double cntSortEnd;
-	double bblSortStart;
-	double bblSortEnd;
-	double bckSortStart;
-	double bckSortEnd;
+	double qckSortTime;
+	double cntSortTime;
+	double bblSortTime;
+	double bckSortTime;
 
 	// Liczba elementów ciągu do wygenerowania i posortowania.
 	unsigned numElements;
@@ -371,11 +367,11 @@ int main() {
 	}
 
 	// Pobranie czasu startu, dla sortowania szybkiego.
-	qckSortStart = cnt.getCounter();
+	qckSortTime = cnt.getCounter();
 	// Wywołanie funkcji sortującej algorytmem quicksort.
 	qckSort.quicksort(numVector, 0, numVector.size() - 1);
 	// Pobranie czasu stopu, dla sortowania szybkiego.
-	qckSortEnd = cnt.getCounter();
+	qckSortTime = cnt.getCounter() - qckSortTime;
 
 	printf("\nElementy na wyjściu:\n");
 
@@ -400,11 +396,11 @@ int main() {
 	}
 
 	// Pobranie czasu startu, dla sortowania przez zliczanie.
-	cntSortStart = cnt.getCounter();
+	cntSortTime = cnt.getCounter();
 	// Wywołanie funkcji sortującej przez zliczanie.
 	cntSort.countSort(numVector);
 	// Pobranie czasu stopu, dla sortowania przez zliczanie.
-	cntSortEnd = cnt.getCounter();
+	cntSortTime = cnt.getCounter() - cntSortTime;
 
 	printf("\nElementy na wyjściu:\n");
 
@@ -429,11 +425,11 @@ int main() {
 	}
 
 	// Pobranie czasu startu, dla sortowania bąbelkowego.
-	bblSortStart = cnt.getCounter();
+	bblSortTime = cnt.getCounter();
 	// Wywołanie funkcji sortującej bąbelkowo.
 	bblSort.bubbleSort(numVector);
 	// Pobranie czasu stopu, dla sortowania bąbelkowego.
-	bblSortEnd = cnt.getCounter();
+	bblSortTime = cnt.getCounter() - bblSortTime;
 
 	printf("\nElementy na wyjściu:\n");
 
@@ -458,11 +454,11 @@ int main() {
 	}
 
 	// Pobranie czasu startu, dla sortowania kubełkowego.
-	bckSortStart = cnt.getCounter();
+	bckSortTime = cnt.getCounter();
 	// Wywołanie funkcji sortującej kubełkowo.
 	bckSort.bucketSort(numVectorBucketSort);
 	// Pobranie czasu stopu, dla sortowania kubełkowego.
-	bckSortEnd = cnt.getCounter();
+	bckSortTime = cnt.getCounter() - bckSortTime;
 
 	printf("\nElementy na wyjściu:\n");
 
@@ -480,10 +476,10 @@ int main() {
 	printf("\n\n%26s%d\n%27s\n%27s%-.10f\n%27s%-.10f\n%27s%-.10f\n%27s%-.10f\n",
 			"Liczba elementów w ciągu : ", numElements,
 			"Czasy       : ",
-			"Quicksort   : ", qckSortEnd - qckSortStart,
-			"Sort_Count  : ", cntSortEnd - cntSortStart,
-			"Sort_Bubble : ", bblSortEnd - bblSortStart,
-			"Sort_Bucket : ", bckSortEnd - bckSortStart);
+			"Quicksort   : ", qckSortTime,
+			"Sort_Count  : ", cntSortTime,
+			"Sort_Bubble : ", bblSortTime,
+			"Sort_Bucket : ", bckSortTime);
 
 	return 0;
 }
