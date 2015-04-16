@@ -1,10 +1,13 @@
 #include <iostream>
 #include <iomanip>
 #include <stdio.h>
+#include <limits.h>
 
 using namespace std;
 
 int main() {
+
+	cout << sizeof(unsigned int) << endl << sizeof(signed int) << endl << sizeof(int) << endl;
 
 	float x = 10.222222;
 	double y = 10.222222;
