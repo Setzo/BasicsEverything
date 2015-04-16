@@ -1,11 +1,13 @@
 #include <iostream>
 #include <iomanip>
 #include <stdio.h>
-#include <limits.h>
+#include "say.h"
 
 using namespace std;
 
 int main() {
+
+	sayHi();
 
 	cout << sizeof(unsigned int) << endl << sizeof(signed int) << endl << sizeof(int) << endl;
 
@@ -34,4 +36,8 @@ int main() {
 	}
 
 	return 0;
+}
+
+void sayHi() {
+	cout << "Hi" << endl;
 }
