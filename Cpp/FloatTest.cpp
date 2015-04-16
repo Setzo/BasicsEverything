@@ -27,5 +27,11 @@ int main() {
 
 	cout << setprecision(20) << scientific << z << endl;
 
+	int tab[] = {3, 3, 3, 3};
+
+	for(unsigned i = 0; i < sizeof(tab) / sizeof(int); i++) {
+		cout << tab[i] << " " << flush;
+	}
+
 	return 0;
 }
