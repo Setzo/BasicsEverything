@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="user" class="tst.User">
+		<constructor-arg value="777" name="id" index="0" type="int"></constructor-arg>
+		<constructor-arg value="Setzo" name="login" type="java.lang.String"
+			index="1">
+		</constructor-arg>
+
+		<property name="count" value="222"></property>
+
+		<property name="address" ref="address"></property>
+	</bean>
+
+	<bean id="address" class="tst.Address">
+		<constructor-arg index="0" name="address" value="Adres"></constructor-arg>
+		<constructor-arg index="1" name="something" value="Coś"></constructor-arg>
+	</bean>
+	
+</beans>
