@@ -4,10 +4,22 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 	default-init-method="init" default-destroy-method="destroy">
 
-	<bean id="user" class="tst.User" scope="singleton" init-method="onCreate"
-		destroy-method="onDestroy">
+	<bean id="user" class="tst.User" scope="singleton"
+		init-method="onCreate" destroy-method="onDestroy"
+		factory-method="getInstance">
 		<constructor-arg value="777" name="id" index="0" type="int"></constructor-arg>
 		<constructor-arg value="Setzo" name="login" type="java.lang.String"
+			index="1">
+		</constructor-arg>
+		<property name="count" value="222"></property>
+		<property name="address" ref="address"></property>
+	</bean>
+
+	<bean id="user1" class="tst.User" scope="singleton"
+		init-method="onCreate" destroy-method="onDestroy"
+		factory-method="createPerson" factory-bean="personfactory">
+		<constructor-arg value="1233" name="id" index="0" type="int"></constructor-arg>
+		<constructor-arg value="ssssss" name="login" type="java.lang.String"
 			index="1">
 		</constructor-arg>
 		<property name="count" value="222"></property>
@@ -19,4 +31,5 @@
 		<constructor-arg index="1" name="something" value="Coś"></constructor-arg>
 	</bean>
 
+	<bean id="personfactory" class="tst.PersonFactory"></bean>
 </beans>
