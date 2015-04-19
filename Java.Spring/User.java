@@ -19,9 +19,15 @@ public class User {
 		this.login = login;
 	}
 	
+	public static User getInstance(int id, String login) {
+		
+		System.out.println("getInstance();");
+		return new User(id, login);
+	}
+	
 	public void onCreate() {
 		
-		System.out.println("Created");
+		System.out.println("created" + this);
 	}
 	
 	public void onDestroy() {
