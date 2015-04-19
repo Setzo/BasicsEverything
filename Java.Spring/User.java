@@ -18,6 +18,16 @@ public class User {
 		this.id = id;
 		this.login = login;
 	}
+	
+	public void onCreate() {
+		
+		System.out.println("Created");
+	}
+	
+	public void onDestroy() {
+		
+		System.out.println("Destroyed");
+	}
 
 	public void sayHello() {
 		System.out.println("Hello!");
