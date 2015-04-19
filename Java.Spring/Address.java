@@ -27,4 +27,14 @@ public class Address {
 	public String toString() {
 		return "Address [address=" + address + ", something=" + something + "]";
 	}
+	
+	public void init() {
+		
+		System.out.println("init");
+	}
+	
+	public void destroy() {
+		
+		System.out.println("destroy");
+	}
 }
