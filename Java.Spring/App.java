@@ -13,17 +13,13 @@ public class App {
 		
 		user.sayHello();
 		
-		System.out.println(user);
-
-		Address adderss = (Address)context.getBean(tst.Address.class);
-		
-		System.out.println(adderss);
-		
 		user.setCount(45656);
 		
-		User user1 = (User)context.getBean("user");
+		System.out.println(user);
 		
-		System.out.println(user1);
+		Address address2 = (Address)context.getBean("address2");
+		
+		System.out.println(address2);
 		
 		((ClassPathXmlApplicationContext)context).close();
 	}
