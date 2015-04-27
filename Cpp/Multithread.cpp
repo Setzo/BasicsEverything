@@ -26,11 +26,11 @@ void showSyntax() {
 	std::cout << "showSyntax() quad-core" << std::endl;
 }
 
-#pragma omp parallel for
-
 void findWords(std::string &text, std::vector<std::string> &dictionary) {
 
 	std::cout << "findWords() quad-core" << std::endl;
+
+#pragma omp parallel for
 
 	for(unsigned int textId = 0; textId < text.size() - SKIP_MAX * WORD_LEN_MAX; textId++) {
 
