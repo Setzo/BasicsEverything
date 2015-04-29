@@ -34,4 +34,16 @@
 		<property name="type" value="snake"></property>
 	</bean>
 
+	<bean id="jungl" class="Jungl">
+
+
+		<property name="map">
+			<props>
+				<prop key="monkey">gorilla</prop>
+				<prop key="fxxx">Rich</prop>
+				<prop key="human">Ben</prop>
+			</props>
+		</property>
+	</bean>
+
 </beans>
