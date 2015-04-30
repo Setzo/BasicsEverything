@@ -22,7 +22,11 @@
 		autowire="constructor">
 	</bean>
 
-	<bean id="consoleWriter" class="spring.testing.ConsoleWriter">
+	<bean id="consoleWriter" class="spring.testing.ConsoleWriter"
+		primary="true">
+	</bean>
+	
+	<bean id="console2Writer" class="spring.testing.ConsoleWriter">
 	</bean>
 
 	<bean id="fileWriter" class="spring.testing.FileWriter">
