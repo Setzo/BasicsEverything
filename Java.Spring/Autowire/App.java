@@ -24,6 +24,11 @@ public class App {
 
 		loggerByConstructor.writeConsole("Hello there");
 		loggerByConstructor.writeFile("Hi again");
+		
+		LoggerByName loggerByDefault = (LoggerByName) context.getBean("loggerbydefault");
+
+		loggerByDefault.writeConsole("Hello there");
+		loggerByDefault.writeFile("Hi again");
 
 		((ClassPathXmlApplicationContext) context).close();
 	}
