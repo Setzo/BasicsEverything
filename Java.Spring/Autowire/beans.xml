@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	
+	default-autowire="byName"
+	default-autowire-candidates="*Writer">
 
 
 	<bean id="loggerbytype" class="spring.testing.LoggerByType"
@@ -12,6 +15,9 @@
 		autowire="byName">
 	</bean>
 	
+	<bean id="loggerbydefault" class="spring.testing.LoggerByName">
+	</bean>
+	
 	<bean id="loggerbyconstructor" class="spring.testing.LoggerByConstructor"
 		autowire="constructor">
 	</bean>
@@ -20,6 +26,10 @@
 	</bean>
 
 	<bean id="fileWriter" class="spring.testing.FileWriter">
+	</bean>
+	
+	<bean id="fileWriter2" class="spring.testing.FileWriter"
+		autowire-candidate="false">
 	</bean>
 
 </beans>
