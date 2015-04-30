@@ -33,6 +33,10 @@
 		<property name="name" value="Bob"></property>
 		<property name="type" value="snake"></property>
 	</bean>
+	
+	<bean id="str" class="java.lang.String">
+		<constructor-arg type="java.lang.String" index="0" value="lion"></constructor-arg>
+	</bean>
 
 	<bean id="jungl" class="Jungl">
 
@@ -44,6 +48,15 @@
 				<prop key="human">Ben</prop>
 			</props>
 		</property>
+		
+		<property name="amap">
+			<map>
+				<entry key="lin" value-ref="lion"></entry>
+				<entry key="snak" value-ref="snake"></entry>
+				<entry key-ref="str" value-ref="snake"></entry>
+			</map>
+		</property>
+		
 	</bean>
 
 </beans>
