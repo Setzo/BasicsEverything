@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="loggerbytype" class="spring.testing.LoggerByType"
+		autowire="byType">
+	</bean>
+
+	<bean id="loggerbyname" class="spring.testing.LoggerByName"
+		autowire="byName">
+	</bean>
+	
+	<bean id="loggerbyconstructor" class="spring.testing.LoggerByConstructor"
+		autowire="constructor">
+	</bean>
+
+	<bean id="consoleWriter" class="spring.testing.ConsoleWriter">
+	</bean>
+
+	<bean id="fileWriter" class="spring.testing.FileWriter">
+	</bean>
+
+</beans>
