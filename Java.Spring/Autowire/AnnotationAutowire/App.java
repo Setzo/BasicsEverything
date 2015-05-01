@@ -15,10 +15,15 @@ public class App {
 		logger.writeConsole("Hello there");
 		logger.writeFile("Hi again");
 		
-		LoggerOptional loggerOptional = (LoggerOptional) context.getBean("loggeroptional");
+		LoggerOptional loggerOptional = (LoggerOptional) context.getBean("loggerOptional");
 
 		loggerOptional.writeConsole("Hello there");
 		loggerOptional.writeFile("Hi again");
+		
+		LoggerJSR loggerJSR = (LoggerJSR) context.getBean("loggerJSR");
+
+		loggerJSR.writeConsole("Hello there");
+		loggerJSR.writeFile("Hi again");
 
 		((ClassPathXmlApplicationContext) context).close();
 	}
