@@ -24,6 +24,11 @@ public class App {
 
 		loggerJSR.writeConsole("Hello there");
 		loggerJSR.writeFile("Hi again");
+		
+		LoggerInject loggerInject = (LoggerInject) context.getBean("loggerInject");
+
+		loggerInject.writeConsole("Hello there");
+		loggerInject.writeFile("Hi again");
 
 		((ClassPathXmlApplicationContext) context).close();
 	}
