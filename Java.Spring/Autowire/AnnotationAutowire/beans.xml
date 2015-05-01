@@ -14,6 +14,9 @@
 
 	<bean id="loggerJSR" class="spring.testing.annotations.LoggerJSR">
 	</bean>
+	
+	<bean id="loggerInject" class="spring.testing.annotations.LoggerInject">
+	</bean>
 
 	<bean id="consoleWriter" class="spring.testing.annotations.ConsoleWriter">
 		<qualifier value="toConsole"></qualifier>
