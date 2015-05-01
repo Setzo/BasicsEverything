@@ -7,16 +7,17 @@ import org.springframework.stereotype.Component;
 @Component("valueContainer")
 public class ValueContainer {
 
-	private int id = 0;
+	private Integer id = 0;
 	private String value = "value";
 
 	@Autowired
-	public void setId(@Value("10") int id) {
+	public void setId(@Value("#{rng?.t?.length()}") Integer id) {
 		this.id = id;
 	}
 
+	//rng.t == rng.getT()
 	@Autowired
-	public void setValue(@Value("String") String value) {
+	public void setValue(@Value("#{'Random txt: ' + rng?.t}") String value) {
 		this.value = value;
 	}
 
