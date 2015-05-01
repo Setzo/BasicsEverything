@@ -1,19 +1,22 @@
 package spring.testing.annotations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public class LoggerOptional {
 
-	private ConsoleWriter consoleWriter;
-	private FileWriter fileWriter;
+	private LogWriter consoleWriter;
+	private LogWriter fileWriter;
 	
-	@Autowired(required=false)
-	public void setConsoleWriter(ConsoleWriter writer) {
+	@Autowired
+	@Qualifier("toConsole")
+	public void setConsoleWriter(LogWriter writer) {
 		this.consoleWriter = writer;
 	}
 
 	@Autowired
-	public void setFileWriter(FileWriter fileWriter) {
+	@Qualifier("toFile")
+	public void setFileWriter(LogWriter fileWriter) {
 		this.fileWriter = fileWriter;
 	}
 	
