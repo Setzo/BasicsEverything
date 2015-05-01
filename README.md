@@ -12,6 +12,7 @@
 
 - <h4>Java</h4>
   - <h5>Spring</h5>
+      - <h6>SPEL</h6>
   - <h5>Swing</h5>
   - <h5>Maven</h5>
   - <h5>JUnit</h5>
