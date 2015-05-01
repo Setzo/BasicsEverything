@@ -9,7 +9,10 @@
 	<bean id="logger" class="spring.testing.annotations.Logger">
 	</bean>
 
-	<bean id="loggeroptional" class="spring.testing.annotations.LoggerOptional">
+	<bean id="loggerOptional" class="spring.testing.annotations.LoggerOptional">
+	</bean>
+
+	<bean id="loggerJSR" class="spring.testing.annotations.LoggerJSR">
 	</bean>
 
 	<bean id="consoleWriter" class="spring.testing.annotations.ConsoleWriter">
