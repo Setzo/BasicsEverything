@@ -7,6 +7,7 @@ import model.dao.OfferDAO;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataAccessException;
 
 public class App {
 
@@ -16,11 +17,21 @@ public class App {
 		
 		OfferDAO offerDAO = (OfferDAO)context.getBean("offerDAO");
 		
-		List<Offer> list = offerDAO.getOffers();
-		
-		for(Offer offer : list) {
+		try {
 			
-			System.out.println(offer);
+			List<Offer> list = offerDAO.getOffers();
+			
+			for(Offer offer : list) {
+				
+				System.out.println(offer);
+			}
+			
+			System.out.println(offerDAO.getOffer(2));
+			
+		} catch (DataAccessException e) {
+			
+			System.out.println(e.getMessage());
+			System.out.println(e.getClass());
 		}
 		
 		((ClassPathXmlApplicationContext)context).close();
