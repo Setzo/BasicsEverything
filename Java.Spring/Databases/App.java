@@ -8,6 +8,7 @@ import model.dao.OfferDAO;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 
 public class App {
 
@@ -27,6 +28,18 @@ public class App {
 			}
 			
 			System.out.println(offerDAO.getOffer(2));
+			
+			MapSqlParameterSource params = new MapSqlParameterSource();
+			params.addValue("name", "liam");
+			params.addValue("id", 3);
+			
+			List<Offer> paramList = offerDAO.getOffersWithParams(params, 
+					"select * from offers where id = :id and name = :name");
+			
+			for(Offer offer : paramList) {
+				
+				System.out.println(offer);
+			}
 			
 		} catch (DataAccessException e) {
 			
