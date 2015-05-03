@@ -2,6 +2,7 @@ package model.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -14,6 +15,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Component;
 
 @Component("offerDAO")
@@ -101,11 +104,46 @@ public class OfferDAO {
 		}
 	}
 	
+	public int[] delete(int[] ids) {
+		
+		List<MapSqlParameterSource> params = new ArrayList<MapSqlParameterSource>();
+		
+		for(int i = 0; i < ids.length; i++) {
+			
+			params.add(new MapSqlParameterSource());
+			
+			params.get(i).addValue("id", ids[i]);
+		}
+		
+		return jdbc.batchUpdate("delete from offers where id = :id", params.toArray(new MapSqlParameterSource[params.size()]));
+	}
+	
 	public boolean create(Offer offer) {
 		
 		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(offer);
 		
 		return jdbc.update("insert into offers (name, email, text) values (:name, :email, :text)", params) == 1;
+	}
+	
+	public int[] create (List<Offer> offerList) {
+		
+		SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(offerList.toArray());
+		
+		return jdbc.batchUpdate("insert into offers (name, email, text) values (:name, :email, :text)", params);
+	}
+	
+	public boolean update(Offer offer) {
+		
+		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(offer);
+		
+		return jdbc.update("update offers set name = :name, email = :email, text = :text where id = :id", params) == 1;
+	}
+	
+	public int[] update (List<Offer> offerList) {
+		
+		SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(offerList.toArray());
+		
+		return jdbc.batchUpdate("update offers set name = :name, email = :email, text = :text where id = :id", params);
 	}
 
 	@Autowired
