@@ -9,7 +9,9 @@ import javax.sql.DataSource;
 import model.Offer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -78,6 +80,32 @@ public class OfferDAO {
 				return offer;
 			}
 		});
+	}
+	
+	public boolean delete(int id) {
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		
+		params.addValue("id", id);
+		
+		try {
+			
+			return jdbc.update("delete from offers where id = :id", params) == 1;
+			
+		} catch (DataAccessException e) {
+			
+			System.out.println(e.getMessage());
+			System.out.println(e.getClass());
+			
+			return false;
+		}
+	}
+	
+	public boolean create(Offer offer) {
+		
+		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(offer);
+		
+		return jdbc.update("insert into offers (name, email, text) values (:name, :email, :text)", params) == 1;
 	}
 
 	@Autowired
