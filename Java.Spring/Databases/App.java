@@ -20,6 +20,36 @@ public class App {
 		
 		try {
 			
+			//ArrayList<Offer> al = new ArrayList<Offer>();
+			
+			/*al.add(new Offer("k", "d", "a"));
+			al.add(new Offer("a", "a", "a"));
+			al.add(new Offer("c", "c", "c"));
+			
+			offerDAO.create(al);
+			*/
+			
+			/*al.add(new Offer(8, "r", "r", "r"));
+			al.add(new Offer(9, "e", "e", "e"));
+			al.add(new Offer(10, "f", "f", "f"));
+			
+			offerDAO.update(al);*/
+			
+			int[] iny = {8, 9, 10};
+			
+			offerDAO.delete(iny);
+			
+			/*
+			Offer off = offerDAO.getOffer(7);
+			System.out.println(off);
+			
+			off.setEmail("email");
+			off.setName("name");
+			off.setText("text");
+			
+			offerDAO.update(off);
+			*/
+			
 			//offerDAO.delete(7);
 			//offerDAO.create(new Offer("Seth", "unknown", "ohai!"));
 			
