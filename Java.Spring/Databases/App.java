@@ -20,6 +20,9 @@ public class App {
 		
 		try {
 			
+			//offerDAO.delete(7);
+			//offerDAO.create(new Offer("Seth", "unknown", "ohai!"));
+			
 			List<Offer> list = offerDAO.getOffers();
 			
 			for(Offer offer : list) {
