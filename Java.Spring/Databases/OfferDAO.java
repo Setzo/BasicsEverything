@@ -2,7 +2,6 @@ package model.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -106,16 +105,14 @@ public class OfferDAO {
 	
 	public int[] delete(int[] ids) {
 		
-		List<MapSqlParameterSource> params = new ArrayList<MapSqlParameterSource>();
-		
-		for(int i = 0; i < ids.length; i++) {
-			
-			params.add(new MapSqlParameterSource());
-			
-			params.get(i).addValue("id", ids[i]);
+		MapSqlParameterSource[] param = new MapSqlParameterSource[ids.length];
+
+		for (int i = 0; i < ids.length; i++) {
+
+			param[i] = new MapSqlParameterSource("id", ids[i]);
 		}
 		
-		return jdbc.batchUpdate("delete from offers where id = :id", params.toArray(new MapSqlParameterSource[params.size()]));
+		return jdbc.batchUpdate("delete from offers where id = :id", param);
 	}
 	
 	public boolean create(Offer offer) {
