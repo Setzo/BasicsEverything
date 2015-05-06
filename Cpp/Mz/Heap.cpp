@@ -2,7 +2,7 @@
  * Heap.cpp
  *
  *  Created on: 4 maj 2015
- *      Author: Setzo
+ *      Author: Wojciech Pruszak
  */
 
 #include <iostream>
