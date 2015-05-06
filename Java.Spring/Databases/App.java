@@ -20,14 +20,14 @@ public class App {
 		
 		try {
 			
-			//ArrayList<Offer> al = new ArrayList<Offer>();
+			/*List<Offer> al = new ArrayList<Offer>();
 			
-			/*al.add(new Offer("k", "d", "a"));
+			al.add(new Offer("k", "d", "a"));
 			al.add(new Offer("a", "a", "a"));
 			al.add(new Offer("c", "c", "c"));
 			
-			offerDAO.create(al);
-			*/
+			offerDAO.create(al);*/
+			
 			
 			/*al.add(new Offer(8, "r", "r", "r"));
 			al.add(new Offer(9, "e", "e", "e"));
@@ -35,9 +35,9 @@ public class App {
 			
 			offerDAO.update(al);*/
 			
-			int[] iny = {8, 9, 10};
+			//int[] iny = {11, 12, 13};
 			
-			offerDAO.delete(iny);
+			//offerDAO.delete(iny);
 			
 			/*
 			Offer off = offerDAO.getOffer(7);
