@@ -17,6 +17,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component("offerDAO")
 public class OfferDAO {
@@ -103,6 +104,7 @@ public class OfferDAO {
 		}
 	}
 	
+	@Transactional
 	public int[] delete(int[] ids) {
 		
 		MapSqlParameterSource[] param = new MapSqlParameterSource[ids.length];
@@ -122,6 +124,7 @@ public class OfferDAO {
 		return jdbc.update("insert into offers (name, email, text) values (:name, :email, :text)", params) == 1;
 	}
 	
+	@Transactional
 	public int[] create (List<Offer> offerList) {
 		
 		SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(offerList.toArray());
@@ -136,6 +139,7 @@ public class OfferDAO {
 		return jdbc.update("update offers set name = :name, email = :email, text = :text where id = :id", params) == 1;
 	}
 	
+	@Transactional
 	public int[] update (List<Offer> offerList) {
 		
 		SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(offerList.toArray());
