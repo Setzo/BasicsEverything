@@ -22,9 +22,9 @@ public class Euler24 {
 		
 		for (int i = 1; index + i < digits.length - i; i++) {
 			
-			int tp = digits[index + i];
+			int tmp = digits[index + i];
 			digits[index + i] = digits[digits.length - i];
-			digits[digits.length - i] = tp;
+			digits[digits.length - i] = tmp;
 		}
 		
 		int j = index + 1;
