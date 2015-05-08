@@ -16,39 +16,27 @@ public class Euler24 {
 		}
 	}
 	
-	@SuppressWarnings("unused")
-	private static void showDigits() {
-		
-		for(int i : digits) {
-			System.out.print(i + ", ");
-		}
-		System.out.println();
-	}
-	
 	private static void permutate() {
 		
 		int index = getIndex();
 		
-		for (int j = 1; index + j < digits.length - j; j++) {
+		for (int i = 1; index + i < digits.length - i; i++) {
 			
-			//showDigits();
-			int tp = digits[index + j];
-			digits[index + j] = digits[digits.length - j];
-			digits[digits.length - j] = tp;
-			//showDigits();
+			int tp = digits[index + i];
+			digits[index + i] = digits[digits.length - i];
+			digits[digits.length - i] = tp;
 		}
 		
 		int j = index + 1;
 		
 		while(digits[j] <= digits[index]) {
+			
 			j++;
 		}
 		
-		//showDigits();
-		int tp = digits[index];
+		int tmp = digits[index];
 		digits[index] = digits[j];
-		digits[j] = tp;
-		//showDigits();
+		digits[j] = tmp;
 	}
 	
 	private static int getIndex() {
