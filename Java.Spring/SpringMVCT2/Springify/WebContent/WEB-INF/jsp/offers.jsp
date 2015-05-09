@@ -25,6 +25,8 @@
 			<br>
 		</c:forEach>
 	</ul>
+	
+	<a href="${pageContext.request.contextPath}/">Click to return to homepage.</a>
 
 </body>
 </html>

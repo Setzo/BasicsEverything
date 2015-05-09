@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+
+.ftab {
+
+	width: 400px;
+	padding: 10px;
+	border: 1px solid black;
+}
+
+input[type=text] {
+	
+	width: 300px;
+}
+
+textarea {
+
+	width: 300px;
+	height: 250px;
+}
+
+.label {
+
+	text-align: right;
+	vertical-align: top;
+}
+
+.cntrl {
+
+	margin-left: 10px;
+}
