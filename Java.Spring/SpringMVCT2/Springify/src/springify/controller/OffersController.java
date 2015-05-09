@@ -62,6 +62,8 @@ public class OffersController {
 			return "createoffer";
 		}
 		
+		offerService.create(offer);
+		
 		model.addAttribute("title", "Offer Created");
 		
 		return "offercreated";
