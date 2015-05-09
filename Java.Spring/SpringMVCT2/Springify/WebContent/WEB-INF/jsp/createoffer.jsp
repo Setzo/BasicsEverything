@@ -3,6 +3,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,17 +16,17 @@
 </head>
 <body>
 
-	<form method="post" 
-		action="${pageContext.request.contextPath}/docreate">
+	<s:form method="post" 
+		action="${pageContext.request.contextPath}/docreate" commandName="offer">
 		
 		<table class="ftab">
-			<tr><td class="label">Name: </td><td><input class="cntrl" type="text" name="name" /></td></tr>
-			<tr><td class="label">Email: </td><td><input class="cntrl" type="text" name="email" /></td></tr>
-			<tr><td class="label">Offer: </td><td><textarea class="cntrl" rows="10" cols="100" name="text"></textarea></td></tr>
+			<tr><td class="label">Name: </td><td><s:input class="cntrl" type="text" path="name" name="name" /><br><s:errors path="name" cssClass="error"></s:errors></td></tr>
+			<tr><td class="label">Email: </td><td><s:input class="cntrl" type="text" path="email" name="email" /><br><s:errors path="email" cssClass="error"></s:errors></td></tr>
+			<tr><td class="label">Offer: </td><td><s:textarea class="cntrl" rows="10" cols="100" path="text" name="text"></s:textarea><br><s:errors path="text" cssClass="error"></s:errors></td></tr>
 			<tr><td class="label"></td><td><input class="cntrl" type="submit" value="Submit" /></td></tr>
 		</table>
 		
-	</form>
+	</s:form>
 
 </body>
 </html>
