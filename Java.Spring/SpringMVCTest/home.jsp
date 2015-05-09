@@ -20,10 +20,10 @@
 
 	<ul>
 		<c:forEach var="row" items="${rs.rows}">
-			<li>ID: ${row.id}</li>
-			<li>Name: ${row.name}</li>
-			<li>Email: ${row.email}</li>
-			<li>Text: ${row.text}</li>
+			<li>ID: <c:out value="${row.id}"/></li>
+			<li>Name: <c:out value="${row.name}"/></li>
+			<li>Email: <c:out value="${row.email}"/></li>
+			<li>Text: <c:out value="${row.text}"/></li>
 
 			<br>
 		</c:forEach>
