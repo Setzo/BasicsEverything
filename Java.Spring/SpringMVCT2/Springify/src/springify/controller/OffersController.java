@@ -1,42 +1,51 @@
 package springify.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller
+import springify.model.Offer;
+import springify.service.OfferService;
+
+@Controller("offersController")
 public class OffersController {
-
-	/*@RequestMapping("/")
-	public String showHome(HttpSession session) {
-		
-		// SESSION SCOPE
-		session.setAttribute("title", "Title");
-		session.setAttribute("text", "txt");
-		
-		return "home";
-	}*/
 	
-	/*@RequestMapping("/")
-	public ModelAndView showHome() {
-		
-		ModelAndView mv = new ModelAndView("home");
-		
-		Map<String, Object> model = mv.getModel();
-		
-		// REQUEST SCOPE
-		model.put("title", "title");
-		model.put("text", "text");
-		
-		return mv;
-	}*/
+	private OfferService offerService;
 	
-	@RequestMapping("/")
-	public String showHome(Model model) {
-
-		model.addAttribute("title", "title");
-		model.addAttribute("text", "sth");
+	@Autowired
+	public void setOfferService(OfferService offerService) {
+		this.offerService = offerService;
+	}
+	
+	@RequestMapping(value="/test", method=RequestMethod.GET)
+	public String showTest(Model model, @RequestParam("text") String text) {
 		
+		System.out.println(text);
 		return "home";
+	}
+
+	@RequestMapping("/offers")
+	public String showOffers(Model model) {
+		
+		List<Offer> offerList = offerService.getCurrent();
+
+		model.addAttribute("offerList", offerList);
+		model.addAttribute("title", "Database Content");
+		model.addAttribute("text", "Database Content:");
+		
+		return "offers";
+	}
+	
+	@RequestMapping("/createoffer")
+	public String createOffer(Model model) {
+		
+		model.addAttribute("title", "Create Offer");
+		
+		return "createoffer";
 	}
 }

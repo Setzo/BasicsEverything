@@ -11,17 +11,7 @@
 </head>
 <body>
 
-<p>
-	<a href="${pageContext.request.contextPath}/offers">
-		Database content.
-	</a>
-</p>
-
-<p>
-	<a href="${pageContext.request.contextPath}/createoffer">
-		Create offer.
-	</a>
-</p>
+Hello
 
 </body>
 </html>

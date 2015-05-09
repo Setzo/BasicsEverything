@@ -11,17 +11,20 @@
 </head>
 <body>
 
-<p>
-	<a href="${pageContext.request.contextPath}/offers">
-		Database content.
-	</a>
-</p>
+	<strong>
+		<c:out value="${text}" />
+	</strong>
 
-<p>
-	<a href="${pageContext.request.contextPath}/createoffer">
-		Create offer.
-	</a>
-</p>
+	<ul>
+		<c:forEach var="row" items="${offerList}">
+			<li>ID: <c:out value="${row.id}"/></li>
+			<li>Name: <c:out value="${row.name}"/></li>
+			<li>Email: <c:out value="${row.email}"/></li>
+			<li>Text: <c:out value="${row.text}"/></li>
+
+			<br>
+		</c:forEach>
+	</ul>
 
 </body>
 </html>

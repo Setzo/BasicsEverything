@@ -45,6 +45,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:springify/config/dao-context.xml
+			classpath:springify/config/service-context.xml
 		</param-value>
 	</context-param>
 
