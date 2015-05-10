@@ -14,9 +14,11 @@
 	
 		<aop:pointcut expression="execution(void main.SayThings.sayHi())"
 			id="aboutToSayHi" />
-		
+			
 		<aop:aspect ref="logger" id="loggerAspect">
 			<aop:before method="aboutToSayHi"
+				pointcut-ref="aboutToSayHi" />
+			<aop:after method="saidHi"
 				pointcut-ref="aboutToSayHi" />
 		</aop:aspect>
 		
