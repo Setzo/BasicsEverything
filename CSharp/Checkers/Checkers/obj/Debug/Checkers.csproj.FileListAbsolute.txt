@@ -1,0 +1,8 @@
+c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\bin\Debug\Checkers.exe
+c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\bin\Debug\Checkers.pdb
+c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug\Checkers.csprojResolveAssemblyReference.cache
+c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug\Checkers.Properties.Resources.resources
+c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug\Checkers.csproj.GenerateResource.Cache
+c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug\Checkers.exe
+c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug\Checkers.pdb
+c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug\Checkers.Form1.resources
