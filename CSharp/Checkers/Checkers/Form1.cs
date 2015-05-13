@@ -14,8 +14,6 @@ namespace Checkers
 
 		private Button[,] bTab;
 
-		private Button last = null;
-
 		private Calc cal;
 
 		public Form1()
@@ -62,7 +60,8 @@ namespace Checkers
 					{
 						if ((j % 2 == 0 && i % 2 == 0) || (j % 2 != 0 && i % 2 != 0))
 						{
-							bTab[i, j].Text = "X";
+							bTab[i, j].Text = "XX";
+							bTab[i, j].Font = new Font(bTab[i, j].Font.FontFamily, 14);
 						}
 					}
 
@@ -70,7 +69,8 @@ namespace Checkers
 					{
 						if ((j % 2 == 0 && i % 2 == 0) || (j % 2 != 0 && i % 2 != 0))
 						{
-							bTab[i, j].Text = "O";
+							bTab[i, j].Text = "OO";
+							bTab[i, j].Font = new Font(bTab[i, j].Font.FontFamily, 14);
 						}
 					}
 				}
@@ -97,7 +97,7 @@ namespace Checkers
 		private void button62_Click(object sender, EventArgs e)
 		{
 			Button btn = (Button)sender;
-			this.label1.Text = "";
+			//this.label1.Text = "";
 			cal.move(btn);
 		}
 
