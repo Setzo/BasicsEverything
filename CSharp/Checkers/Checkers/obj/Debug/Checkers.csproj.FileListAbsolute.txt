@@ -6,3 +6,7 @@ c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug
 c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug\Checkers.exe
 c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug\Checkers.pdb
 c:\users\setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug\Checkers.Form1.resources
+C:\Users\Setzo\documents\visual studio 2013\Projects\Checkers\Checkers\bin\Debug\Checkers.exe.manifest
+C:\Users\Setzo\documents\visual studio 2013\Projects\Checkers\Checkers\bin\Debug\Checkers.application
+C:\Users\Setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug\Checkers.exe.manifest
+C:\Users\Setzo\documents\visual studio 2013\Projects\Checkers\Checkers\obj\Debug\Checkers.application

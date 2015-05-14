@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -39,9 +39,17 @@ namespace Checkers
 				for (int j = 0; j < 8; j++)
 				{
 					this.highlighted[i, j] = 0;
+
+					if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
+					{
+						this.bTab[i, j].BackColor = System.Drawing.SystemColors.ActiveCaption;
+					}
+					else
+					{
+						this.bTab[i, j].BackColor = default(Color);
+					}
 				}
 			}
-
 			//this.bTab[0, 2].Font = new Font(bTab[0, 2].Font.FontFamily, 14);
 			//this.bTab[0, 1].Text = "OO";
 
@@ -170,7 +178,13 @@ namespace Checkers
 						{
 							if(this.isColliding(i, j)[0, 0] != Calc.ERROR)
 							{
-								this.bTab[i, j].BackColor = Color.Coral;
+								if (this.turn && this.isX(this.bTab[i, j])) { 
+									this.bTab[i, j].BackColor = Color.Coral;
+								}
+								else if (!this.turn && this.isO(this.bTab[i, j]))
+								{
+									this.bTab[i, j].BackColor = Color.Coral;
+								}
 								this.highlighted[i, j] = 1;
 								continue;
 							}
@@ -185,7 +199,14 @@ namespace Checkers
 								|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
 								|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
 							{
-								this.bTab[i, j].BackColor = Color.Coral;
+								if (this.turn && this.isXX(this.bTab[i, j]))
+								{
+									this.bTab[i, j].BackColor = Color.Coral;
+								}
+								else if (!this.turn && this.isOO(this.bTab[i, j]))
+								{
+									this.bTab[i, j].BackColor = Color.Coral;
+								}
 								this.highlighted[i, j] = 1;
 								continue;
 							}
