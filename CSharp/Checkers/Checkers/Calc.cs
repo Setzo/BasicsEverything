@@ -99,6 +99,7 @@ namespace Checkers
 
 		public void move(Button btn)
 		{
+
 			if ((this.last != null && !this.justMoved && this.isXSide(this.last) && this.turn)
 					|| (this.last != null && !this.justMoved && this.isOSide(this.last) && !this.turn))
 			{
@@ -143,6 +144,48 @@ namespace Checkers
 					this.justMoved = false;
 				}
 			}
+		}
+
+		public bool win()
+		{
+			bool xAlive = false;
+			bool oAlive = false;
+
+			for(int i = 0; i < 8; i++)
+			{
+				for (int j = 0; j < 8; j++)
+				{
+					if (this.isXSide(this.bTab[i, j]))
+					{
+						xAlive = true;
+					}
+
+					if (this.isOSide(this.bTab[i, j]))
+					{
+						oAlive = true;
+					}
+				}
+			}
+
+			if(!xAlive && !oAlive)
+			{
+				MessageBox.Show("Draw.");
+				return true;
+			}
+
+			if (!xAlive)
+			{
+				MessageBox.Show("Player O wins!!!");
+				return true;
+			}
+
+			if (!xAlive)
+			{
+				MessageBox.Show("Player X wins!!!");
+				return true;
+			}
+
+			return false;
 		}
 
 		private bool isQueen(Button btn)

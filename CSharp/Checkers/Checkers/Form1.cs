@@ -52,8 +52,8 @@ namespace Checkers
 			{
 				for (int j = 0; j < 8; j++)
 				{
-					bTab[i, j].Text = "";
-					bTab[i, j].Font = new Font(bTab[i, j].Font.FontFamily, 30);
+					this.bTab[i, j].Text = "";
+					this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 30);
 				}
 			}
 
@@ -63,25 +63,25 @@ namespace Checkers
 				{
 					if (j < 3)
 					{
-						if ((j % 2 == 0 && i % 2 == 0) || (j % 2 != 0 && i % 2 != 0))
+						if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
 						{
-							bTab[i, j].Text = "X";
+							this.bTab[i, j].Text = "X";
 							//bTab[i, j].Font = new Font(bTab[i, j].Font.FontFamily, 14);
 						}
 					}
 
 					if (j > 4)
 					{
-						if ((j % 2 == 0 && i % 2 == 0) || (j % 2 != 0 && i % 2 != 0))
+						if ((j % 2 != 0 && i % 2 == 0) || (j % 2 == 0 && i % 2 != 0))
 						{
-							bTab[i, j].Text = "O";
+							this.bTab[i, j].Text = "O";
 							//bTab[i, j].Font = new Font(bTab[i, j].Font.FontFamily, 14);
 						}
 					}
 				}
 			}
 
-			cal = new Calc(ref bTab);
+			cal = new Calc(ref this.bTab);
 		}
 
 		private void GetAllControl(Control c, List<Control> list)
@@ -171,6 +171,11 @@ namespace Checkers
 		{
 			Button btn = (Button)sender;
 			cal.move(btn);
+
+			if(cal.win())
+			{
+				startup();
+			}
 		}
 
 		private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
