@@ -24,6 +24,16 @@ namespace Checkers
 			this.bTab = bTab;
 			this.last = this.bTab[0, 7];
 
+			this.highlighted = new int[8, 8];
+
+			for (int i = 0; i < 8; i++)
+			{
+				for (int j = 0; j < 8; j++)
+				{
+					this.highlighted[i, j] = 0;
+				}
+			}
+
 			//this.bTab[0, 2].Font = new Font(bTab[0, 2].Font.FontFamily, 14);
 			//this.bTab[0, 1].Text = "OO";
 
@@ -34,8 +44,10 @@ namespace Checkers
 
 		private Button last = null;
 
+		private int[,] highlighted;
+
 		private bool justMoved = false;
-		private bool turn = true;
+		private bool turn = false;
 		private bool requireSwitching = true;
 
 		private bool isX(Button button)
@@ -103,7 +115,7 @@ namespace Checkers
 			if ((this.last != null && !this.justMoved && this.isXSide(this.last) && this.turn)
 					|| (this.last != null && !this.justMoved && this.isOSide(this.last) && !this.turn))
 			{
-
+				this.highlight();
 				// this.label.Text = (this.isXX(this.last) || this.isOO(this.last)) ? "True" : "False";
 
 				if (!this.isE(this.last))
@@ -135,6 +147,7 @@ namespace Checkers
 				}
 
 				this.last = btn;
+				this.highlight();
 			}
 			else
 			{
@@ -143,7 +156,80 @@ namespace Checkers
 					this.last = btn;
 					this.justMoved = false;
 				}
+				this.highlight();
 			}
+		}
+
+		public void highlight()
+		{
+				for (int i = 0; i < 8; i++)
+				{
+					for (int j = 0; j < 8; j++)
+					{
+						if (this.isX(this.bTab[i, j]))
+						{
+							if(this.isColliding(i, j)[0, 0] != Calc.ERROR)
+							{
+								this.bTab[i, j].BackColor = Color.Coral;
+								this.highlighted[i, j] = 1;
+								continue;
+							}
+						}
+
+						if(this.isXX(this.bTab[i, j]))
+						{
+							int[,,] collide = this.isCollidingQueenVersion(i, j);
+							
+							if(collide[Calc.BTT_R, 0, 0] != Calc.ERROR
+								|| collide[Calc.BTT_L, 0, 0] != Calc.ERROR
+								|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
+								|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
+							{
+								this.bTab[i, j].BackColor = Color.Coral;
+								this.highlighted[i, j] = 1;
+								continue;
+							}
+						}
+						if (this.isO(this.bTab[i, j]))
+						{
+							if (this.isColliding(i, j)[0, 0] != Calc.ERROR)
+							{
+								this.bTab[i, j].BackColor = Color.Coral;
+								this.highlighted[i, j] = 1;
+								continue;
+							}
+						}
+						if (this.isOO(this.bTab[i, j]))
+						{
+							int[, ,] collide = this.isCollidingQueenVersion(i, j);
+
+							if (collide[Calc.BTT_R, 0, 0] != Calc.ERROR
+								|| collide[Calc.BTT_L, 0, 0] != Calc.ERROR
+								|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
+								|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
+							{
+								this.bTab[i, j].BackColor = Color.Coral;
+								this.highlighted[i, j] = 1;
+								continue;
+							}
+						}
+
+						if(this.highlighted[i, j] == 1)
+						{
+							if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
+							{
+								this.bTab[i,j].BackColor = System.Drawing.SystemColors.ActiveCaption;
+							}
+							else
+							{
+								this.bTab[i,j].BackColor = default(Color);
+							}
+							this.highlighted[i, j] = 0;
+						}
+					}
+				}
+
+			return;
 		}
 
 		public bool win()
