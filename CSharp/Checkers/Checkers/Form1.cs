@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -135,8 +135,6 @@ namespace Checkers
 									sign = sign + c[j];
 								}
 								j++;
-
-								String ss = "";
 
 								if (sign.Equals("E"))
 								{
