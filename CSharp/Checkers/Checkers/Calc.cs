@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -166,7 +166,7 @@ namespace Checkers
 				{
 					for (int j = 0; j < 8; j++)
 					{
-						if (this.isX(this.bTab[i, j]))
+						if (this.isX(this.bTab[i, j]) || this.isO(this.bTab[i, j]))
 						{
 							if(this.isColliding(i, j)[0, 0] != Calc.ERROR)
 							{
@@ -176,34 +176,11 @@ namespace Checkers
 							}
 						}
 
-						if(this.isXX(this.bTab[i, j]))
+						if (this.isXX(this.bTab[i, j]) || this.isOO(this.bTab[i, j]))
 						{
 							int[,,] collide = this.isCollidingQueenVersion(i, j);
 							
 							if(collide[Calc.BTT_R, 0, 0] != Calc.ERROR
-								|| collide[Calc.BTT_L, 0, 0] != Calc.ERROR
-								|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
-								|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
-							{
-								this.bTab[i, j].BackColor = Color.Coral;
-								this.highlighted[i, j] = 1;
-								continue;
-							}
-						}
-						if (this.isO(this.bTab[i, j]))
-						{
-							if (this.isColliding(i, j)[0, 0] != Calc.ERROR)
-							{
-								this.bTab[i, j].BackColor = Color.Coral;
-								this.highlighted[i, j] = 1;
-								continue;
-							}
-						}
-						if (this.isOO(this.bTab[i, j]))
-						{
-							int[, ,] collide = this.isCollidingQueenVersion(i, j);
-
-							if (collide[Calc.BTT_R, 0, 0] != Calc.ERROR
 								|| collide[Calc.BTT_L, 0, 0] != Calc.ERROR
 								|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
 								|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
