@@ -17,6 +17,14 @@ namespace Checkers
 		public const int UPP_R = 2;
 		public const int UPP_L = 3;
 
+		private Button last = null;
+
+		private int[,] highlighted;
+
+		private bool justMoved = false;
+		private bool turn = false;
+		private bool requireSwitching = true;
+
 		private Button[,] bTab;
 
 		public Calc(ref Button[,] bTab)
@@ -41,14 +49,6 @@ namespace Checkers
 			//this.bTab[4, 4].Text = "XX";
 			//this.bTab[4, 4].Font = new Font(this.bTab[4, 4].Font.FontFamily, 14);
 		}
-
-		private Button last = null;
-
-		private int[,] highlighted;
-
-		private bool justMoved = false;
-		private bool turn = false;
-		private bool requireSwitching = true;
 
 		private bool isX(Button button)
 		{
