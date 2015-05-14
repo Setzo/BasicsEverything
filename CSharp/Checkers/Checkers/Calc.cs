@@ -12,14 +12,15 @@ namespace Checkers
 	public class Calc
 	{
 		public const int ERROR = 100;
-
-		private Label label;
+		public const int BTT_R = 0;
+		public const int BTT_L = 1;
+		public const int UPP_R = 2;
+		public const int UPP_L = 3;
 
 		private Button[,] bTab;
 
-		public Calc(ref Button[,] bTab, ref Label label)
+		public Calc(ref Button[,] bTab)
 		{
-			this.label = label;
 			this.bTab = bTab;
 			this.last = this.bTab[0, 7];
 
@@ -36,13 +37,6 @@ namespace Checkers
 		private bool justMoved = false;
 		private bool turn = true;
 		private bool requireSwitching = true;
-		private bool xCollide = false;
-		private bool oCollide = false;
-
-		private bool upperRight = false;
-		private bool upperLeft = false;
-		private bool bottomRight = false;
-		private bool bottomLeft = false;
 
 		private bool isX(Button button)
 		{
@@ -69,6 +63,21 @@ namespace Checkers
 			return button.Text.Equals("OO");
 		}
 
+		private bool isOSide(Button button)
+		{
+			return this.isO(button) || this.isOO(button);
+		}
+
+		private bool isXSide(Button button)
+		{
+			return this.isX(button) || this.isXX(button);
+		}
+
+		private bool isP(Button button)
+		{
+			return this.isXSide(button) || this.isOSide(button);
+		}
+
 		private int[] getCoordinates(Button b)
 		{
 			for (int i = 0; i < 8; i++)
@@ -90,8 +99,8 @@ namespace Checkers
 
 		public void move(Button btn)
 		{
-			if ((this.last != null && !this.justMoved && (this.isX(this.last) || this.isXX(this.last)) && this.turn)
-					|| (this.last != null && !this.justMoved && (this.isO(this.last) || this.isOO(this.last)) && !this.turn))
+			if ((this.last != null && !this.justMoved && this.isXSide(this.last) && this.turn)
+					|| (this.last != null && !this.justMoved && this.isOSide(this.last) && !this.turn))
 			{
 
 				// this.label.Text = (this.isXX(this.last) || this.isOO(this.last)) ? "True" : "False";
@@ -128,7 +137,7 @@ namespace Checkers
 			}
 			else
 			{
-				if (this.isX(btn) || this.isO(btn) || this.isXX(btn) || this.isOO(btn))
+				if (this.isP(btn))
 				{
 					this.last = btn;
 					this.justMoved = false;
@@ -171,26 +180,26 @@ namespace Checkers
 								return true;
 							}
 						}
-						if (this.isXX(this.bTab[i, j]))
+
+						if(this.isXX(this.bTab[i, j]))
 						{
-							this.xCollide = false;
-
-							this.upperLeftCorner(i, j, isX);
-							this.upperRightCorner(i, j, isX);
-							this.bottomLeftCorner(i, j, isX);
-							this.bottomRightCorner(i, j, isX);
-
-							if (this.xCollide)
+							int[,,] collide = this.isCollidingQueenVersion(i, j);
+							
+							if(collide[Calc.BTT_R, 0, 0] != Calc.ERROR
+								|| collide[Calc.BTT_L, 0, 0] != Calc.ERROR
+								|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
+								|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
 							{
-								this.xCollide = false;
 								return true;
 							}
 						}
+
+
 					}
 				}
 			}
 
-			else if(!isX)
+			else
 			{
 				for (int i = 0; i < 8; i++)
 				{
@@ -205,17 +214,13 @@ namespace Checkers
 						}
 						if (this.isOO(this.bTab[i, j]))
 						{
-							this.xCollide = false;
-							this.oCollide = false;
+							int[, ,] collide = this.isCollidingQueenVersion(i, j);
 
-							this.upperLeftCorner(i, j, isX);
-							this.upperRightCorner(i, j, isX);
-							this.bottomLeftCorner(i, j, isX);
-							this.bottomRightCorner(i, j, isX);
-
-							if (this.oCollide)
+							if (collide[Calc.BTT_R, 0, 0] != Calc.ERROR
+								|| collide[Calc.BTT_L, 0, 0] != Calc.ERROR
+								|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
+								|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
 							{
-								this.oCollide = false;
 								return true;
 							}
 						}
@@ -224,6 +229,182 @@ namespace Checkers
 			}
 
 			return false;
+		}
+
+		private int[,,] isCollidingQueenVersion(int x, int y)
+		{
+			int[,,] collide = new int[4, 7, 2];
+
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 7; j++)
+				{
+					collide[i, j, 0] = Calc.ERROR;
+				}
+			}
+
+			bool isXX = this.isXX(this.bTab[x, y]);
+
+			bool bottomR = x == 7 || y == 7 ? false : true;
+			bool bottomL = x == 0 || y == 7 ? false : true;
+			bool upperR = x == 7 || y == 0 ? false : true;
+			bool upperL = x == 0 || y == 0 ? false : true;
+
+			bool bottomRO = false;
+			bool bottomLO = false;
+			bool upperRO = false;
+			bool upperLO = false;
+
+			int pdx = x;
+			int pdy = y;
+
+			int mdx = x;
+			int mdy = y;
+
+			int cntBTT_R = 0;
+			int cntBTT_L = 0;
+			int cntUPP_R = 0;
+			int cntUPP_L = 0;
+
+			while (pdx <= 7 || pdy <= 7 || mdy >= 0 || mdx >=0) {
+				pdx++;
+				pdy++;
+
+				mdy--;
+				mdx--;
+
+				// ****************** BOTTOM RIGHT ******************
+				if(bottomR)
+				{
+					if(pdx <= 7 && pdy <= 7)
+					{
+						if ((this.isXSide(this.bTab[pdx, pdy]) && isXX) || (this.isOSide(this.bTab[pdx, pdy]) && !isXX))
+						{
+							bottomR = false;
+						}
+						else if ((this.isOSide(this.bTab[pdx, pdy]) && isXX) || (this.isXSide(this.bTab[pdx, pdy]) && !isXX))
+						{
+							if (bottomRO)
+							{
+								bottomR = false;
+							}
+							bottomRO = true;
+
+						}
+						else if(bottomRO && this.isE(this.bTab[pdx, pdy]))
+						{
+							collide[Calc.BTT_R, cntBTT_R, 0] = pdx;
+							collide[Calc.BTT_R, cntBTT_R, 1] = pdy;
+							cntBTT_R++;
+						}
+					}
+					else
+					{
+						bottomR = false;
+					}
+				}
+
+				// ****************** BOTTOM LEFT ******************
+				if (bottomL)
+				{
+					if (mdx >= 0 && pdy <= 7)
+					{
+						if ((this.isXSide(this.bTab[mdx, pdy]) && isXX) || (this.isOSide(this.bTab[mdx, pdy]) && !isXX))
+						{
+							bottomL = false;
+						}
+						else if ((this.isOSide(this.bTab[mdx, pdy]) && isXX) || (this.isXSide(this.bTab[mdx, pdy]) && !isXX))
+						{
+							if (bottomLO)
+							{
+								bottomL = false;
+							}
+
+							bottomLO = true;
+						}
+						else if (bottomLO && this.isE(this.bTab[mdx, pdy]))
+						{
+							collide[Calc.BTT_L, cntBTT_L, 0] = mdx;
+							collide[Calc.BTT_L, cntBTT_L, 1] = pdy;
+							cntBTT_L++;
+						}
+					}
+					else
+					{
+						bottomL = false;
+					}
+				}
+
+				// ****************** UPPER RIGHT ******************
+				if (upperR)
+				{
+					if (pdx <= 7 && mdy >= 0)
+					{
+						if ((this.isXSide(this.bTab[pdx, mdy]) && isXX) || (this.isOSide(this.bTab[pdx, mdy]) && !isXX))
+						{
+							upperR = false;
+						}
+						else if ((this.isOSide(this.bTab[pdx, mdy]) && isXX) || (this.isXSide(this.bTab[pdx, mdy]) && !isXX))
+						{
+							if (upperRO)
+							{
+								upperR = false;
+							}
+
+							upperRO = true;
+						}
+						else if (upperRO && this.isE(this.bTab[pdx, mdy]))
+						{
+							collide[Calc.UPP_R, cntUPP_R, 0] = pdx;
+							collide[Calc.UPP_R, cntUPP_R, 1] = mdy;
+							cntUPP_R++;
+						}
+					}
+					else
+					{
+						upperR = false;
+					}
+				}
+
+				// ****************** UPPER LEFT ******************
+				if (upperL)
+				{
+					if (mdx >= 0 && mdy >= 0)
+					{
+						if (!isXX)
+						{
+							//this.label.Text = this.label.Text + String.Format(" {0} {1} ", mdx, mdy);
+						}
+						if ((this.isXSide(this.bTab[mdx, mdy]) && isXX) || (this.isOSide(this.bTab[mdx, mdy]) && !isXX))
+						{
+							upperL = false;
+						}	
+						if ((this.isOSide(this.bTab[mdx, mdy]) && isXX) || (this.isXSide(this.bTab[mdx, mdy]) && !isXX))
+						{
+							if (upperLO)
+							{
+								upperL = false;
+							}
+
+							upperLO = true;
+						}
+						else if (upperLO && this.isE(this.bTab[mdx, mdy]))
+						{
+							//this.label.Text = this.label.Text + String.Format(" {0} {1} ", mdx, mdy);
+							collide[Calc.UPP_L, cntUPP_L, 0] = mdx;
+							collide[Calc.UPP_L, cntUPP_L, 1] = mdy;
+							cntUPP_L++;
+						}
+					}
+					else
+					{
+						upperL = false;
+					}
+				}
+
+			}
+
+			return collide;
 		}
 
 		private int[,] isColliding(int lx, int ly)
@@ -358,257 +539,43 @@ namespace Checkers
 			{
 				lx = lx < x ? lx + 1 : lx - 1;
 				ly = ly < y ? ly + 1 : ly - 1;
-
 				this.bTab[lx, ly].Text = "";
 			}
 		}
 
-		private int[,] bottomRightCorner(int x, int y, bool isXX)
+		private bool clear(int x, int y, int lx, int ly)
 		{
-			int[,] tab = new int[7,2];
-
-			for (int i = 0; i < 7; i++)
+			if (x == lx || y == ly)
 			{
-				for (int j = 0; j < 2; j++)
-				{
-					tab[i, j] = Calc.ERROR;
-				}
+				return false;
 			}
 
-			bool obstacle = false;
-
-			int cnt = 0;
-			x++;
-			y++;
-
-			while (x <= 7 && y <= 7)
+			if(!this.isE(this.bTab[x, y]))
 			{
-				if (!this.isE(this.bTab[x, y]))
-				{
-					if (obstacle)
-					{
-						return tab;
-					}
-
-					if ((isXX && (this.isO(this.bTab[x, y]) || this.isOO(this.bTab[x, y])))
-							|| (!isXX && (this.isX(this.bTab[x, y]) || this.isXX(this.bTab[x, y]))))
-					{
-						obstacle = true;
-					}
-					else
-					{
-						return tab;
-					}
-
-				}
-
-				if (obstacle)
-				{
-					if(isXX)
-					{
-						this.xCollide = true;
-					}
-					else
-					{
-						this.oCollide = true;
-					}
-				}
-
-				tab[cnt, 0] = x;
-				tab[cnt, 1] = y;
-				cnt++;
-
-				x++;
-				y++;
+				return false;
 			}
 
-			return tab;
-		}
+			int maxX = Math.Max(x, lx);
+			int minX = Math.Min(x, lx);
 
-		private int[,] bottomLeftCorner(int x, int y, bool isXX)
-		{
-			int[,] tab = new int[7, 2];
+			int maxY = Math.Max(y, ly);
+			int minY = Math.Min(y, ly);
 
-			for (int i = 0; i < 7; i++)
+			minX++;
+			minY++;
+
+			while(minX != maxX && minY != maxY)
 			{
-				for (int j = 0; j < 2; j++)
+				if (!this.isE(this.bTab[minX, minY]))
 				{
-					tab[i, j] = Calc.ERROR;
+					return false;
 				}
+
+				minX++;
+				minY++;
 			}
 
-			bool obstacle = false;
-
-			int cnt = 0;
-			x--;
-			y++;
-
-			while (x >= 0 && y <= 7)
-			{
-				if (!this.isE(this.bTab[x, y]))
-				{
-					if (obstacle)
-					{
-						return tab;
-					}
-
-					if ((isXX && (this.isO(this.bTab[x, y]) || this.isOO(this.bTab[x, y])))
-							|| (!isXX && (this.isX(this.bTab[x, y]) || this.isXX(this.bTab[x, y]))))
-					{
-						obstacle = true;
-					}
-					else
-					{
-						return tab;
-					}
-
-				}
-
-				if (obstacle)
-				{
-					if (isXX)
-					{
-						this.xCollide = true;
-					}
-					else
-					{
-						this.oCollide = true;
-					}
-				}
-
-				tab[cnt, 0] = x;
-				tab[cnt, 1] = y;
-				cnt++;
-
-				x--;
-				y++;
-			}
-
-			return tab;
-		}
-
-		private int[,] upperLeftCorner(int x, int y, bool isXX)
-		{
-			int[,] tab = new int[7, 2];
-
-			for (int i = 0; i < 7; i++)
-			{
-				for (int j = 0; j < 2; j++)
-				{
-					tab[i, j] = Calc.ERROR;
-				}
-			}
-
-			bool obstacle = false;
-
-			int cnt = 0;
-			x--;
-			y--;
-
-			while (x >= 0 && y >= 0)
-			{
-				if (!this.isE(this.bTab[x, y]))
-				{
-					if (obstacle)
-					{
-						return tab;
-					}
-
-					if ((isXX && (this.isO(this.bTab[x, y]) || this.isOO(this.bTab[x, y])))
-							|| (!isXX && (this.isX(this.bTab[x, y]) || this.isXX(this.bTab[x, y]))))
-					{
-						obstacle = true;
-					}
-					else
-					{
-						return tab;
-					}
-
-				}
-
-				if (obstacle)
-				{
-					if (isXX)
-					{
-						this.xCollide = true;
-					}
-					else
-					{
-						this.oCollide = true;
-					}
-				}
-
-				tab[cnt, 0] = x;
-				tab[cnt, 1] = y;
-				cnt++;
-
-				x--;
-				y--;
-			}
-
-			return tab;
-		}
-
-		private int[,] upperRightCorner(int x, int y, bool isXX)
-		{
-			int[,] tab = new int[7, 2];
-
-			for (int i = 0; i < 7; i++)
-			{
-				for (int j = 0; j < 2; j++)
-				{
-					tab[i, j] = Calc.ERROR;
-				}
-			}
-
-			bool obstacle = false;
-
-			int cnt = 0;
-			x++;
-			y--;
-
-			while (x <= 7 && y >= 0)
-			{
-				if (!this.isE(this.bTab[x, y]))
-				{
-					if (obstacle)
-					{
-						return tab;
-					}
-
-					if ((isXX && (this.isO(this.bTab[x, y]) || this.isOO(this.bTab[x, y])))
-							|| (!isXX && (this.isX(this.bTab[x, y]) || this.isXX(this.bTab[x, y]))))
-					{
-						obstacle = true;
-					}
-					else
-					{
-						return tab;
-					}
-
-				}
-
-				if (obstacle)
-				{
-					if (isXX)
-					{
-						this.xCollide = true;
-					}
-					else
-					{
-						this.oCollide = true;
-					}
-				}
-
-				tab[cnt, 0] = x;
-				tab[cnt, 1] = y;
-				cnt++;
-
-				x++;
-				y--;
-			}
-
-			return tab;
+			return true;
 		}
 
 		private bool isMoveValidQueenVersion(Button btn, int x, int y, int lx, int ly)
@@ -618,86 +585,54 @@ namespace Checkers
 				return false;
 			}
 
-			if(this.onSegment(x, y, lx, ly) && !isCollideAffecting(this.isXX(this.last)))
+			bool coll = this.isCollideAffecting(this.isXSide(this.last));
+
+			if(!coll)
 			{
-
-				int[,] toGo = new int [7, 2];
-
-				if (x > lx && y > ly)
+				if(this.onSegment(x, y, lx, ly))
 				{
-					toGo = this.bottomRightCorner(lx, ly, this.isXX(this.last));
-				}
-				if (x > lx && y < ly)
-				{
-					toGo = this.upperRightCorner(lx, ly, this.isXX(this.last));
-				}
-				if (x < lx && y > ly)
-				{
-					toGo = this.bottomLeftCorner(lx, ly, this.isXX(this.last));
-				}
-				if (x < lx && y < ly)
-				{
-					toGo = this.upperLeftCorner(lx, ly, this.isXX(this.last));
-				}
-
-				for(int i = 0; i < 7; i++)
-				{
-					if(toGo[i, 0] == Calc.ERROR)
+					if(clear(x, y, lx, ly))
 					{
-						break;
-					}
-
-					if(toGo[i, 0] == x && toGo[i, 1] == y)
-					{
-						this.batchRemove(x, y, lx, ly);
-						this.requireSwitching = false;
+						this.requireSwitching = true;
 						return true;
 					}
 				}
 			}
 
-			else if (this.onSegment(x, y, lx, ly) && isCollideAffecting(this.isXX(this.last)))
+			if(coll)
 			{
-				//this.label.Text = "ss";
-				
-				int[,] toGo = new int[7, 2];
+				int[,,] collide = this.isCollidingQueenVersion(lx, ly);
 
-				if (x > lx && y > ly)
+				for(int i = 0; i < 4; i++)
 				{
-					toGo = this.bottomRightCorner(lx, ly, this.isXX(this.last));
-				}
-				if (x > lx && y < ly)
-				{
-					toGo = this.upperRightCorner(lx, ly, this.isXX(this.last));
-				}
-				if (x < lx && y > ly)
-				{
-					toGo = this.bottomLeftCorner(lx, ly, this.isXX(this.last));
-				}
-				if (x < lx && y < ly)
-				{
-					toGo = this.upperLeftCorner(lx, ly, this.isXX(this.last));
-				}
-
-				bool after = false;
-
-				for (int i = 1; i < 7; i++)
-				{
-					if (toGo[i, 0] == Calc.ERROR)
+					for(int j = 0; j < 7; j++)
 					{
-						break;
-					}
+						if(collide[i, j, 0] == Calc.ERROR)
+						{
+							break;
+						}
 
-					if (Math.Abs(toGo[i, 0] - toGo[i - 1, 0]) != 1 || Math.Abs(toGo[i, 1] - toGo[i - 1, 1]) != 1)
-					{
-						after = true;
-					}
+						if(collide[i, j, 0] == x && collide[i, j, 1] == y)
+						{
+							String tmp = this.bTab[lx, ly].Text;
+							this.batchRemove(x, y, lx, ly);
+							this.bTab[x, y].Text = tmp;
 
-					if (toGo[i, 0] == x && toGo[i, 1] == y && after)
-					{
-						this.batchRemove(x, y, lx, ly);
-						this.requireSwitching = false;
-						return true;
+							if (this.isCollidingQueenVersion(x, y)[0, 0, 0] != Calc.ERROR
+									|| this.isCollidingQueenVersion(x, y)[1, 0, 0] != Calc.ERROR
+									|| this.isCollidingQueenVersion(x, y)[2, 0, 0] != Calc.ERROR
+									|| this.isCollidingQueenVersion(x, y)[3, 0, 0] != Calc.ERROR)
+							{
+								this.requireSwitching = false;
+
+								this.bTab[x, y].Text = tmp;
+								return true;
+							}
+
+							this.bTab[x, y].Text = tmp;
+							this.requireSwitching = true;
+							return true;
+						}
 					}
 				}
 			}
@@ -717,13 +652,12 @@ namespace Checkers
 
 			if(this.isXX(this.last) || this.isOO(this.last))
 			{
-				// this.label.Text = "ssss";
 				return isMoveValidQueenVersion(btn, x, y, lx, ly);
 			}
 
 			int[,] collide = this.isColliding(lx, ly);
 
-			if (collide[0, 0] == Calc.ERROR && !this.isCollideAffecting(this.isX(this.last)))
+			if (collide[0, 0] == Calc.ERROR && !this.isCollideAffecting(this.isXSide(this.last)))
 			{
 			
 				if (this.isX(this.last))
