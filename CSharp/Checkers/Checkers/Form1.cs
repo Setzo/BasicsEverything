@@ -15,13 +15,16 @@ namespace Checkers
 
 		private Button[,] bTab;
 
+		private bool xCheat = false;
+		private bool oCheat = false;
+
 		private Calc cal;
 
 		public Form1()
 		{
 			InitializeComponent();
 
-			bTab = new Button[8, 8];
+			this.bTab = new Button[8, 8];
 
 			List<Control> list = new List<Control>();
 
@@ -38,12 +41,14 @@ namespace Checkers
 						int y = (int)char.GetNumericValue(b.Name[b.Name.Length - 1]);
 						int x = (int)char.GetNumericValue(b.Name[b.Name.Length - 2]);
 
-						bTab[x, y] = b;
+						this.bTab[x, y] = b;
 					}
 				}
 			}
 
-			startup();
+			this.label.Font = new Font(this.label.Font.FontFamily, 10);
+
+			this.startup();
 		}
 
 		private void startup()
@@ -53,7 +58,8 @@ namespace Checkers
 				for (int j = 0; j < 8; j++)
 				{
 					this.bTab[i, j].Text = "";
-					this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 30);
+					this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 100);
+					this.bTab[i, j].Image = default(Image);
 				}
 			}
 
@@ -65,8 +71,17 @@ namespace Checkers
 					{
 						if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
 						{
-							this.bTab[i, j].Text = "X";
-							//this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 14);
+							if (!this.xCheat)
+							{
+								this.bTab[i, j].Text = "X";
+								this.bTab[i, j].Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\blackPawn.png");
+								//this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 14);
+							}
+							else
+							{
+								this.bTab[i, j].Text = "XX";
+								this.bTab[i, j].Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\blackQueen.png");
+							}
 						}
 					}
 
@@ -74,14 +89,23 @@ namespace Checkers
 					{
 						if ((j % 2 != 0 && i % 2 == 0) || (j % 2 == 0 && i % 2 != 0))
 						{
-							this.bTab[i, j].Text = "O";
-							//this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 14);
+							if (!this.oCheat)
+							{
+								this.bTab[i, j].Text = "O";
+								this.bTab[i, j].Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\redPawn.png");
+								//this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 14);
+							}
+							else
+							{
+								this.bTab[i, j].Text = "OO";
+								this.bTab[i, j].Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\redQueen.png");
+							}
 						}
 					}
 				}
 			}
 
-			cal = new Calc(ref this.bTab);
+			cal = new Calc(ref this.bTab, ref this.label);
 		}
 
 		private void GetAllControl(Control c, List<Control> list)
@@ -90,8 +114,9 @@ namespace Checkers
 			{
 				list.Add(control);
 
-				if (control.GetType() == typeof(Panel))
+				if (control.GetType() == typeof(Panel)) {
 					GetAllControl(control, list);
+				}
 			}
 		}
 
@@ -144,13 +169,25 @@ namespace Checkers
 							}
 						}
 
+						String cx = sr.ReadLine();
+						
+						if(cx[0].ToString().Equals("t"))
+						{
+							this.cal.setTurn(true);
+						}
+
+						else
+						{
+							this.cal.setTurn(false);
+						}
+
 						for (int i = 0; i < 8; i++)
 						{
 							for (int j = 0; j < 8; j++)
 							{
 								if (this.bTab[i, j].Text.Equals("XX") || this.bTab[i, j].Text.Equals("OO"))
 								{
-									bTab[i, j].Font = new Font(bTab[i, j].Font.FontFamily, 14);
+									this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 14);
 								}
 							}
 						}
@@ -167,12 +204,12 @@ namespace Checkers
 
 		private void button62_Click(object sender, EventArgs e)
 		{
-			Button btn = (Button)sender;
-			cal.move(btn);
+			this.cal.move((Button)sender);
+			this.cal.updateLabel();
 
-			if(cal.win())
+			if(this.cal.win())
 			{
-				startup();
+				this.startup();
 			}
 		}
 
@@ -224,6 +261,15 @@ namespace Checkers
 						sw.Write("\n");
 					}
 
+					if (cal.getTurn())
+					{
+						sw.Write("t");
+					}
+					else
+					{
+						sw.Write("f");
+					}
+
 					sw.Close();
 				}
 			}
@@ -237,6 +283,18 @@ namespace Checkers
 		private void authorsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("Created by :");
+		}
+
+		private void bluePlayerCheatToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.oCheat = !this.oCheat;
+			this.startup();
+		}
+
+		private void blackPlayerCheatToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.xCheat = !this.xCheat;
+			this.startup();
 		}
 	}
 }

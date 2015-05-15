@@ -19,6 +19,8 @@ namespace Checkers
 
 		private Button last = null;
 
+		private Label label;
+
 		private int[,] highlighted;
 
 		private bool justMoved = false;
@@ -27,9 +29,10 @@ namespace Checkers
 
 		private Button[,] bTab;
 
-		public Calc(ref Button[,] bTab)
+		public Calc(ref Button[,] bTab, ref Label label)
 		{
 			this.bTab = bTab;
+			this.label = label;
 			this.last = this.bTab[0, 7];
 
 			this.highlighted = new int[8, 8];
@@ -42,7 +45,7 @@ namespace Checkers
 
 					if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
 					{
-						this.bTab[i, j].BackColor = System.Drawing.SystemColors.ActiveCaption;
+						this.bTab[i, j].BackColor = Color.Silver;
 					}
 					else
 					{
@@ -50,9 +53,11 @@ namespace Checkers
 					}
 				}
 			}
+
+			this.updateLabel();
 			//this.bTab[0, 2].Font = new Font(bTab[0, 2].Font.FontFamily, 14);
 			//this.bTab[0, 1].Text = "OO";
-
+			//this.bTab[0, 1].Image = default(Image);
 			//this.label.Text = bTab[0, 0].Font.Size.ToString();		// 30
 			//this.bTab[4, 4].Text = "XX";
 			//this.bTab[4, 4].Font = new Font(this.bTab[4, 4].Font.FontFamily, 14);
@@ -98,6 +103,16 @@ namespace Checkers
 			return this.isXSide(button) || this.isOSide(button);
 		}
 
+		public bool getTurn()
+		{
+			return this.turn;
+		}
+
+		public void setTurn(bool turn)
+		{
+			this.turn = turn;
+		}
+
 		private int[] getCoordinates(Button b)
 		{
 			for (int i = 0; i < 8; i++)
@@ -131,10 +146,12 @@ namespace Checkers
 					if (this.isMoveValid(btn))
 					{
 						btn.Text = this.last.Text;
-						Font fnt = new Font(btn.Font.FontFamily, btn.Font.Size);
-						btn.Font = new Font(this.last.Font.FontFamily, this.last.Font.Size);
+						btn.Image = this.last.Image;
+						//Font fnt = new Font(btn.Font.FontFamily, btn.Font.Size);
+						//btn.Font = new Font(this.last.Font.FontFamily, this.last.Font.Size);
 						this.last.Text = "";
-						this.last.Font = fnt;
+						//this.last.Font = fnt;
+						this.last.Image = default(Image);
 						this.justMoved = true;
 						this.turn = this.requireSwitching ? !this.turn : this.turn;
 
@@ -142,13 +159,15 @@ namespace Checkers
 						{
 							if(this.isX(btn))
 							{
-								btn.Font = new Font(btn.Font.FontFamily, 14);
+								//btn.Font = new Font(btn.Font.FontFamily, 14);
 								btn.Text = "XX";
+								btn.Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\blackQueen.png");
 							}
 							else
 							{
-								btn.Font = new Font(btn.Font.FontFamily, 14);
+								//btn.Font = new Font(btn.Font.FontFamily, 14);
 								btn.Text = "OO";
+								btn.Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\redQueen.png");
 							}
 						}
 					}
@@ -168,64 +187,77 @@ namespace Checkers
 			}
 		}
 
+		public void updateLabel()
+		{
+			if(this.turn)
+			{
+				this.label.Text = "Black Player turn.";
+			}
+			else
+			{
+				this.label.Text = "Red Player turn.";
+			}
+		}
+
 		public void highlight()
 		{
-				for (int i = 0; i < 8; i++)
+
+			for (int i = 0; i < 8; i++)
+			{
+				for (int j = 0; j < 8; j++)
 				{
-					for (int j = 0; j < 8; j++)
+					if (this.isX(this.bTab[i, j]) || this.isO(this.bTab[i, j]))
 					{
-						if (this.isX(this.bTab[i, j]) || this.isO(this.bTab[i, j]))
+						if(this.isColliding(i, j)[0, 0] != Calc.ERROR)
 						{
-							if(this.isColliding(i, j)[0, 0] != Calc.ERROR)
-							{
-								if (this.turn && this.isX(this.bTab[i, j])) { 
-									this.bTab[i, j].BackColor = Color.Coral;
-								}
-								else if (!this.turn && this.isO(this.bTab[i, j]))
-								{
-									this.bTab[i, j].BackColor = Color.Coral;
-								}
-								this.highlighted[i, j] = 1;
-								continue;
+							if (this.turn && this.isX(this.bTab[i, j])) { 
+								this.bTab[i, j].BackColor = Color.Coral;
 							}
-						}
-
-						if (this.isXX(this.bTab[i, j]) || this.isOO(this.bTab[i, j]))
-						{
-							int[,,] collide = this.isCollidingQueenVersion(i, j);
-							
-							if(collide[Calc.BTT_R, 0, 0] != Calc.ERROR
-								|| collide[Calc.BTT_L, 0, 0] != Calc.ERROR
-								|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
-								|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
+							else if (!this.turn && this.isO(this.bTab[i, j]))
 							{
-								if (this.turn && this.isXX(this.bTab[i, j]))
-								{
-									this.bTab[i, j].BackColor = Color.Coral;
-								}
-								else if (!this.turn && this.isOO(this.bTab[i, j]))
-								{
-									this.bTab[i, j].BackColor = Color.Coral;
-								}
-								this.highlighted[i, j] = 1;
-								continue;
+								this.bTab[i, j].BackColor = Color.Coral;
 							}
-						}
-
-						if(this.highlighted[i, j] == 1)
-						{
-							if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
-							{
-								this.bTab[i,j].BackColor = System.Drawing.SystemColors.ActiveCaption;
-							}
-							else
-							{
-								this.bTab[i,j].BackColor = default(Color);
-							}
-							this.highlighted[i, j] = 0;
+							this.highlighted[i, j] = 1;
+							continue;
 						}
 					}
+
+					if (this.isXX(this.bTab[i, j]) || this.isOO(this.bTab[i, j]))
+					{
+						int[,,] collide = this.isCollidingQueenVersion(i, j);
+							
+						if(collide[Calc.BTT_R, 0, 0] != Calc.ERROR
+							|| collide[Calc.BTT_L, 0, 0] != Calc.ERROR
+							|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
+							|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
+						{
+							if (this.turn && this.isXX(this.bTab[i, j]))
+							{
+								this.bTab[i, j].BackColor = Color.Coral;
+							}
+							else if (!this.turn && this.isOO(this.bTab[i, j]))
+							{
+								this.bTab[i, j].BackColor = Color.Coral;
+							}
+							this.highlighted[i, j] = 1;
+							continue;
+						}
+					}
+
+					if(this.highlighted[i, j] == 1)
+					{
+						if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
+						{
+							this.bTab[i,j].BackColor = Color.Silver;
+						}
+						else
+						{
+							this.bTab[i,j].BackColor = default(Color);
+						}
+						this.highlighted[i, j] = 0;
+					}
 				}
+			}
 
 			return;
 		}
@@ -259,25 +291,25 @@ namespace Checkers
 
 			if (!xAlive)
 			{
-				MessageBox.Show("Player O wins!!!");
+				MessageBox.Show("Red Player wins!!!");
 				return true;
 			}
 
-			if (!xAlive)
+			if (!oAlive)
 			{
-				MessageBox.Show("Player X wins!!!");
+				MessageBox.Show("Black Player wins!!!");
 				return true;
 			}
 
 			if (this.isBlocked(true))
 			{
-				MessageBox.Show("Player O Wins, player X is blocked!!!");
+				MessageBox.Show("Red Player wins, black player is blocked!!!");
 				return true;
 			}
 
 			if (this.isBlocked(false))
 			{
-				MessageBox.Show("Player O Wins, player X is blocked!!!");
+				MessageBox.Show("Black Player Wins, red player X is blocked!!!");
 				return true;
 			}
 
@@ -308,7 +340,7 @@ namespace Checkers
 								blocked = true;
 							}
 
-							else if(i >= 2 && i <= 5 && this.isOSide(this.bTab[i - 1, j - 1]) && this.isOSide(this.bTab[i - 2, j - 2]) && this.isOSide(this.bTab[i + 1, j + 1]) && this.isOSide(this.bTab[i + 2, j + 2]))
+							else if(i >= 2 && i <= 5 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
 							{
 								blocked = true;
 							}
@@ -389,7 +421,7 @@ namespace Checkers
 								blocked = true;
 							}
 
-							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j - 1]) && this.isXSide(this.bTab[i - 2, j - 2]) && this.isXSide(this.bTab[i + 1, j + 1]) && this.isXSide(this.bTab[i + 2, j + 2]))
+							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
 							{
 								blocked = true;
 							}
@@ -845,6 +877,7 @@ namespace Checkers
 				lx = lx < x ? lx + 1 : lx - 1;
 				ly = ly < y ? ly + 1 : ly - 1;
 				this.bTab[lx, ly].Text = "";
+				this.bTab[lx, ly].Image = default(Image);
 			}
 		}
 
@@ -1001,7 +1034,9 @@ namespace Checkers
 					if(collide[i, 0] == x && collide[i, 1] == y)
 					{
 						this.bTab[(x + lx) / 2, (y + ly) / 2].Text = "";
+						this.bTab[(x + lx) / 2, (y + ly) / 2].Image = default(Image);
 						String tmp = this.bTab[lx, ly].Text;
+						Image tmi = this.bTab[lx, ly].Image;
 						this.bTab[x, y].Text = this.bTab[lx, ly].Text;
 
 						if(this.isColliding(x, y)[0, 0] != Calc.ERROR)
@@ -1009,10 +1044,12 @@ namespace Checkers
 							this.requireSwitching = false;
 
 							this.bTab[x, y].Text = tmp;
+							this.bTab[x, y].Image = tmi;
 							return true;
 						}
 
 						this.bTab[x, y].Text = tmp;
+						this.bTab[x, y].Image = tmi;
 						this.requireSwitching = true;
 						return true;
 					}
