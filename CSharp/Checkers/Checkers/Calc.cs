@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -929,7 +929,7 @@ namespace Checkers
 			{
 				if(this.onSegment(x, y, lx, ly))
 				{
-					if(clear(x, y, lx, ly))
+					if(this.clear(x, y, lx, ly))
 					{
 						this.requireSwitching = true;
 						return true;
