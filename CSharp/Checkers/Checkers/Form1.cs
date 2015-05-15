@@ -66,7 +66,7 @@ namespace Checkers
 						if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
 						{
 							this.bTab[i, j].Text = "X";
-							//bTab[i, j].Font = new Font(bTab[i, j].Font.FontFamily, 14);
+							//this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 14);
 						}
 					}
 
@@ -75,7 +75,7 @@ namespace Checkers
 						if ((j % 2 != 0 && i % 2 == 0) || (j % 2 == 0 && i % 2 != 0))
 						{
 							this.bTab[i, j].Text = "O";
-							//bTab[i, j].Font = new Font(bTab[i, j].Font.FontFamily, 14);
+							//this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 14);
 						}
 					}
 				}
@@ -232,6 +232,11 @@ namespace Checkers
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			System.Diagnostics.Process.Start("http://www.kurnik.pl/warcaby/zasady.phtml");
+		}
+
+		private void authorsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Created by :");
 		}
 	}
 }

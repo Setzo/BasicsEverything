@@ -269,7 +269,189 @@ namespace Checkers
 				return true;
 			}
 
+			if (this.isBlocked(true))
+			{
+				MessageBox.Show("Player O Wins, player X is blocked!!!");
+				return true;
+			}
+
+			if (this.isBlocked(false))
+			{
+				MessageBox.Show("Player O Wins, player X is blocked!!!");
+				return true;
+			}
+
 			return false;
+		}
+
+		public bool isBlocked(bool isX)
+		{
+			bool blocked = false;
+
+			if(isX)
+			{
+				for (int i = 0; i < 8; i++)
+				{
+					for (int j = 0; j < 8; j++)
+					{
+						if(this.isX(this.bTab[i, j]))
+						{
+							if((i == 0 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+									|| (i == 1 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1])))
+							{
+								blocked = true;
+							}
+
+							else if ((i == 7 && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]))
+									|| (i == 6 && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1])))
+							{
+								blocked = true;
+							}
+
+							else if(i >= 2 && i <= 5 && this.isOSide(this.bTab[i - 1, j - 1]) && this.isOSide(this.bTab[i - 2, j - 2]) && this.isOSide(this.bTab[i + 1, j + 1]) && this.isOSide(this.bTab[i + 2, j + 2]))
+							{
+								blocked = true;
+							}
+							else
+							{
+								return false;
+							}
+						}
+
+						if(this.isXX(this.bTab[i, j]))
+						{
+							bool upperBlock = false;
+							bool bottomBlock = false;
+							
+							if ((i == 0 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+									|| (i == 1 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1])))
+							{
+								upperBlock = true;
+							}
+
+							else if ((i == 7 && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]))
+									|| (i == 6 && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1])))
+							{
+								upperBlock = true;
+							}
+
+							else if (i >= 2 && i <= 5 && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+							{
+								upperBlock = true;
+							}
+
+							if ((i == 0 && this.isOSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
+									|| (i == 1 && this.isOSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]) && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1])))
+							{
+								bottomBlock = true;
+							}
+
+							else if ((i == 7 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]))
+									|| (i == 6 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isOSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1])))
+							{
+								bottomBlock = true;
+							}
+
+							else if (i >= 2 && i <= 5 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
+							{
+								bottomBlock = true;
+							}
+
+							if (upperBlock && bottomBlock)
+							{
+								blocked = true;
+							}
+							else
+							{
+								return false;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0; i < 8; i++)
+				{
+					for (int j = 0; j < 8; j++)
+					{
+						if (this.isX(this.bTab[i, j]))
+						{
+							if ((i == 0 && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+									|| (i == 1 && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]) && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1])))
+							{
+								blocked = true;
+							}
+
+							else if ((i == 7 && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]))
+									|| (i == 6 && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1])))
+							{
+								blocked = true;
+							}
+
+							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j - 1]) && this.isXSide(this.bTab[i - 2, j - 2]) && this.isXSide(this.bTab[i + 1, j + 1]) && this.isXSide(this.bTab[i + 2, j + 2]))
+							{
+								blocked = true;
+							}
+							else
+							{
+								return false;
+							}
+						}
+
+						if (this.isXX(this.bTab[i, j]))
+						{
+							bool upperBlock = false;
+							bool bottomBlock = false;
+
+							if ((i == 0 && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+									|| (i == 1 && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]) && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1])))
+							{
+								upperBlock = true;
+							}
+
+							else if ((i == 7 && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]))
+									|| (i == 6 && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1])))
+							{
+								upperBlock = true;
+							}
+
+							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+							{
+								upperBlock = true;
+							}
+
+							if ((i == 0 && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
+									|| (i == 1 && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1])))
+							{
+								bottomBlock = true;
+							}
+
+							else if ((i == 7 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]))
+									|| (i == 6 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1])))
+							{
+								bottomBlock = true;
+							}
+
+							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
+							{
+								bottomBlock = true;
+							}
+
+							if (upperBlock && bottomBlock)
+							{
+								blocked = true;
+							}
+							else
+							{
+								return false;
+							}
+						}
+					}
+				}
+			}
+
+			return blocked;
 		}
 
 		private bool isQueen(Button btn)
@@ -498,10 +680,6 @@ namespace Checkers
 				{
 					if (mdx >= 0 && mdy >= 0)
 					{
-						if (!isXX)
-						{
-							//this.label.Text = this.label.Text + String.Format(" {0} {1} ", mdx, mdy);
-						}
 						if ((this.isXSide(this.bTab[mdx, mdy]) && isXX) || (this.isOSide(this.bTab[mdx, mdy]) && !isXX))
 						{
 							upperL = false;

@@ -100,6 +100,7 @@
 			this.button27 = new System.Windows.Forms.Button();
 			this.button07 = new System.Windows.Forms.Button();
 			this.button17 = new System.Windows.Forms.Button();
+			this.authorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -156,7 +157,8 @@
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.authorsToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.helpToolStripMenuItem.Text = "Help";
@@ -164,7 +166,7 @@
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.aboutToolStripMenuItem.Text = "About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
@@ -840,6 +842,13 @@
 			this.button17.UseVisualStyleBackColor = false;
 			this.button17.Click += new System.EventHandler(this.button62_Click);
 			// 
+			// authorsToolStripMenuItem
+			// 
+			this.authorsToolStripMenuItem.Name = "authorsToolStripMenuItem";
+			this.authorsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.authorsToolStripMenuItem.Text = "Authors";
+			this.authorsToolStripMenuItem.Click += new System.EventHandler(this.authorsToolStripMenuItem_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -995,6 +1004,7 @@
 		private System.Windows.Forms.Button button27;
 		private System.Windows.Forms.Button button07;
 		private System.Windows.Forms.Button button17;
+		private System.Windows.Forms.ToolStripMenuItem authorsToolStripMenuItem;
 	}
 }
 
