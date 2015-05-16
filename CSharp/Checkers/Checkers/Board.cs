@@ -201,7 +201,6 @@ namespace Checkers
 
 		public void highlight()
 		{
-
 			for (int i = 0; i < 8; i++)
 			{
 				for (int j = 0; j < 8; j++)
@@ -217,6 +216,7 @@ namespace Checkers
 								continue;
 							}
 						}
+
 						else if(this.isXX(this.bTab[i, j]))
 						{
 							int[, ,] collide = this.isCollidingQueenVersion(i, j);
@@ -231,7 +231,8 @@ namespace Checkers
 								continue;
 							}
 						}
-						else if (this.highlighted[i, j] == 1)
+
+						if (this.highlighted[i, j] == 1)
 						{
 							if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
 							{
@@ -255,6 +256,7 @@ namespace Checkers
 								continue;
 							}
 						}
+
 						else if (this.isOO(this.bTab[i, j]))
 						{
 							int[, ,] collide = this.isCollidingQueenVersion(i, j);
@@ -269,7 +271,8 @@ namespace Checkers
 								continue;
 							}
 						}
-						else if (this.highlighted[i, j] == 1)
+
+						if (this.highlighted[i, j] == 1)
 						{
 							if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
 							{

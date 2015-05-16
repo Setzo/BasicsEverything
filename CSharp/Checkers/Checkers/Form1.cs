@@ -110,6 +110,8 @@ namespace Checkers
 			}
 
 			board = new Board(ref this.bTab, ref this.label);
+
+			this.board.updateLabel();
 		}
 
 		private void GetAllControl(Control c, List<Control> list)
@@ -225,6 +227,7 @@ namespace Checkers
 						}
 
 						this.board.highlight();
+						this.board.updateLabel();
 
 						sr.Close();
 					}
@@ -240,6 +243,7 @@ namespace Checkers
 		private void button62_Click(object sender, EventArgs e)
 		{
 			this.board.move((Button)sender);
+
 			this.board.updateLabel();
 			this.board.highlight();
 
@@ -252,6 +256,7 @@ namespace Checkers
 		private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			startup();
+			this.board.updateLabel();
 		}
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
