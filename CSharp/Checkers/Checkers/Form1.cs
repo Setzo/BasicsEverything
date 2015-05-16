@@ -12,6 +12,10 @@ namespace Checkers
 {
 	public partial class Form1 : Form
 	{
+		public const string BLACK_PAWN = "C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\blackPawn.png";
+		public const string BLACK_QUEEN = "C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\blackQueen.png";
+		public const string RED_PAWN = "C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\redPawn.png";
+		public const string RED_QUEEN = "C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\redQueen.png";
 
 		private Button[,] bTab;
 
@@ -74,13 +78,13 @@ namespace Checkers
 							if (!this.xCheat)
 							{
 								this.bTab[i, j].Text = "X";
-								this.bTab[i, j].Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\blackPawn.png");
+								this.bTab[i, j].Image = Image.FromFile(Form1.BLACK_PAWN);
 								//this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 14);
 							}
 							else
 							{
 								this.bTab[i, j].Text = "XX";
-								this.bTab[i, j].Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\blackQueen.png");
+								this.bTab[i, j].Image = Image.FromFile(Form1.BLACK_QUEEN);
 							}
 						}
 					}
@@ -92,13 +96,13 @@ namespace Checkers
 							if (!this.oCheat)
 							{
 								this.bTab[i, j].Text = "O";
-								this.bTab[i, j].Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\redPawn.png");
+								this.bTab[i, j].Image = Image.FromFile(Form1.RED_PAWN);
 								//this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 14);
 							}
 							else
 							{
 								this.bTab[i, j].Text = "OO";
-								this.bTab[i, j].Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\redQueen.png");
+								this.bTab[i, j].Image = Image.FromFile(Form1.RED_QUEEN);
 							}
 						}
 					}
@@ -166,6 +170,23 @@ namespace Checkers
 									sign = "";
 								}
 								this.bTab[x, y].Text = sign;
+
+								if (sign.Equals("X"))
+								{
+									this.bTab[x, y].Image = Image.FromFile(Form1.BLACK_PAWN);
+								}
+								else if (sign.Equals("O"))
+								{
+									this.bTab[x, y].Image = Image.FromFile(Form1.RED_PAWN);
+								}
+								else if (sign.Equals("XX"))
+								{
+									this.bTab[x, y].Image = Image.FromFile(Form1.BLACK_QUEEN);
+								}
+								else if (sign.Equals("OO"))
+								{
+									this.bTab[x, y].Image = Image.FromFile(Form1.RED_QUEEN);
+								}
 							}
 						}
 
@@ -187,7 +208,7 @@ namespace Checkers
 							{
 								if (this.bTab[i, j].Text.Equals("XX") || this.bTab[i, j].Text.Equals("OO"))
 								{
-									this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 14);
+									this.bTab[i, j].Font = new Font(this.bTab[i, j].Font.FontFamily, 100);
 								}
 							}
 						}
@@ -206,6 +227,7 @@ namespace Checkers
 		{
 			this.cal.move((Button)sender);
 			this.cal.updateLabel();
+			this.cal.highlight();
 
 			if(this.cal.win())
 			{

@@ -11,13 +11,13 @@ namespace Checkers
 {
 	public class Calc
 	{
-		public const int ERROR = 100;
-		public const int BTT_R = 0;
-		public const int BTT_L = 1;
-		public const int UPP_R = 2;
-		public const int UPP_L = 3;
+		private const int ERROR = 100;
+		private const int BTT_R = 0;
+		private const int BTT_L = 1;
+		private const int UPP_R = 2;
+		private const int UPP_L = 3;
 
-		private Button last = null;
+		private Button last;
 
 		private Label label;
 
@@ -138,8 +138,8 @@ namespace Checkers
 			if ((this.last != null && !this.justMoved && this.isXSide(this.last) && this.turn)
 					|| (this.last != null && !this.justMoved && this.isOSide(this.last) && !this.turn))
 			{
-				this.highlight();
-				// this.label.Text = (this.isXX(this.last) || this.isOO(this.last)) ? "True" : "False";
+				//this.highlight();
+				//this.label.Text = (this.isXX(this.last) || this.isOO(this.last)) ? "True" : "False";
 
 				if (!this.isE(this.last))
 				{
@@ -161,20 +161,20 @@ namespace Checkers
 							{
 								//btn.Font = new Font(btn.Font.FontFamily, 14);
 								btn.Text = "XX";
-								btn.Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\blackQueen.png");
+								btn.Image = Image.FromFile(Form1.BLACK_QUEEN);
 							}
 							else
 							{
 								//btn.Font = new Font(btn.Font.FontFamily, 14);
 								btn.Text = "OO";
-								btn.Image = Image.FromFile("C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\redQueen.png");
+								btn.Image = Image.FromFile(Form1.RED_QUEEN);
 							}
 						}
 					}
 				}
 
 				this.last = btn;
-				this.highlight();
+				//this.highlight();
 			}
 			else
 			{
@@ -183,7 +183,7 @@ namespace Checkers
 					this.last = btn;
 					this.justMoved = false;
 				}
-				this.highlight();
+				//this.highlight();
 			}
 		}
 
@@ -210,7 +210,8 @@ namespace Checkers
 					{
 						if(this.isColliding(i, j)[0, 0] != Calc.ERROR)
 						{
-							if (this.turn && this.isX(this.bTab[i, j])) { 
+							if (this.turn && this.isX(this.bTab[i, j]))
+							{ 
 								this.bTab[i, j].BackColor = Color.Coral;
 							}
 							else if (!this.turn && this.isO(this.bTab[i, j]))
@@ -267,6 +268,12 @@ namespace Checkers
 			bool xAlive = false;
 			bool oAlive = false;
 
+			int cntX = 0;
+			int cntO = 0;
+
+			bool isXBlocked = this.isBlocked(true);
+			bool isOBlocked = this.isBlocked(false);
+
 			for(int i = 0; i < 8; i++)
 			{
 				for (int j = 0; j < 8; j++)
@@ -274,11 +281,13 @@ namespace Checkers
 					if (this.isXSide(this.bTab[i, j]))
 					{
 						xAlive = true;
+						cntX++;
 					}
 
 					if (this.isOSide(this.bTab[i, j]))
 					{
 						oAlive = true;
+						cntO++;
 					}
 				}
 			}
@@ -301,13 +310,30 @@ namespace Checkers
 				return true;
 			}
 
-			if (this.isBlocked(true))
+			if(isXBlocked && isOBlocked)
+			{
+				if(cntX == cntO)
+				{
+					MessageBox.Show("Draw.");
+				}
+				else if(cntX > cntO)
+				{
+					MessageBox.Show("Both players are blocked, black player wins\ncause of higher quantity of pawns & queens.");
+				}
+				else
+				{
+					MessageBox.Show("Both players are blocked, red player wins\ncause of higher quantity of pawns & queens.");
+				}
+				return true;
+			}
+
+			if (isXBlocked)
 			{
 				MessageBox.Show("Red Player wins, black player is blocked!!!");
 				return true;
 			}
 
-			if (this.isBlocked(false))
+			if (isOBlocked)
 			{
 				MessageBox.Show("Black Player Wins, red player X is blocked!!!");
 				return true;
@@ -316,7 +342,7 @@ namespace Checkers
 			return false;
 		}
 
-		public bool isBlocked(bool isX)
+		private bool isBlocked(bool isX)
 		{
 			bool blocked = false;
 
@@ -407,21 +433,21 @@ namespace Checkers
 				{
 					for (int j = 0; j < 8; j++)
 					{
-						if (this.isX(this.bTab[i, j]))
+						if (this.isO(this.bTab[i, j]))
 						{
-							if ((i == 0 && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
-									|| (i == 1 && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]) && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1])))
+							if ((i == 0 && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
+									|| (i == 1 && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1])))
 							{
 								blocked = true;
 							}
 
-							else if ((i == 7 && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]))
-									|| (i == 6 && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1])))
+							else if ((i == 7 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]))
+									|| (i == 6 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1])))
 							{
 								blocked = true;
 							}
 
-							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
 							{
 								blocked = true;
 							}
@@ -431,7 +457,7 @@ namespace Checkers
 							}
 						}
 
-						if (this.isXX(this.bTab[i, j]))
+						if (this.isOO(this.bTab[i, j]))
 						{
 							bool upperBlock = false;
 							bool bottomBlock = false;
@@ -465,7 +491,7 @@ namespace Checkers
 								bottomBlock = true;
 							}
 
-							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
+							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
 							{
 								bottomBlock = true;
 							}
@@ -956,10 +982,10 @@ namespace Checkers
 							this.batchRemove(x, y, lx, ly);
 							this.bTab[x, y].Text = tmp;
 
-							if (this.isCollidingQueenVersion(x, y)[0, 0, 0] != Calc.ERROR
-									|| this.isCollidingQueenVersion(x, y)[1, 0, 0] != Calc.ERROR
-									|| this.isCollidingQueenVersion(x, y)[2, 0, 0] != Calc.ERROR
-									|| this.isCollidingQueenVersion(x, y)[3, 0, 0] != Calc.ERROR)
+							if (this.isCollidingQueenVersion(x, y)[Calc.BTT_R, 0, 0] != Calc.ERROR
+									|| this.isCollidingQueenVersion(x, y)[Calc.BTT_L, 0, 0] != Calc.ERROR
+									|| this.isCollidingQueenVersion(x, y)[Calc.UPP_R, 0, 0] != Calc.ERROR
+									|| this.isCollidingQueenVersion(x, y)[Calc.UPP_L, 0, 0] != Calc.ERROR)
 							{
 								this.requireSwitching = false;
 

@@ -37,6 +37,9 @@
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.authorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.cheatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.bluePlayerCheatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.blackPlayerCheatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.button10 = new System.Windows.Forms.Button();
 			this.button00 = new System.Windows.Forms.Button();
 			this.button20 = new System.Windows.Forms.Button();
@@ -102,9 +105,6 @@
 			this.button07 = new System.Windows.Forms.Button();
 			this.button17 = new System.Windows.Forms.Button();
 			this.label = new System.Windows.Forms.Label();
-			this.cheatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.bluePlayerCheatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.blackPlayerCheatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -133,28 +133,28 @@
 			// newGameToolStripMenuItem
 			// 
 			this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-			this.newGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.newGameToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
 			this.newGameToolStripMenuItem.Text = "New Game";
 			this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
 			// 
 			// saveGameToolStripMenuItem
 			// 
 			this.saveGameToolStripMenuItem.Name = "saveGameToolStripMenuItem";
-			this.saveGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveGameToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
 			this.saveGameToolStripMenuItem.Text = "Save Game";
 			this.saveGameToolStripMenuItem.Click += new System.EventHandler(this.saveGameToolStripMenuItem_Click);
 			// 
 			// loadGameToolStripMenuItem
 			// 
 			this.loadGameToolStripMenuItem.Name = "loadGameToolStripMenuItem";
-			this.loadGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.loadGameToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
 			this.loadGameToolStripMenuItem.Text = "Load Game";
 			this.loadGameToolStripMenuItem.Click += new System.EventHandler(this.loadGameToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -171,16 +171,39 @@
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.aboutToolStripMenuItem.Text = "About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
 			// authorsToolStripMenuItem
 			// 
 			this.authorsToolStripMenuItem.Name = "authorsToolStripMenuItem";
-			this.authorsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+			this.authorsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.authorsToolStripMenuItem.Text = "Authors";
 			this.authorsToolStripMenuItem.Click += new System.EventHandler(this.authorsToolStripMenuItem_Click);
+			// 
+			// cheatToolStripMenuItem
+			// 
+			this.cheatToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bluePlayerCheatToolStripMenuItem,
+            this.blackPlayerCheatToolStripMenuItem});
+			this.cheatToolStripMenuItem.Name = "cheatToolStripMenuItem";
+			this.cheatToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.cheatToolStripMenuItem.Text = "Cheat";
+			// 
+			// bluePlayerCheatToolStripMenuItem
+			// 
+			this.bluePlayerCheatToolStripMenuItem.Name = "bluePlayerCheatToolStripMenuItem";
+			this.bluePlayerCheatToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+			this.bluePlayerCheatToolStripMenuItem.Text = "Red Player Cheat";
+			this.bluePlayerCheatToolStripMenuItem.Click += new System.EventHandler(this.bluePlayerCheatToolStripMenuItem_Click);
+			// 
+			// blackPlayerCheatToolStripMenuItem
+			// 
+			this.blackPlayerCheatToolStripMenuItem.Name = "blackPlayerCheatToolStripMenuItem";
+			this.blackPlayerCheatToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+			this.blackPlayerCheatToolStripMenuItem.Text = "Black Player Cheat";
+			this.blackPlayerCheatToolStripMenuItem.Click += new System.EventHandler(this.blackPlayerCheatToolStripMenuItem_Click);
 			// 
 			// button10
 			// 
@@ -861,29 +884,6 @@
 			this.label.Name = "label";
 			this.label.Size = new System.Drawing.Size(0, 13);
 			this.label.TabIndex = 65;
-			// 
-			// cheatToolStripMenuItem
-			// 
-			this.cheatToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bluePlayerCheatToolStripMenuItem,
-            this.blackPlayerCheatToolStripMenuItem});
-			this.cheatToolStripMenuItem.Name = "cheatToolStripMenuItem";
-			this.cheatToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.cheatToolStripMenuItem.Text = "Cheat";
-			// 
-			// bluePlayerCheatToolStripMenuItem
-			// 
-			this.bluePlayerCheatToolStripMenuItem.Name = "bluePlayerCheatToolStripMenuItem";
-			this.bluePlayerCheatToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-			this.bluePlayerCheatToolStripMenuItem.Text = "Blue Player Cheat";
-			this.bluePlayerCheatToolStripMenuItem.Click += new System.EventHandler(this.bluePlayerCheatToolStripMenuItem_Click);
-			// 
-			// blackPlayerCheatToolStripMenuItem
-			// 
-			this.blackPlayerCheatToolStripMenuItem.Name = "blackPlayerCheatToolStripMenuItem";
-			this.blackPlayerCheatToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-			this.blackPlayerCheatToolStripMenuItem.Text = "Black Player Cheat";
-			this.blackPlayerCheatToolStripMenuItem.Click += new System.EventHandler(this.blackPlayerCheatToolStripMenuItem_Click);
 			// 
 			// Form1
 			// 
