@@ -206,56 +206,81 @@ namespace Checkers
 			{
 				for (int j = 0; j < 8; j++)
 				{
-					if (this.isX(this.bTab[i, j]) || this.isO(this.bTab[i, j]))
+					if(this.turn)
 					{
-						if (this.isColliding(i, j)[0, 0] != Board.ERROR)
+						if (this.isX(this.bTab[i, j]))
 						{
-							if (this.turn && this.isX(this.bTab[i, j]))
+							if (this.isColliding(i, j)[0, 0] != Board.ERROR)
 							{
 								this.bTab[i, j].BackColor = Color.Coral;
+								this.highlighted[i, j] = 1;
+								continue;
 							}
-							else if (!this.turn && this.isO(this.bTab[i, j]))
+						}
+						else if(this.isXX(this.bTab[i, j]))
+						{
+							int[, ,] collide = this.isCollidingQueenVersion(i, j);
+
+							if (collide[Board.BTT_R, 0, 0] != Board.ERROR
+								|| collide[Board.BTT_L, 0, 0] != Board.ERROR
+								|| collide[Board.UPP_R, 0, 0] != Board.ERROR
+								|| collide[Board.UPP_L, 0, 0] != Board.ERROR)
 							{
 								this.bTab[i, j].BackColor = Color.Coral;
+								this.highlighted[i, j] = 1;
+								continue;
 							}
-							this.highlighted[i, j] = 1;
-							continue;
+						}
+						else if (this.highlighted[i, j] == 1)
+						{
+							if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
+							{
+								this.bTab[i, j].BackColor = Color.Silver;
+							}
+							else
+							{
+								this.bTab[i, j].BackColor = default(Color);
+							}
+							this.highlighted[i, j] = 0;
 						}
 					}
-
-					if (this.isXX(this.bTab[i, j]) || this.isOO(this.bTab[i, j]))
+					else
 					{
-						int[, ,] collide = this.isCollidingQueenVersion(i, j);
-
-						if (collide[Board.BTT_R, 0, 0] != Board.ERROR
-							|| collide[Board.BTT_L, 0, 0] != Board.ERROR
-							|| collide[Board.UPP_R, 0, 0] != Board.ERROR
-							|| collide[Board.UPP_L, 0, 0] != Board.ERROR)
+						if (this.isO(this.bTab[i, j]))
 						{
-							if (this.turn && this.isXX(this.bTab[i, j]))
+							if (this.isColliding(i, j)[0, 0] != Board.ERROR)
 							{
 								this.bTab[i, j].BackColor = Color.Coral;
+								this.highlighted[i, j] = 1;
+								continue;
 							}
-							else if (!this.turn && this.isOO(this.bTab[i, j]))
+						}
+						else if (this.isOO(this.bTab[i, j]))
+						{
+							int[, ,] collide = this.isCollidingQueenVersion(i, j);
+
+							if (collide[Board.BTT_R, 0, 0] != Board.ERROR
+								|| collide[Board.BTT_L, 0, 0] != Board.ERROR
+								|| collide[Board.UPP_R, 0, 0] != Board.ERROR
+								|| collide[Board.UPP_L, 0, 0] != Board.ERROR)
 							{
 								this.bTab[i, j].BackColor = Color.Coral;
+								this.highlighted[i, j] = 1;
+								continue;
 							}
-							this.highlighted[i, j] = 1;
-							continue;
 						}
-					}
-
-					if (this.highlighted[i, j] == 1)
-					{
-						if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
+						else if (this.highlighted[i, j] == 1)
 						{
-							this.bTab[i, j].BackColor = Color.Silver;
+							if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
+							{
+								this.bTab[i, j].BackColor = Color.Silver;
+							}
+							else
+							{
+								this.bTab[i, j].BackColor = default(Color);
+							}
+							this.highlighted[i, j] = 0;
 						}
-						else
-						{
-							this.bTab[i, j].BackColor = default(Color);
-						}
-						this.highlighted[i, j] = 0;
 					}
 				}
 			}

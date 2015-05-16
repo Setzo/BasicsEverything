@@ -131,6 +131,16 @@ namespace Checkers
 			OpenFileDialog theDialog = new OpenFileDialog();
 			theDialog.Title = "Load Game";
 			theDialog.Filter = "Text files (*.txt)|*.txt|All files|*.*";
+
+			for(int i = 0; i < 8; i++)
+			{
+				for (int j = 0; j < 8; j++)
+				{
+					this.bTab[i, j].Text = "";
+					this.bTab[i, j].Image = default(Image);
+				}
+			}
+
 			if (theDialog.ShowDialog() == DialogResult.OK)
 			{
 				try
@@ -214,12 +224,15 @@ namespace Checkers
 							}
 						}
 
+						this.board.highlight();
+
 						sr.Close();
 					}
 				}
 				catch (Exception ex)
 				{
 					MessageBox.Show("Error: Could not read file from disk.");
+					this.startup();
 				}
 			}
 		}
