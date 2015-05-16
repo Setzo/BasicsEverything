@@ -256,7 +256,6 @@ namespace Checkers
 		private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			startup();
-			this.board.updateLabel();
 		}
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
