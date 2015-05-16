@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Checkers
 {
-	public class Calc
+	public class Board
 	{
 		private const int ERROR = 100;
 		private const int BTT_R = 0;
@@ -29,7 +29,7 @@ namespace Checkers
 
 		private Button[,] bTab;
 
-		public Calc(ref Button[,] bTab, ref Label label)
+		public Board(ref Button[,] bTab, ref Label label)
 		{
 			this.bTab = bTab;
 			this.label = label;
@@ -155,9 +155,9 @@ namespace Checkers
 						this.justMoved = true;
 						this.turn = this.requireSwitching ? !this.turn : this.turn;
 
-						if(this.isQueen(btn))
+						if (this.isQueen(btn))
 						{
-							if(this.isX(btn))
+							if (this.isX(btn))
 							{
 								//btn.Font = new Font(btn.Font.FontFamily, 14);
 								btn.Text = "XX";
@@ -189,7 +189,7 @@ namespace Checkers
 
 		public void updateLabel()
 		{
-			if(this.turn)
+			if (this.turn)
 			{
 				this.label.Text = "Black Player turn.";
 			}
@@ -208,10 +208,10 @@ namespace Checkers
 				{
 					if (this.isX(this.bTab[i, j]) || this.isO(this.bTab[i, j]))
 					{
-						if(this.isColliding(i, j)[0, 0] != Calc.ERROR)
+						if (this.isColliding(i, j)[0, 0] != Board.ERROR)
 						{
 							if (this.turn && this.isX(this.bTab[i, j]))
-							{ 
+							{
 								this.bTab[i, j].BackColor = Color.Coral;
 							}
 							else if (!this.turn && this.isO(this.bTab[i, j]))
@@ -225,12 +225,12 @@ namespace Checkers
 
 					if (this.isXX(this.bTab[i, j]) || this.isOO(this.bTab[i, j]))
 					{
-						int[,,] collide = this.isCollidingQueenVersion(i, j);
-							
-						if(collide[Calc.BTT_R, 0, 0] != Calc.ERROR
-							|| collide[Calc.BTT_L, 0, 0] != Calc.ERROR
-							|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
-							|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
+						int[, ,] collide = this.isCollidingQueenVersion(i, j);
+
+						if (collide[Board.BTT_R, 0, 0] != Board.ERROR
+							|| collide[Board.BTT_L, 0, 0] != Board.ERROR
+							|| collide[Board.UPP_R, 0, 0] != Board.ERROR
+							|| collide[Board.UPP_L, 0, 0] != Board.ERROR)
 						{
 							if (this.turn && this.isXX(this.bTab[i, j]))
 							{
@@ -245,15 +245,15 @@ namespace Checkers
 						}
 					}
 
-					if(this.highlighted[i, j] == 1)
+					if (this.highlighted[i, j] == 1)
 					{
 						if ((j % 2 == 0 && i % 2 != 0) || (j % 2 != 0 && i % 2 == 0))
 						{
-							this.bTab[i,j].BackColor = Color.Silver;
+							this.bTab[i, j].BackColor = Color.Silver;
 						}
 						else
 						{
-							this.bTab[i,j].BackColor = default(Color);
+							this.bTab[i, j].BackColor = default(Color);
 						}
 						this.highlighted[i, j] = 0;
 					}
@@ -274,7 +274,7 @@ namespace Checkers
 			bool isXBlocked = this.isBlocked(true);
 			bool isOBlocked = this.isBlocked(false);
 
-			for(int i = 0; i < 8; i++)
+			for (int i = 0; i < 8; i++)
 			{
 				for (int j = 0; j < 8; j++)
 				{
@@ -292,7 +292,7 @@ namespace Checkers
 				}
 			}
 
-			if(!xAlive && !oAlive)
+			if (!xAlive && !oAlive)
 			{
 				MessageBox.Show("Draw.");
 				return true;
@@ -310,13 +310,13 @@ namespace Checkers
 				return true;
 			}
 
-			if(isXBlocked && isOBlocked)
+			if (isXBlocked && isOBlocked)
 			{
-				if(cntX == cntO)
+				if (cntX == cntO)
 				{
 					MessageBox.Show("Draw.");
 				}
-				else if(cntX > cntO)
+				else if (cntX > cntO)
 				{
 					MessageBox.Show("Both players are blocked, black player wins\ncause of higher quantity of pawns & queens.");
 				}
@@ -346,15 +346,15 @@ namespace Checkers
 		{
 			bool blocked = false;
 
-			if(isX)
+			if (isX)
 			{
 				for (int i = 0; i < 8; i++)
 				{
 					for (int j = 0; j < 8; j++)
 					{
-						if(this.isX(this.bTab[i, j]))
+						if (this.isX(this.bTab[i, j]))
 						{
-							if((i == 0 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+							if ((i == 0 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
 									|| (i == 1 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1])))
 							{
 								blocked = true;
@@ -366,7 +366,7 @@ namespace Checkers
 								blocked = true;
 							}
 
-							else if(i >= 2 && i <= 5 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+							else if (i >= 2 && i <= 5 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
 							{
 								blocked = true;
 							}
@@ -376,11 +376,11 @@ namespace Checkers
 							}
 						}
 
-						if(this.isXX(this.bTab[i, j]))
+						if (this.isXX(this.bTab[i, j]))
 						{
 							bool upperBlock = false;
 							bool bottomBlock = false;
-							
+
 							if ((i == 0 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
 									|| (i == 1 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1])))
 							{
@@ -514,9 +514,9 @@ namespace Checkers
 
 		private bool isQueen(Button btn)
 		{
-			if(this.isX(btn))
+			if (this.isX(btn))
 			{
-				if(this.getCoordinates(btn)[1] == 7)
+				if (this.getCoordinates(btn)[1] == 7)
 				{
 					return true;
 				}
@@ -534,7 +534,7 @@ namespace Checkers
 
 		private bool isCollideAffecting(bool isX)
 		{
-			if(isX)
+			if (isX)
 			{
 				for (int i = 0; i < 8; i++)
 				{
@@ -542,20 +542,20 @@ namespace Checkers
 					{
 						if (this.isX(this.bTab[i, j]))
 						{
-							if(this.isColliding(i, j)[0, 0] != Calc.ERROR)
+							if (this.isColliding(i, j)[0, 0] != Board.ERROR)
 							{
 								return true;
 							}
 						}
 
-						if(this.isXX(this.bTab[i, j]))
+						if (this.isXX(this.bTab[i, j]))
 						{
-							int[,,] collide = this.isCollidingQueenVersion(i, j);
-							
-							if(collide[Calc.BTT_R, 0, 0] != Calc.ERROR
-								|| collide[Calc.BTT_L, 0, 0] != Calc.ERROR
-								|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
-								|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
+							int[, ,] collide = this.isCollidingQueenVersion(i, j);
+
+							if (collide[Board.BTT_R, 0, 0] != Board.ERROR
+								|| collide[Board.BTT_L, 0, 0] != Board.ERROR
+								|| collide[Board.UPP_R, 0, 0] != Board.ERROR
+								|| collide[Board.UPP_L, 0, 0] != Board.ERROR)
 							{
 								return true;
 							}
@@ -574,7 +574,7 @@ namespace Checkers
 					{
 						if (this.isO(this.bTab[i, j]))
 						{
-							if (this.isColliding(i, j)[0, 0] != Calc.ERROR)
+							if (this.isColliding(i, j)[0, 0] != Board.ERROR)
 							{
 								return true;
 							}
@@ -583,10 +583,10 @@ namespace Checkers
 						{
 							int[, ,] collide = this.isCollidingQueenVersion(i, j);
 
-							if (collide[Calc.BTT_R, 0, 0] != Calc.ERROR
-								|| collide[Calc.BTT_L, 0, 0] != Calc.ERROR
-								|| collide[Calc.UPP_R, 0, 0] != Calc.ERROR
-								|| collide[Calc.UPP_L, 0, 0] != Calc.ERROR)
+							if (collide[Board.BTT_R, 0, 0] != Board.ERROR
+								|| collide[Board.BTT_L, 0, 0] != Board.ERROR
+								|| collide[Board.UPP_R, 0, 0] != Board.ERROR
+								|| collide[Board.UPP_L, 0, 0] != Board.ERROR)
 							{
 								return true;
 							}
@@ -598,15 +598,15 @@ namespace Checkers
 			return false;
 		}
 
-		private int[,,] isCollidingQueenVersion(int x, int y)
+		private int[, ,] isCollidingQueenVersion(int x, int y)
 		{
-			int[,,] collide = new int[4, 7, 2];
+			int[, ,] collide = new int[4, 7, 2];
 
 			for (int i = 0; i < 4; i++)
 			{
 				for (int j = 0; j < 7; j++)
 				{
-					collide[i, j, 0] = Calc.ERROR;
+					collide[i, j, 0] = Board.ERROR;
 				}
 			}
 
@@ -633,7 +633,8 @@ namespace Checkers
 			int cntUPP_R = 0;
 			int cntUPP_L = 0;
 
-			while (pdx <= 7 || pdy <= 7 || mdy >= 0 || mdx >=0) {
+			while (pdx <= 7 || pdy <= 7 || mdy >= 0 || mdx >= 0)
+			{
 				pdx++;
 				pdy++;
 
@@ -641,9 +642,9 @@ namespace Checkers
 				mdx--;
 
 				// ****************** BOTTOM RIGHT ******************
-				if(bottomR)
+				if (bottomR)
 				{
-					if(pdx <= 7 && pdy <= 7)
+					if (pdx <= 7 && pdy <= 7)
 					{
 						if ((this.isXSide(this.bTab[pdx, pdy]) && isXX) || (this.isOSide(this.bTab[pdx, pdy]) && !isXX))
 						{
@@ -658,10 +659,10 @@ namespace Checkers
 							bottomRO = true;
 
 						}
-						else if(bottomRO && this.isE(this.bTab[pdx, pdy]))
+						else if (bottomRO && this.isE(this.bTab[pdx, pdy]))
 						{
-							collide[Calc.BTT_R, cntBTT_R, 0] = pdx;
-							collide[Calc.BTT_R, cntBTT_R, 1] = pdy;
+							collide[Board.BTT_R, cntBTT_R, 0] = pdx;
+							collide[Board.BTT_R, cntBTT_R, 1] = pdy;
 							cntBTT_R++;
 						}
 					}
@@ -691,8 +692,8 @@ namespace Checkers
 						}
 						else if (bottomLO && this.isE(this.bTab[mdx, pdy]))
 						{
-							collide[Calc.BTT_L, cntBTT_L, 0] = mdx;
-							collide[Calc.BTT_L, cntBTT_L, 1] = pdy;
+							collide[Board.BTT_L, cntBTT_L, 0] = mdx;
+							collide[Board.BTT_L, cntBTT_L, 1] = pdy;
 							cntBTT_L++;
 						}
 					}
@@ -722,8 +723,8 @@ namespace Checkers
 						}
 						else if (upperRO && this.isE(this.bTab[pdx, mdy]))
 						{
-							collide[Calc.UPP_R, cntUPP_R, 0] = pdx;
-							collide[Calc.UPP_R, cntUPP_R, 1] = mdy;
+							collide[Board.UPP_R, cntUPP_R, 0] = pdx;
+							collide[Board.UPP_R, cntUPP_R, 1] = mdy;
 							cntUPP_R++;
 						}
 					}
@@ -741,7 +742,7 @@ namespace Checkers
 						if ((this.isXSide(this.bTab[mdx, mdy]) && isXX) || (this.isOSide(this.bTab[mdx, mdy]) && !isXX))
 						{
 							upperL = false;
-						}	
+						}
 						if ((this.isOSide(this.bTab[mdx, mdy]) && isXX) || (this.isXSide(this.bTab[mdx, mdy]) && !isXX))
 						{
 							if (upperLO)
@@ -754,8 +755,8 @@ namespace Checkers
 						else if (upperLO && this.isE(this.bTab[mdx, mdy]))
 						{
 							//this.label.Text = this.label.Text + String.Format(" {0} {1} ", mdx, mdy);
-							collide[Calc.UPP_L, cntUPP_L, 0] = mdx;
-							collide[Calc.UPP_L, cntUPP_L, 1] = mdy;
+							collide[Board.UPP_L, cntUPP_L, 0] = mdx;
+							collide[Board.UPP_L, cntUPP_L, 1] = mdy;
 							cntUPP_L++;
 						}
 					}
@@ -774,11 +775,11 @@ namespace Checkers
 		{
 			int[,] tab = new int[4, 2];
 
-			for(int i = 0; i < 4; i++)
+			for (int i = 0; i < 4; i++)
 			{
-				for(int j = 0; j < 2; j++)
+				for (int j = 0; j < 2; j++)
 				{
-					tab[i, j] = Calc.ERROR;
+					tab[i, j] = Board.ERROR;
 				}
 			}
 
@@ -788,7 +789,7 @@ namespace Checkers
 
 			if (this.isX(this.bTab[lx, ly]))
 			{
-				
+
 				if (!(lx + 2 > 7) && !(ly + 2 > 7))
 				{
 					if ((this.isO(this.bTab[lx + 1, ly + 1]) || this.isOO(this.bTab[lx + 1, ly + 1])) && this.isE(this.bTab[lx + 2, ly + 2]))
@@ -881,13 +882,13 @@ namespace Checkers
 			int cntX = 0;
 			int cntY = 0;
 
-			while(lx != x)
+			while (lx != x)
 			{
 				lx = lx < x ? lx + 1 : lx - 1;
 				cntX++;
 			}
 
-			while(ly != y)
+			while (ly != y)
 			{
 				ly = ly < y ? ly + 1 : ly - 1;
 				cntY++;
@@ -898,7 +899,7 @@ namespace Checkers
 
 		private void batchRemove(int x, int y, int lx, int ly)
 		{
-			while(lx != x && ly != y)
+			while (lx != x && ly != y)
 			{
 				lx = lx < x ? lx + 1 : lx - 1;
 				ly = ly < y ? ly + 1 : ly - 1;
@@ -914,7 +915,7 @@ namespace Checkers
 				return false;
 			}
 
-			if(!this.isE(this.bTab[x, y]))
+			if (!this.isE(this.bTab[x, y]))
 			{
 				return false;
 			}
@@ -928,7 +929,7 @@ namespace Checkers
 			minX++;
 			minY++;
 
-			while(minX != maxX && minY != maxY)
+			while (minX != maxX && minY != maxY)
 			{
 				if (!this.isE(this.bTab[minX, minY]))
 				{
@@ -944,18 +945,18 @@ namespace Checkers
 
 		private bool isMoveValidQueenVersion(Button btn, int x, int y, int lx, int ly)
 		{
-			if(x == lx || y == ly)
+			if (x == lx || y == ly)
 			{
 				return false;
 			}
 
 			bool coll = this.isCollideAffecting(this.isXSide(this.last));
 
-			if(!coll)
+			if (!coll)
 			{
-				if(this.onSegment(x, y, lx, ly))
+				if (this.onSegment(x, y, lx, ly))
 				{
-					if(this.clear(x, y, lx, ly))
+					if (this.clear(x, y, lx, ly))
 					{
 						this.requireSwitching = true;
 						return true;
@@ -963,29 +964,29 @@ namespace Checkers
 				}
 			}
 
-			if(coll)
+			if (coll)
 			{
-				int[,,] collide = this.isCollidingQueenVersion(lx, ly);
+				int[, ,] collide = this.isCollidingQueenVersion(lx, ly);
 
-				for(int i = 0; i < 4; i++)
+				for (int i = 0; i < 4; i++)
 				{
-					for(int j = 0; j < 7; j++)
+					for (int j = 0; j < 7; j++)
 					{
-						if(collide[i, j, 0] == Calc.ERROR)
+						if (collide[i, j, 0] == Board.ERROR)
 						{
 							break;
 						}
 
-						if(collide[i, j, 0] == x && collide[i, j, 1] == y)
+						if (collide[i, j, 0] == x && collide[i, j, 1] == y)
 						{
 							String tmp = this.bTab[lx, ly].Text;
 							this.batchRemove(x, y, lx, ly);
 							this.bTab[x, y].Text = tmp;
 
-							if (this.isCollidingQueenVersion(x, y)[Calc.BTT_R, 0, 0] != Calc.ERROR
-									|| this.isCollidingQueenVersion(x, y)[Calc.BTT_L, 0, 0] != Calc.ERROR
-									|| this.isCollidingQueenVersion(x, y)[Calc.UPP_R, 0, 0] != Calc.ERROR
-									|| this.isCollidingQueenVersion(x, y)[Calc.UPP_L, 0, 0] != Calc.ERROR)
+							if (this.isCollidingQueenVersion(x, y)[Board.BTT_R, 0, 0] != Board.ERROR
+									|| this.isCollidingQueenVersion(x, y)[Board.BTT_L, 0, 0] != Board.ERROR
+									|| this.isCollidingQueenVersion(x, y)[Board.UPP_R, 0, 0] != Board.ERROR
+									|| this.isCollidingQueenVersion(x, y)[Board.UPP_L, 0, 0] != Board.ERROR)
 							{
 								this.requireSwitching = false;
 
@@ -1014,16 +1015,16 @@ namespace Checkers
 			int lx = lstCords[0];
 			int ly = lstCords[1];
 
-			if(this.isXX(this.last) || this.isOO(this.last))
+			if (this.isXX(this.last) || this.isOO(this.last))
 			{
 				return isMoveValidQueenVersion(btn, x, y, lx, ly);
 			}
 
 			int[,] collide = this.isColliding(lx, ly);
 
-			if (collide[0, 0] == Calc.ERROR && !this.isCollideAffecting(this.isXSide(this.last)))
+			if (collide[0, 0] == Board.ERROR && !this.isCollideAffecting(this.isXSide(this.last)))
 			{
-			
+
 				if (this.isX(this.last))
 				{
 					if ((y - 1 == ly) && (x - 1 == lx || x + 1 == lx))
@@ -1050,14 +1051,14 @@ namespace Checkers
 			else
 			{
 
-				for(int i = 0; i < 4; i++)
+				for (int i = 0; i < 4; i++)
 				{
-					if (collide[i, 0] == Calc.ERROR)
+					if (collide[i, 0] == Board.ERROR)
 					{
 						break;
 					}
 
-					if(collide[i, 0] == x && collide[i, 1] == y)
+					if (collide[i, 0] == x && collide[i, 1] == y)
 					{
 						this.bTab[(x + lx) / 2, (y + ly) / 2].Text = "";
 						this.bTab[(x + lx) / 2, (y + ly) / 2].Image = default(Image);
@@ -1065,7 +1066,7 @@ namespace Checkers
 						Image tmi = this.bTab[lx, ly].Image;
 						this.bTab[x, y].Text = this.bTab[lx, ly].Text;
 
-						if(this.isColliding(x, y)[0, 0] != Calc.ERROR)
+						if (this.isColliding(x, y)[0, 0] != Board.ERROR)
 						{
 							this.requireSwitching = false;
 

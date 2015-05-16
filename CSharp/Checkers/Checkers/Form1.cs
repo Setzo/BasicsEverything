@@ -22,7 +22,7 @@ namespace Checkers
 		private bool xCheat = false;
 		private bool oCheat = false;
 
-		private Calc cal;
+		private Board board;
 
 		public Form1()
 		{
@@ -109,7 +109,7 @@ namespace Checkers
 				}
 			}
 
-			cal = new Calc(ref this.bTab, ref this.label);
+			board = new Board(ref this.bTab, ref this.label);
 		}
 
 		private void GetAllControl(Control c, List<Control> list)
@@ -118,7 +118,8 @@ namespace Checkers
 			{
 				list.Add(control);
 
-				if (control.GetType() == typeof(Panel)) {
+				if (control.GetType() == typeof(Panel))
+				{
 					GetAllControl(control, list);
 				}
 			}
@@ -138,11 +139,11 @@ namespace Checkers
 					{
 						StreamReader sr = new StreamReader(myStream);
 
-						for(int i = 0; i < 8; i++)
+						for (int i = 0; i < 8; i++)
 						{
 							String c = sr.ReadLine();
 
-							for(int j = 0; j < c.Length; j++)
+							for (int j = 0; j < c.Length; j++)
 							{
 								int x = (int)char.GetNumericValue(c[j]);
 								j++;
@@ -191,15 +192,15 @@ namespace Checkers
 						}
 
 						String cx = sr.ReadLine();
-						
-						if(cx[0].ToString().Equals("t"))
+
+						if (cx[0].ToString().Equals("t"))
 						{
-							this.cal.setTurn(true);
+							this.board.setTurn(true);
 						}
 
 						else
 						{
-							this.cal.setTurn(false);
+							this.board.setTurn(false);
 						}
 
 						for (int i = 0; i < 8; i++)
@@ -225,11 +226,11 @@ namespace Checkers
 
 		private void button62_Click(object sender, EventArgs e)
 		{
-			this.cal.move((Button)sender);
-			this.cal.updateLabel();
-			this.cal.highlight();
+			this.board.move((Button)sender);
+			this.board.updateLabel();
+			this.board.highlight();
 
-			if(this.cal.win())
+			if (this.board.win())
 			{
 				this.startup();
 			}
@@ -261,15 +262,15 @@ namespace Checkers
 				if ((myStream = (FileStream)saveFileDialog.OpenFile()) != null)
 				{
 					StreamWriter sw = new StreamWriter(myStream);
-					
-					for(int i = 0; i < 8; i++)
+
+					for (int i = 0; i < 8; i++)
 					{
 						for (int j = 0; j < 8; j++)
 						{
 							String c = "";
 							c = c + i.ToString() + " " + j.ToString() + " ";
 
-							if(this.bTab[i, j].Text.Equals(""))
+							if (this.bTab[i, j].Text.Equals(""))
 							{
 								c = c + "E ";
 							}
@@ -283,7 +284,7 @@ namespace Checkers
 						sw.Write("\n");
 					}
 
-					if (cal.getTurn())
+					if (board.getTurn())
 					{
 						sw.Write("t");
 					}
