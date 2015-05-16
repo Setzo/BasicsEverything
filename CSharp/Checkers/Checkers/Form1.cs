@@ -110,8 +110,6 @@ namespace Checkers
 			}
 
 			board = new Board(ref this.bTab, ref this.label);
-
-			this.board.updateLabel();
 		}
 
 		private void GetAllControl(Control c, List<Control> list)
