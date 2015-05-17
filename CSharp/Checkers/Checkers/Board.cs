@@ -9,37 +9,102 @@ using System.Windows.Forms;
 
 namespace Checkers
 {
+	/*
+	 * Klasa odpowiadająca za wszystkie możliwe akcje
+	 * związane z samą grą i planszą.
+	 */
 	public class Board
 	{
+		/*
+		 * Stała definiująca, czy dany pionek (lub damka)
+		 * musi bić. Dokładniejsze wyjaśnienie w okolicach
+		 * funkcji isColliding() i isCollidingQueenVersion().
+		 */
 		private const int ERROR = 100;
+
+		/*
+		 * Stałe reprezentujące 4 strony, na jakie można się poruszać
+		 * w warcabach.
+		 * 
+		 * BTT_R - Bottom Right - Dolny Prawy
+		 * BTT_L - Bottom Left  - Dolny Lewy
+		 * UPP_R - Upper Right  - Górny Prawy
+		 * UPP_L - Upper Left   - Górny Lewy
+		 */
 		private const int BTT_R = 0;
 		private const int BTT_L = 1;
 		private const int UPP_R = 2;
 		private const int UPP_L = 3;
 
+		/*
+		 * Stała zainicjalizowana w konstruktorze, definiująca
+		 * wielkość planszy. Przy czym z góry zakładam że plansza
+		 * jest kwadratowa, więc stała ta reprezentuje zarówno
+		 * długość jak i wysokość planszy.
+		 */
+		private readonly int boardSize;
+
+		/*
+		 * Przycik naciśnięty przed obecnie naciśnietym przyciskiem.
+		 */
 		private Button last;
 
+		/*
+		 * Etykieta pokazująca turę aktualnego gracza.
+		 */
 		private Label label;
 
+		/*
+		 * Tablica zawierająca współrzędne podświetlonych guzików.
+		 * 
+		 * 0 - brak podświetlenia
+		 * 1 - podświetlony
+		 * 
+		 * np. jeżeli this.highlighted[4, 5] == 1, to
+		 * guzik na pozycji [4, 5] jest podświetlony.
+		 */
 		private int[,] highlighted;
 
+		/*
+		 * Zmienna pokazująca, czy ostatni ruch gracza był udany.
+		 */
 		private bool justMoved = false;
+
+		/*
+		 * Zmienna pokazująca który gracz ma aktualnie turę.
+		 */
 		private bool turn = false;
+
+		/*
+		 * Zmienna definiująca czy trzeba zmieniać turę gracza
+		 * po skończeniu ruchu (jeżeli gracz ma podwójne bicie,
+		 * to ma 2 tury).
+		 */
 		private bool requireSwitching = true;
 
+		/*
+		 * Nasza plansza.
+		 */
 		private Button[,] bTab;
 
+		/*
+		 * Konstruktor ustawiający referencje do naszej planszy i etykiety.
+		 * Resetuje on również wszystkie stare podświetlenia i aktualizuje
+		 * etykietę z aktualną turą gracza.
+		 */
 		public Board(ref Button[,] bTab, ref Label label)
 		{
 			this.bTab = bTab;
 			this.label = label;
 			this.last = this.bTab[0, 7];
 
+			this.boardSize = this.bTab.GetLength(0);
+
 			this.highlighted = new int[8, 8];
 
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < this.boardSize; i++)
 			{
-				for (int j = 0; j < 8; j++)
+				for (int j = 0; j < this.boardSize; j++)
 				{
 					this.highlighted[i, j] = 0;
 
@@ -63,61 +128,124 @@ namespace Checkers
 			//this.bTab[4, 4].Font = new Font(this.bTab[4, 4].Font.FontFamily, 14);
 		}
 
+
+		/********************************************************
+		 * Jeżeli jakiekolwiek pole na planszy ma tekst, to		*
+		 * jest to pionek albo damka jednego z graczy.			*
+		 *														*
+		 *	Objaśnienia :										*
+		 *														*
+		 *		X	-	Pionek czarnego gracza					*
+		 *		XX	-	Damka czarnego gracza					*
+		 *														*
+		 *		O	-	Pionek czerwonego gracza				*
+		 *		OO	-	Damka czerwonego gracza					*
+		 *														*
+		 *		brak tekstu oznacza, że pole jest puste.		*
+		 *														*
+		 ********************************************************/
+
+
+		/*
+		 * Metoda zwracająca true, gdy dany jej
+		 * guzik jest pionkiem czarnego gracza.
+		 */
 		private bool isX(Button button)
 		{
 			return button.Text.Equals("X");
 		}
 
+		/*
+		 * Metoda zwracająca true, gdy dany jej
+		 * guzik jest pionkiem czerwonego gracza.
+		 */
 		private bool isO(Button button)
 		{
 			return button.Text.Equals("O");
 		}
 
+		/*
+		 * Metoda zwracająca true, gdy dany jej
+		 * guzik jest pustym polem.
+		 */
 		private bool isE(Button button)
 		{
 			return button.Text.Equals("");
 		}
 
+		/*
+		 * Metoda zwracająca true, gdy dany jej
+		 * guzik jest damką czarnego gracza.
+		 */
 		private bool isXX(Button button)
 		{
 			return button.Text.Equals("XX");
 		}
 
+		/*
+		 * Metoda zwracająca true, gdy dany jej
+		 * guzik jest damką czerwonego gracza.
+		 */
 		private bool isOO(Button button)
 		{
 			return button.Text.Equals("OO");
 		}
 
+		/*
+		 * Metoda zwracająca true, gdy dany jej
+		 * guzik jest pionkiem lub damką czerwonego gracza.
+		 */
 		private bool isOSide(Button button)
 		{
 			return this.isO(button) || this.isOO(button);
 		}
 
+		/*
+		 * Metoda zwracająca true, gdy dany jej
+		 * guzik jest pionkiem lub damką czarnego gracza.
+		 */
 		private bool isXSide(Button button)
 		{
 			return this.isX(button) || this.isXX(button);
 		}
 
+		/*
+		 * Metoda zwracająca true, gdy dany jej
+		 * guzik jest pionkiem lub damką czarnego lub czerwonego gracza.
+		 */
 		private bool isP(Button button)
 		{
 			return this.isXSide(button) || this.isOSide(button);
 		}
 
+		/*
+		 * Metoda zwracająca wartość zmiennej instancyjnej turn.
+		 */
 		public bool getTurn()
 		{
 			return this.turn;
 		}
 
+		/*
+		 * Metoda ustawiająca wartość zmiennej instancyjnej turn.
+		 */
 		public void setTurn(bool turn)
 		{
 			this.turn = turn;
 		}
 
+		/*
+		 * Metoda zwracająca współrzędne podanego jej guzika
+		 * na planszy w postaci tablicy jenowymiarowej o dwóch elementach.
+		 * 
+		 * element zwrócony z indeksem 0 - współrzędna X.
+		 * element zwrócony z indeksem 1 - współrzędna Y.
+		 */
 		private int[] getCoordinates(Button b)
 		{
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < this.boardSize; i++)
 			{
-				for (int j = 0; j < 8; j++)
+				for (int j = 0; j < this.boardSize; j++)
 				{
 					if (b.Equals(bTab[i, j]))
 					{
@@ -132,17 +260,30 @@ namespace Checkers
 			return null;
 		}
 
+		/*
+		 * Główna metoda logiczna tej klasy, jeżeli podany jej ruch
+		 * jest możliwy, to go wykona. Jeżeli nie - nic nie zrobi.
+		 */
 		public void move(Button btn)
 		{
-
+			/*
+			 * Ostatnio kliknięty guzik = [this.last] <---> Aktualnie kliknięty guzik = [btn]
+			 * 
+			 * Jeżeli ostatnio kliknięty guzik nie jest pusty
+			 * i ostatnie wywołanie tej metody się nie powiodło (nie doszło do ruchu)
+			 * i	
+			 *(		jest tura gracza X i ostatnio kliknięty guzik należał do gracza X
+			 * lub	jest tura gracza O i ostatnio kliknięty guzik należał do gracza O)
+			 */
 			if ((this.last != null && !this.justMoved && this.isXSide(this.last) && this.turn)
 					|| (this.last != null && !this.justMoved && this.isOSide(this.last) && !this.turn))
 			{
-				//this.highlight();
-				//this.label.Text = (this.isXX(this.last) || this.isOO(this.last)) ? "True" : "False";
-
 				if (!this.isE(this.last))
 				{
+					/* 
+					 * Sprawdzanie czy ruch z guzika [this.last] do [btn]
+					 * jest prawidłowy. Jeżeli tak, to wykonaj ruch.
+					 */
 					if (this.isMoveValid(btn))
 					{
 						btn.Text = this.last.Text;
@@ -187,6 +328,9 @@ namespace Checkers
 			}
 		}
 
+		/*
+		 * Metoda aktualizująca stan etykiety z turą aktualnego gracza.
+		 */
 		public void updateLabel()
 		{
 			if (this.turn)
@@ -199,11 +343,15 @@ namespace Checkers
 			}
 		}
 
+		/*
+		 * Metoda podświetlająca pola z pionkami / damkami aktualnego
+		 * gracza, które mają bicie i muszą je wykonać.
+		 */
 		public void highlight()
 		{
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < this.boardSize; i++)
 			{
-				for (int j = 0; j < 8; j++)
+				for (int j = 0; j < this.boardSize; j++)
 				{
 					if(this.turn)
 					{
@@ -291,6 +439,11 @@ namespace Checkers
 			return;
 		}
 
+		/*
+		 * Metoda zwracająca true, gdy gra się zakończyła.
+		 * Poza tym metoda wyświetli komunikat o zwycięskim graczu
+		 * w racie zakończenia gry.
+		 */
 		public bool win()
 		{
 			bool xAlive = false;
@@ -302,9 +455,9 @@ namespace Checkers
 			bool isXBlocked = this.isBlocked(true);
 			bool isOBlocked = this.isBlocked(false);
 
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < this.boardSize; i++)
 			{
-				for (int j = 0; j < 8; j++)
+				for (int j = 0; j < this.boardSize; j++)
 				{
 					if (this.isXSide(this.bTab[i, j]))
 					{
@@ -363,38 +516,53 @@ namespace Checkers
 
 			if (isOBlocked)
 			{
-				MessageBox.Show("Black Player Wins, red player X is blocked!!!");
+				MessageBox.Show("Black Player wins, red player is blocked!!!");
 				return true;
 			}
 
 			return false;
 		}
 
+		/****************************************
+		 *										*
+		 *		Gracz X - gracz czarny			*
+		 *										*
+		 *		Gracz O - gracz czerwony		*
+		 *										*
+		 ****************************************/
+
+		/*
+		 * Metoda zwracająca true, gdy dany gracz jest zablokoany
+		 * i nie może się ruszyć.
+		 * 
+		 * [isX] = true		-> Sprawdź czy gracz X jest zablokowany.
+		 * [isX] = false	-> Sprawdź czy gracz O jest zablokowany.
+		 */
 		private bool isBlocked(bool isX)
 		{
 			bool blocked = false;
 
 			if (isX)
 			{
-				for (int i = 0; i < 8; i++)
+				for (int i = 0; i < this.boardSize; i++)
 				{
-					for (int j = 0; j < 8; j++)
+					for (int j = 0; j < this.boardSize; j++)
 					{
 						if (this.isX(this.bTab[i, j]))
 						{
-							if ((i == 0 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
-									|| (i == 1 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1])))
+							if ((i == 0 && this.isOSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > this.boardSize - 1 ? j : j + 2]))
+									|| (i == 1 && this.isOSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > this.boardSize - 1 ? j : j + 2]) && this.isOSide(this.bTab[i - 1, j + 1 > this.boardSize - 1 ? j : j + 1])))
 							{
 								blocked = true;
 							}
 
-							else if ((i == 7 && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]))
-									|| (i == 6 && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1])))
+							else if ((i == this.boardSize - 1 && this.isOSide(this.bTab[i - 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > this.boardSize - 1 ? j : j + 2]))
+									|| (i == this.boardSize - 2 && this.isOSide(this.bTab[i - 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > this.boardSize - 1 ? j : j + 2]) && this.isOSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1])))
 							{
 								blocked = true;
 							}
 
-							else if (i >= 2 && i <= 5 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+							else if (i >= 2 && i <= this.boardSize - 3 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isOSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > this.boardSize - 1 ? j : j + 2]))
 							{
 								blocked = true;
 							}
@@ -409,19 +577,19 @@ namespace Checkers
 							bool upperBlock = false;
 							bool bottomBlock = false;
 
-							if ((i == 0 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
-									|| (i == 1 && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1])))
+							if ((i == 0 && this.isOSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > this.boardSize - 1 ? j : j + 2]))
+									|| (i == 1 && this.isOSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > this.boardSize - 1 ? j : j + 2]) && this.isOSide(this.bTab[i - 1, j + 1 > this.boardSize - 1 ? j : j + 1])))
 							{
 								upperBlock = true;
 							}
 
-							else if ((i == 7 && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]))
-									|| (i == 6 && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1])))
+							else if ((i == this.boardSize - 1 && this.isOSide(this.bTab[i - 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > this.boardSize - 1 ? j : j + 2]))
+									|| (i == this.boardSize - 2 && this.isOSide(this.bTab[i - 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > this.boardSize - 1 ? j : j + 2]) && this.isOSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1])))
 							{
 								upperBlock = true;
 							}
 
-							else if (i >= 2 && i <= 5 && this.isOSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isOSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+							else if (i >= 2 && i <= this.boardSize - 3 && this.isOSide(this.bTab[i - 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isOSide(this.bTab[i - 2, j + 2 > this.boardSize - 1 ? j : j + 2]) && this.isOSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isOSide(this.bTab[i + 2, j + 2 > this.boardSize - 1 ? j : j + 2]))
 							{
 								upperBlock = true;
 							}
@@ -432,13 +600,13 @@ namespace Checkers
 								bottomBlock = true;
 							}
 
-							else if ((i == 7 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]))
-									|| (i == 6 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isOSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1])))
+							else if ((i == this.boardSize - 1 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]))
+									|| (i == this.boardSize - 2 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isOSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1])))
 							{
 								bottomBlock = true;
 							}
 
-							else if (i >= 2 && i <= 5 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
+							else if (i >= 2 && i <= this.boardSize - 3 && this.isOSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i - 2, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isOSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
 							{
 								bottomBlock = true;
 							}
@@ -457,9 +625,9 @@ namespace Checkers
 			}
 			else
 			{
-				for (int i = 0; i < 8; i++)
+				for (int i = 0; i < this.boardSize; i++)
 				{
-					for (int j = 0; j < 8; j++)
+					for (int j = 0; j < this.boardSize; j++)
 					{
 						if (this.isO(this.bTab[i, j]))
 						{
@@ -469,13 +637,13 @@ namespace Checkers
 								blocked = true;
 							}
 
-							else if ((i == 7 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]))
-									|| (i == 6 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1])))
+							else if ((i == this.boardSize - 1 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]))
+									|| (i == this.boardSize - 2 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1])))
 							{
 								blocked = true;
 							}
 
-							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
+							else if (i >= 2 && i <= this.boardSize - 3 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
 							{
 								blocked = true;
 							}
@@ -490,19 +658,19 @@ namespace Checkers
 							bool upperBlock = false;
 							bool bottomBlock = false;
 
-							if ((i == 0 && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
-									|| (i == 1 && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]) && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1])))
+							if ((i == 0 && this.isXSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > this.boardSize - 1 ? j : j + 2]))
+									|| (i == 1 && this.isXSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > this.boardSize - 1 ? j : j + 2]) && this.isXSide(this.bTab[i - 1, j + 1 > this.boardSize - 1 ? j : j + 1])))
 							{
 								upperBlock = true;
 							}
 
-							else if ((i == 7 && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]))
-									|| (i == 6 && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1])))
+							else if ((i == this.boardSize - 1 && this.isXSide(this.bTab[i - 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > this.boardSize - 1 ? j : j + 2]))
+									|| (i == this.boardSize - 2 && this.isXSide(this.bTab[i - 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > this.boardSize - 1 ? j : j + 2]) && this.isXSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1])))
 							{
 								upperBlock = true;
 							}
 
-							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > 7 ? j : j + 2]) && this.isXSide(this.bTab[i + 1, j + 1 > 7 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > 7 ? j : j + 2]))
+							else if (i >= 2 && i <= this.boardSize - 3 && this.isXSide(this.bTab[i - 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isXSide(this.bTab[i - 2, j + 2 > this.boardSize - 1 ? j : j + 2]) && this.isXSide(this.bTab[i + 1, j + 1 > this.boardSize - 1 ? j : j + 1]) && this.isXSide(this.bTab[i + 2, j + 2 > this.boardSize - 1 ? j : j + 2]))
 							{
 								upperBlock = true;
 							}
@@ -513,13 +681,13 @@ namespace Checkers
 								bottomBlock = true;
 							}
 
-							else if ((i == 7 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]))
-									|| (i == 6 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1])))
+							else if ((i == this.boardSize - 1 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]))
+									|| (i == this.boardSize - 2 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1])))
 							{
 								bottomBlock = true;
 							}
 
-							else if (i >= 2 && i <= 5 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
+							else if (i >= 2 && i <= this.boardSize - 3 && this.isXSide(this.bTab[i - 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i - 2, j - 2 < 0 ? j : j - 2]) && this.isXSide(this.bTab[i + 1, j - 1 < 0 ? j : j - 1]) && this.isXSide(this.bTab[i + 2, j - 2 < 0 ? j : j - 2]))
 							{
 								bottomBlock = true;
 							}
@@ -540,11 +708,16 @@ namespace Checkers
 			return blocked;
 		}
 
+		/*
+		 * Metoda zwracająca true, gdy podany jej guzik
+		 * jest pionkiem, a powinien być damką (jeżeli pionek
+		 * doszedł na sam koniec planszy).
+		 */
 		private bool isQueen(Button btn)
 		{
 			if (this.isX(btn))
 			{
-				if (this.getCoordinates(btn)[1] == 7)
+				if (this.getCoordinates(btn)[1] == this.boardSize - 1)
 				{
 					return true;
 				}
@@ -560,13 +733,24 @@ namespace Checkers
 			return false;
 		}
 
+		/*
+		 * Metoda zwracająca true, gdy dany gracz ma bicie.
+		 * 
+		 * [isX] = true		-> Sprawdź czy gracz X ma bicie.
+		 * [isX] = false	-> Sprawdź czy gracz O ma bicie.
+		 * 
+		 * Więcej o działaniu tej metody w metodach:
+		 * 
+		 *	isCollidingQueenVersion();
+		 *	isColliding();
+		 */
 		private bool isCollideAffecting(bool isX)
 		{
 			if (isX)
 			{
-				for (int i = 0; i < 8; i++)
+				for (int i = 0; i < this.boardSize; i++)
 				{
-					for (int j = 0; j < 8; j++)
+					for (int j = 0; j < this.boardSize; j++)
 					{
 						if (this.isX(this.bTab[i, j]))
 						{
@@ -596,9 +780,9 @@ namespace Checkers
 
 			else
 			{
-				for (int i = 0; i < 8; i++)
+				for (int i = 0; i < this.boardSize; i++)
 				{
-					for (int j = 0; j < 8; j++)
+					for (int j = 0; j < this.boardSize; j++)
 					{
 						if (this.isO(this.bTab[i, j]))
 						{
@@ -626,24 +810,71 @@ namespace Checkers
 			return false;
 		}
 
+		/*
+		 * Metoda zwracająca trójwymiarową tablice współrzędnych,
+		 * na które damka stojąca w punkcie [x, y] może ruszyć
+		 * się po biciu.
+		 * 
+		 * W przypadku gdy damka nie ma bicia zwróci tablice wypełnioną
+		 * wartościami [Board.ERROR]. Zatem łatwo sprawdzić czy damka ma 
+		 * bicie - wystarczy sprawdzić, czy zwrócona tablica w polach
+		 * 
+		 *		[Board.BTT_R, 0, 0], [Board.BTT_L, 0, 0], [Board.UPP_R, 0, 0], [Board.BTT_L, 0, 0]
+		 *		
+		 * posiada same wartości [Board.ERROR].
+		 * 
+		 * Jeżeli damka ma bicie, to tablica ta będzie zawierała 
+		 * wszystkie współrzędne możliwych ruchów damki.
+		 */
 		private int[, ,] isCollidingQueenVersion(int x, int y)
 		{
-			int[, ,] collide = new int[4, 7, 2];
+			int[, ,] collide = new int[4, this.boardSize - 2, 2];
 
 			for (int i = 0; i < 4; i++)
 			{
-				for (int j = 0; j < 7; j++)
+				for (int j = 0; j < this.boardSize - 2; j++)
 				{
 					collide[i, j, 0] = Board.ERROR;
 				}
 			}
 
+			/*
+			 * Zmienna definiująca stronę aktualnego gracza.
+			 */
 			bool isXX = this.isXX(this.bTab[x, y]);
 
+			/*
+			 * Objaśnienia zmiennych :
+			 * 
+			 * Poniższe zmienne definiują, czy mamy sprawdzać ruchy damki
+			 * w ich kierunkach.
+			 * 
+			 * bottomR (bottomRight), bottomL(bottomLeft)
+			 * upperR  (upperRight),  upperL (upperLeft)
+			 * 
+			 * Poniższe zmienne definują, czy spotkaliśmy na drodzę w danym kierunku
+			 * pojedyńczego pionka lub pojedyńczą damkę przeciwnego gracza.
+			 * 
+			 * bottomRO (bottomRightObstacle), bottomLO (bottomLeftObstacle)
+			 * upperRO  (upperRightObstacle),  upperLO  (upperLeftObstacle)
+			 * 
+			 * Poniższe zmienne to po prostu kopie współrzędnych damki [x] i [y].
+			 * 
+			 * pdx - rosnący x		mdx - malejący x
+			 * pdy - posnący y		mdy - malejący y
+			 * 
+			 * Poniższe zmienne to liczniki znalezionych możliwych ruchów
+			 * po biciu w danym kierunku.
+			 * 
+			 * cntBTT_R (counterBottomRight) - licznik możliwych ruchów po biciu po dolnej prawej przekątnej
+			 * cntBTT_L (counterBottomLeft)  - licznik możliwych ruchów po biciu po dolnej lewej przekątnej
+			 * cntUPP_R (counterUpperRight)  - licznik możliwych ruchów po biciu po górnej prawej przekątnej
+			 * cntUPP_L (counterUpperLeft)   - licznik możliwych ruchów po biciu po górnej lewej przekątnej
+			 */
 			bool bottomR = x == 7 || y == 7 ? false : true;
 			bool bottomL = x == 0 || y == 7 ? false : true;
-			bool upperR = x == 7 || y == 0 ? false : true;
-			bool upperL = x == 0 || y == 0 ? false : true;
+			bool upperR  = x == 7 || y == 0 ? false : true;
+			bool upperL  = x == 0 || y == 0 ? false : true;
 
 			bool bottomRO = false;
 			bool bottomLO = false;
@@ -661,7 +892,10 @@ namespace Checkers
 			int cntUPP_R = 0;
 			int cntUPP_L = 0;
 
-			while (pdx <= 7 || pdy <= 7 || mdy >= 0 || mdx >= 0)
+			/*
+			 * Dopóki którakolwiek ze zmiennych nie przekroczyła wartości progowych współrzędnych planszy.
+			 */
+			while (pdx <= this.boardSize - 1 || pdy <= this.boardSize - 1 || mdy >= 0 || mdx >= 0)
 			{
 				pdx++;
 				pdy++;
@@ -672,7 +906,7 @@ namespace Checkers
 				// ****************** BOTTOM RIGHT ******************
 				if (bottomR)
 				{
-					if (pdx <= 7 && pdy <= 7)
+					if (pdx <= this.boardSize - 1 && pdy <= this.boardSize - 1)
 					{
 						if ((this.isXSide(this.bTab[pdx, pdy]) && isXX) || (this.isOSide(this.bTab[pdx, pdy]) && !isXX))
 						{
@@ -703,7 +937,7 @@ namespace Checkers
 				// ****************** BOTTOM LEFT ******************
 				if (bottomL)
 				{
-					if (mdx >= 0 && pdy <= 7)
+					if (mdx >= 0 && pdy <= this.boardSize - 1)
 					{
 						if ((this.isXSide(this.bTab[mdx, pdy]) && isXX) || (this.isOSide(this.bTab[mdx, pdy]) && !isXX))
 						{
@@ -734,7 +968,7 @@ namespace Checkers
 				// ****************** UPPER RIGHT ******************
 				if (upperR)
 				{
-					if (pdx <= 7 && mdy >= 0)
+					if (pdx <= this.boardSize - 1 && mdy >= 0)
 					{
 						if ((this.isXSide(this.bTab[pdx, mdy]) && isXX) || (this.isOSide(this.bTab[pdx, mdy]) && !isXX))
 						{
@@ -799,7 +1033,12 @@ namespace Checkers
 			return collide;
 		}
 
-		private int[,] isColliding(int lx, int ly)
+		/*
+		 * Metoda zwracająca macierz współrzędnych,
+		 * na które pionek stojący w punkcie [lx, ly] może ruszyć
+		 * się po biciu.
+		 */
+		private int[,] isColliding(int x, int y)
 		{
 			int[,] tab = new int[4, 2];
 
@@ -811,92 +1050,95 @@ namespace Checkers
 				}
 			}
 
-			// this.label.Text = this.label.Text + String.Format("@ lx : {0} && ly : {1} @", lx, ly);
-
+			/*
+			 * Licznik, który trzyma liczbę możliwych bić
+			 * dla pionka w punkcie [lx, ly].
+			 * cnt - counter
+			 */
 			int cnt = 0;
 
-			if (this.isX(this.bTab[lx, ly]))
+			if (this.isX(this.bTab[x, y]))
 			{
 
-				if (!(lx + 2 > 7) && !(ly + 2 > 7))
+				if (!(x + 2 > this.boardSize - 1) && !(y + 2 > this.boardSize - 1))
 				{
-					if ((this.isO(this.bTab[lx + 1, ly + 1]) || this.isOO(this.bTab[lx + 1, ly + 1])) && this.isE(this.bTab[lx + 2, ly + 2]))
+					if ((this.isO(this.bTab[x + 1, y + 1]) || this.isOO(this.bTab[x + 1, y + 1])) && this.isE(this.bTab[x + 2, y + 2]))
 					{
-						tab[cnt, 0] = lx + 2;
-						tab[cnt, 1] = ly + 2;
+						tab[cnt, 0] = x + 2;
+						tab[cnt, 1] = y + 2;
 						cnt++;
 					}
 				}
 
-				if (!(lx + 2 > 7) && !(ly - 2 < 0))
+				if (!(x + 2 > this.boardSize - 1) && !(y - 2 < 0))
 				{
-					if ((this.isO(this.bTab[lx + 1, ly - 1]) || this.isOO(this.bTab[lx + 1, ly - 1])) && this.isE(this.bTab[lx + 2, ly - 2]))
+					if ((this.isO(this.bTab[x + 1, y - 1]) || this.isOO(this.bTab[x + 1, y - 1])) && this.isE(this.bTab[x + 2, y - 2]))
 					{
-						tab[cnt, 0] = lx + 2;
-						tab[cnt, 1] = ly - 2;
+						tab[cnt, 0] = x + 2;
+						tab[cnt, 1] = y - 2;
 						cnt++;
 					}
 				}
 
-				if (!(lx - 2 < 0) && !(ly + 2 > 7))
+				if (!(x - 2 < 0) && !(y + 2 > this.boardSize - 1))
 				{
-					if ((this.isO(this.bTab[lx - 1, ly + 1]) || this.isOO(this.bTab[lx - 1, ly + 1])) && this.isE(this.bTab[lx - 2, ly + 2]))
+					if ((this.isO(this.bTab[x - 1, y + 1]) || this.isOO(this.bTab[x - 1, y + 1])) && this.isE(this.bTab[x - 2, y + 2]))
 					{
-						tab[cnt, 0] = lx - 2;
-						tab[cnt, 1] = ly + 2;
+						tab[cnt, 0] = x - 2;
+						tab[cnt, 1] = y + 2;
 						cnt++;
 					}
 				}
 
-				if (!(lx - 2 < 0) && !(ly - 2 < 0))
+				if (!(x - 2 < 0) && !(y - 2 < 0))
 				{
-					if ((this.isO(this.bTab[lx - 1, ly - 1]) || this.isOO(this.bTab[lx - 1, ly - 1])) && this.isE(this.bTab[lx - 2, ly - 2]))
+					if ((this.isO(this.bTab[x - 1, y - 1]) || this.isOO(this.bTab[x - 1, y - 1])) && this.isE(this.bTab[x - 2, y - 2]))
 					{
-						tab[cnt, 0] = lx - 2;
-						tab[cnt, 1] = ly - 2;
+						tab[cnt, 0] = x - 2;
+						tab[cnt, 1] = y - 2;
 						cnt++;
 					}
 				}
 			}
-			else if (this.isO(this.bTab[lx, ly]))
+			else if (this.isO(this.bTab[x, y]))
 			{
 
-				if (!(lx + 2 > 7) && !(ly + 2 > 7))
+				if (!(x + 2 > this.boardSize - 1) && !(y + 2 > this.boardSize - 1))
 				{
-					if ((this.isX(this.bTab[lx + 1, ly + 1]) || this.isXX(this.bTab[lx + 1, ly + 1])) && this.isE(this.bTab[lx + 2, ly + 2]))
+					if ((this.isX(this.bTab[x + 1, y + 1]) || this.isXX(this.bTab[x + 1, y + 1])) && this.isE(this.bTab[x + 2, y + 2]))
 					{
-						tab[cnt, 0] = lx + 2;
-						tab[cnt, 1] = ly + 2;
+						tab[cnt, 0] = x + 2;
+						tab[cnt, 1] = y + 2;
 						cnt++;
 					}
 				}
 
-				if (!(lx + 2 > 7) && !(ly - 2 < 0))
+				if (!(x + 2 > this.boardSize - 1) && !(y - 2 < 0))
 				{
-					if ((this.isX(this.bTab[lx + 1, ly - 1]) || this.isXX(this.bTab[lx + 1, ly - 1])) && this.isE(this.bTab[lx + 2, ly - 2]))
+					if ((this.isX(this.bTab[x + 1, y - 1]) || this.isXX(this.bTab[x + 1, y - 1])) && this.isE(this.bTab[x + 2, y - 2]))
 					{
-						tab[cnt, 0] = lx + 2;
-						tab[cnt, 1] = ly - 2;
+						tab[cnt, 0] = x + 2;
+						tab[cnt, 1] = y - 2;
 						cnt++;
 					}
 				}
 
-				if (!(lx - 2 < 0) && !(ly + 2 > 7))
+				if (!(x - 2 < 0) && !(y + 2 > this.boardSize - 1))
 				{
-					if ((this.isX(this.bTab[lx - 1, ly + 1]) || this.isXX(this.bTab[lx - 1, ly + 1])) && this.isE(this.bTab[lx - 2, ly + 2]))
+					if ((this.isX(this.bTab[x - 1, y + 1]) || this.isXX(this.bTab[x - 1, y + 1])) && this.isE(this.bTab[x - 2, y + 2]))
 					{
-						tab[cnt, 0] = lx - 2;
-						tab[cnt, 1] = ly + 2;
+						tab[cnt, 0] = x - 2;
+						tab[cnt, 1] = y + 2;
 						cnt++;
 					}
 				}
 
-				if (!(lx - 2 < 0) && !(ly - 2 < 0))
+				if (!(x - 2 < 0) && !(y - 2 < 0))
 				{
-					if ((this.isX(this.bTab[lx - 1, ly - 1]) || this.isXX(this.bTab[lx - 1, ly - 1])) && this.isE(this.bTab[lx - 2, ly - 2]))
+					if ((this.isX(this.bTab[x - 1, y - 1]) || this.isXX(this.bTab[x - 1, y - 1])) && this.isE(this.bTab[x - 2, y - 2]))
 					{
-						tab[cnt, 0] = lx - 2;
-						tab[cnt, 1] = ly - 2;
+						tab[cnt, 0] = x - 2;
+						tab[cnt, 1] = y - 2;
 						cnt++;
 					}
 				}
@@ -905,6 +1147,23 @@ namespace Checkers
 			return tab;
 		}
 
+		/****************************************************************************
+		 *																			*
+		 *	Objaśnienia:															*
+		 *																			*
+		 *		x				-	współrzędna x aktualnie wciśniętego guzika		*
+		 *		y				-	współrzędna y aktualnie wciśniętego guzika		*
+		 *																			*
+		 *		lx	(lastX)		-	współrzędna x ostatnio wciśniętego guzika		*
+		 *		ly	(lastY)		-	współrzędna y ostatnio wciśniętego guzika		*
+		 *																			*
+		 ****************************************************************************/
+
+		/*
+		 * Metoda zwracająca true, gdy punkty
+		 *		[x, y] i [lx, ly]
+		 * są na tej samej linii.
+		 */
 		private bool onSegment(int x, int y, int lx, int ly)
 		{
 			int cntX = 0;
@@ -925,6 +1184,10 @@ namespace Checkers
 			return cntX == cntY;
 		}
 
+		/*
+		 * Metoda usuwająca wszystkie pionki / damki
+		 * na linii [x, y] -> [lx, ly].
+		 */
 		private void batchRemove(int x, int y, int lx, int ly)
 		{
 			while (lx != x && ly != y)
@@ -936,6 +1199,10 @@ namespace Checkers
 			}
 		}
 
+		/*
+		 * Metoda zwracająca true, jeżeli na linii
+		 * [x, y] -> [lx, ly] nie ma żadnego pionka lub damki.
+		 */
 		private bool clear(int x, int y, int lx, int ly)
 		{
 			if (x == lx || y == ly)
@@ -971,7 +1238,11 @@ namespace Checkers
 			return true;
 		}
 
-		private bool isMoveValidQueenVersion(Button btn, int x, int y, int lx, int ly)
+		/*
+		 * Metoda zwracająca true, jeżeli ruch damki z punktu [lx, ly]
+		 * do punktu [x, y] jest prawidłowy.
+		 */
+		private bool isMoveValidQueenVersion(int x, int y, int lx, int ly)
 		{
 			if (x == lx || y == ly)
 			{
@@ -980,10 +1251,19 @@ namespace Checkers
 
 			bool coll = this.isCollideAffecting(this.isXSide(this.last));
 
+			/*
+			 * Jeżeli nie ma przymusowego bicia.
+			 */
 			if (!coll)
 			{
+				/*
+				 * Jeżeli punkty [x, y] i [lx, ly] są na tej samej linii.
+				 */
 				if (this.onSegment(x, y, lx, ly))
 				{
+					/*
+					 * Jeżeli na linii [x, y] -> [lx, ly] nie ma żadnego pionka lub damki.
+					 */
 					if (this.clear(x, y, lx, ly))
 					{
 						this.requireSwitching = true;
@@ -992,25 +1272,41 @@ namespace Checkers
 				}
 			}
 
+			/*
+			 * Jeżeli jest przymusowe bicie.
+			 */
 			if (coll)
 			{
 				int[, ,] collide = this.isCollidingQueenVersion(lx, ly);
 
 				for (int i = 0; i < 4; i++)
 				{
-					for (int j = 0; j < 7; j++)
+					for (int j = 0; j < this.boardSize - 2; j++)
 					{
+						/*
+						 * Jeżeli punkt [x, y] nie równał się żandemu z dostępnych
+						 * ruchów po biciu i nie ma już żadnych dostępnych ruchów po biciu,
+						 * to zakończ pętle
+						 */
 						if (collide[i, j, 0] == Board.ERROR)
 						{
 							break;
 						}
 
+						/*
+						 * Jeżeli punkt [x, y] równa się jednemu z dostępnych
+						 * ruchów po biciu.
+						 */
 						if (collide[i, j, 0] == x && collide[i, j, 1] == y)
 						{
 							String tmp = this.bTab[lx, ly].Text;
 							this.batchRemove(x, y, lx, ly);
 							this.bTab[x, y].Text = tmp;
 
+							/*
+							 * Sprawdzanie czy nie ma podwójnego bicia.
+							 * Jeżeli jest podwójne bicie, to nie zmieniaj tury.
+							 */
 							if (this.isCollidingQueenVersion(x, y)[Board.BTT_R, 0, 0] != Board.ERROR
 									|| this.isCollidingQueenVersion(x, y)[Board.BTT_L, 0, 0] != Board.ERROR
 									|| this.isCollidingQueenVersion(x, y)[Board.UPP_R, 0, 0] != Board.ERROR
@@ -1033,6 +1329,10 @@ namespace Checkers
 			return false;
 		}
 
+		/*
+		 * Metoda zwracająca true, jeżeli ruch z guzika
+		 * [this.last] do [btn] jest prawidłowy.
+		 */
 		private bool isMoveValid(Button btn)
 		{
 			int[] btnCords = this.getCoordinates(btn);
@@ -1043,13 +1343,22 @@ namespace Checkers
 			int lx = lstCords[0];
 			int ly = lstCords[1];
 
+			/*
+			 * Jeżeli mamy do czynienia z ruchem damki, zwróć wynik
+			 * isMoveValidQueenVersion().
+			 * Jeżeli natomiast mamy do czynienia z ruchem pionka
+			 * kontynuuj.
+			 */
 			if (this.isXX(this.last) || this.isOO(this.last))
 			{
-				return isMoveValidQueenVersion(btn, x, y, lx, ly);
+				return isMoveValidQueenVersion(x, y, lx, ly);
 			}
 
 			int[,] collide = this.isColliding(lx, ly);
 
+			/*
+			 * Jeżeli pionek nie musi bić.
+			 */
 			if (collide[0, 0] == Board.ERROR && !this.isCollideAffecting(this.isXSide(this.last)))
 			{
 
@@ -1076,16 +1385,27 @@ namespace Checkers
 					}
 				}
 			}
+			/*
+			 * Jeżeli pionek musi bić.
+			 */
 			else
 			{
 
 				for (int i = 0; i < 4; i++)
 				{
+					/*
+					 * Jeżeli żaden z dostępnych ruchów po biciu,
+					 * nie równa się naszemu ruchowi to zakończ.
+					 */
 					if (collide[i, 0] == Board.ERROR)
 					{
 						break;
 					}
 
+					/*
+					 * Jeżeli nasz ruch równa się jednemu z dostępnych
+					 * ruchów po biciu.
+					 */
 					if (collide[i, 0] == x && collide[i, 1] == y)
 					{
 						this.bTab[(x + lx) / 2, (y + ly) / 2].Text = "";
@@ -1094,6 +1414,9 @@ namespace Checkers
 						Image tmi = this.bTab[lx, ly].Image;
 						this.bTab[x, y].Text = this.bTab[lx, ly].Text;
 
+						/*
+						 * Jeżeli mamy podwójne bicie to nie zmieniaj tury.
+						 */
 						if (this.isColliding(x, y)[0, 0] != Board.ERROR)
 						{
 							this.requireSwitching = false;

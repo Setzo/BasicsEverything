@@ -8,20 +8,41 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
+/************************************
+ *									*
+ * Autorzy:							*
+ *		Aleksandra Matuszewska		*
+ *		Wojciech Pruszak			*
+ *									*
+ ************************************/
+
 namespace Checkers
 {
+	/*
+	 * Klasa odpowiadająca za całą interakcje użytkownika
+	 * z menu.
+	 */
 	public partial class Form1 : Form
 	{
+		/*
+		 * Ścieżki do obrazków pionków / damek.
+		*/
 		public const string BLACK_PAWN = "C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\blackPawn.png";
 		public const string BLACK_QUEEN = "C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\blackQueen.png";
 		public const string RED_PAWN = "C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\redPawn.png";
 		public const string RED_QUEEN = "C:\\Users\\Setzo\\Documents\\Visual Studio 2013\\Projects\\Checkers\\redQueen.png";
 
+		/*
+		 * Tablica zawierająca wszystkie nasze guziki.
+		 */
 		private Button[,] bTab;
 
 		private bool xCheat = false;
 		private bool oCheat = false;
 
+		/*
+		 * Plansza.
+		 */
 		private Board board;
 
 		public Form1()
@@ -32,8 +53,11 @@ namespace Checkers
 
 			List<Control> list = new List<Control>();
 
-			GetAllControl(this, list);
+			listControls(this, list);
 
+			/*
+			 * Wczytywanie wszystkich guzików do tablicy.
+			 */
 			foreach (Control control in list)
 			{
 				if (control.GetType() == typeof(Button))
@@ -55,6 +79,11 @@ namespace Checkers
 			this.startup();
 		}
 
+		/*
+		 * Funkcja wczytująca wszystkie pionki na ich startowe pozycje,
+		 * oraz wymazująca wszystko co było na planszy przed rozpoczęciem
+		 * działania tej metody.
+		 */
 		private void startup()
 		{
 			for (int i = 0; i < 8; i++)
@@ -112,7 +141,11 @@ namespace Checkers
 			board = new Board(ref this.bTab, ref this.label);
 		}
 
-		private void GetAllControl(Control c, List<Control> list)
+		/*
+		 * Metoda zapisująca w liście wszystkie kontrolki,
+		 * w tym nasze guziki.
+		 */
+		private void listControls(Control c, List<Control> list)
 		{
 			foreach (Control control in c.Controls)
 			{
@@ -120,11 +153,16 @@ namespace Checkers
 
 				if (control.GetType() == typeof(Panel))
 				{
-					GetAllControl(control, list);
+					listControls(control, list);
 				}
 			}
 		}
 
+		/*
+		 * Metoda wczytująca stan gry z pliku tekstowego wybranego przez użytkownika.
+		 * W przypadku, gdy nie może otworzyć pliku, lub plik jest uszkodzony
+		 * wyda ona komunikat o błędzie.
+		 */
 		private void loadGameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			FileStream myStream = null;
@@ -132,19 +170,19 @@ namespace Checkers
 			theDialog.Title = "Load Game";
 			theDialog.Filter = "Text files (*.txt)|*.txt|All files|*.*";
 
-			for(int i = 0; i < 8; i++)
-			{
-				for (int j = 0; j < 8; j++)
-				{
-					this.bTab[i, j].Text = "";
-					this.bTab[i, j].Image = default(Image);
-				}
-			}
-
 			if (theDialog.ShowDialog() == DialogResult.OK)
 			{
 				try
 				{
+					for (int i = 0; i < 8; i++)
+					{
+						for (int j = 0; j < 8; j++)
+						{
+							this.bTab[i, j].Text = "";
+							this.bTab[i, j].Image = default(Image);
+						}
+					}
+
 					if ((myStream = (FileStream)theDialog.OpenFile()) != null)
 					{
 						StreamReader sr = new StreamReader(myStream);
@@ -238,6 +276,14 @@ namespace Checkers
 			}
 		}
 
+		/*
+		 * Metoda wykonująca sie za każdym naciśnięciem przycisku na planszy.
+		 * Sprawdza ona czy poprzednia gra się nie skończyła, i czy nie powinna
+		 * zacząć nowej. Poza tym podświetla ona pionki, których ruch jest wymuszony
+		 * (jeżeli mają bicie) i aktualizuje stan etykiety z aktualną turą gracza.
+		 * 
+		 * Więcej informacji o działaniu tej metody znajdziemy w klasie Board.
+		 */
 		private void button62_Click(object sender, EventArgs e)
 		{
 			this.board.move((Button)sender);
@@ -251,16 +297,26 @@ namespace Checkers
 			}
 		}
 
+		/*
+		 * Metoda rozpoczynająca nową grę.
+		 */
 		private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			startup();
 		}
 
+		/* 
+		 * Metoda zamykająca program.
+		 */
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			System.Windows.Forms.Application.Exit();
 		}
 
+		/*
+		 * Metoda zapisująca aktualny stan gry do pliku tekstowego
+		 * wybranego przez użytkownika.
+		 */
 		private void saveGameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			FileStream myStream;
@@ -313,22 +369,34 @@ namespace Checkers
 			}
 		}
 
+		/*
+		 * Metoda otwierająca zasady do gry w warcaby.
+		 */
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			System.Diagnostics.Process.Start("http://www.kurnik.pl/warcaby/zasady.phtml");
 		}
-
+		
+		/*
+		 * Metoda wyświetlająca autorów programu.
+		 */
 		private void authorsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Created by :");
+			MessageBox.Show("Created by :\n\n\tAleksandra Matuszewska\n\tWojciech Pruszak");
 		}
 
+		/*
+		 * Ustawienia cheat'ów dla gracza czerwonego.
+		 */
 		private void bluePlayerCheatToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			this.oCheat = !this.oCheat;
 			this.startup();
 		}
 
+		/*
+		 * Ustawienia cheat'ów dla gracza czarnego.
+		 */
 		private void blackPlayerCheatToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			this.xCheat = !this.xCheat;

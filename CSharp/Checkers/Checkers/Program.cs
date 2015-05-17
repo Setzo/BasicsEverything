@@ -7,9 +7,9 @@ namespace Checkers
 {
 	static class Program
 	{
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
+		/*
+		 * Główna metoda programu.
+		 */
 		[STAThread]
 		static void Main()
 		{
