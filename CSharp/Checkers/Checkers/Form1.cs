@@ -44,7 +44,10 @@ namespace Checkers
 		 * Plansza.
 		 */
 		private Board board;
-
+		
+		/*
+		 * Konstruktor, inicjalizujący planszę.
+		 */
 		public Form1()
 		{
 			InitializeComponent();
