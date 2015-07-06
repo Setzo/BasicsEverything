@@ -1,7 +1,7 @@
 <?php
 $hostname = "localhost";
-$username = "root";
-$password = "09437";
+$username = "setzo";
+$password = "pswd";
 
 $databaseName = "letsgophp";
 
