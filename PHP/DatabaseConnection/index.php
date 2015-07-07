@@ -24,6 +24,15 @@ if ($dbConnected) {
 $select = "select * from people";
 $val = mysql_query ($select, $dbConnected);
 
+//$insert = "insert into people (imie, nazwisko, wiek) values ('Rakk', 'Test', 6)";
+//mysql_query($insert, $dbConnected);
+
+//$delete = "delete from people where id = 5";
+//mysql_query($delete, $dbConnected);
+
+$update = "update people set imie='Setzo' where id=3";
+mysql_query($update, $dbConnected);
+
 echo "<br><table> 
 		<tr>
 			<td>Id</td>
