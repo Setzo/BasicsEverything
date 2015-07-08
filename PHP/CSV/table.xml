@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.0.10deb1
+- http://www.phpmyadmin.net
+-
+- Host: localhost
+- Czas wygenerowania: 08 Lip 2015, 19:05
+- Wersja serwera: 5.5.43-0ubuntu0.14.04.1
+- Wersja PHP: 5.5.9-1ubuntu4.9
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="http://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="letsgophp" collation="utf8_general_ci" charset="utf8">
+            <pma:table name="people">
+                CREATE TABLE `people` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `imie` varchar(100) DEFAULT NULL,
+                  `nazwisko` varchar(100) DEFAULT NULL,
+                  `wiek` int(11) DEFAULT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Baza danych: 'letsgophp'
+    -->
+    <database name="letsgophp">
+        <!-- Tabela people -->
+        <table name="people">
+            <column name="id">1</column>
+            <column name="imie">Wojtek</column>
+            <column name="nazwisko">Pruszak</column>
+            <column name="wiek">21</column>
+        </table>
+        <table name="people">
+            <column name="id">2</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">3</column>
+            <column name="imie">Setzo</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">4</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">6</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">7</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">8</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">9</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">10</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">11</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">12</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">13</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">14</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">15</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">16</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">17</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">18</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">19</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">20</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">21</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">22</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">23</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+        <table name="people">
+            <column name="id">24</column>
+            <column name="imie">Rakk</column>
+            <column name="nazwisko">Test</column>
+            <column name="wiek">6</column>
+        </table>
+    </database>
+</pma_xml_export>
