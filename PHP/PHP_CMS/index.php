@@ -16,6 +16,7 @@
 	
 	$company_create_link = "forms/f_create_company.php";
 	$view_company_link = "forms/f_sel_company.php";
+	$list_all_employees_link = "forms/f_list_company_emp.php";
 
 	echo '<h2 style="font-family: arial, helvetica, sans-serif;" >
 					Content Management System
@@ -34,6 +35,11 @@
 	
 	echo '<a href="'.$view_company_link.'">
 					<span style="color: maroon; ">View Company Employees</span>
+					</a>';
+	echo '<br /><br />';
+	
+	echo '<a href="'.$list_all_employees_link.'">
+					<span style="color: maroon; ">List All Employees</span>
 					</a>';
 	echo '<br /><br />';
 	
