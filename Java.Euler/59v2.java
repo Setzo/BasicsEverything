@@ -28,6 +28,7 @@ public class Euler59 {
 	static {
 
 		Scanner sc;
+		
 		try {
 			sc = new Scanner(new URL(Euler59.CIPHER_URL).openStream());
 
@@ -59,13 +60,13 @@ public class Euler59 {
 
 		Euler59.Looper.loopThrough(keys, Euler59.FROM, Euler59::valSigma);
 
-		System.out.printf("%d : %s\n", Euler59.Looper.max, Euler59.Looper.maxKey.stream()
-				.map(x -> (new Character((char) x.byteValue()).toString()))
-				.collect(Collectors.joining("")));
-		
-		System.out.println(Euler59.xor(Euler59.Looper.maxKey).stream()
-				.map(x -> (new Character((char) x.byteValue()).toString()))
-				.collect(Collectors.joining("")));
+		System.out.printf("%d%s%s\n%s\n", Euler59.Looper.max, " : ",
+				Euler59.Looper.maxKey.stream()
+						.map(x -> (new Character((char) x.byteValue()).toString()))
+						.collect(Collectors.joining("")),
+				Euler59.xor(Euler59.Looper.maxKey).stream()
+						.map(x -> (new Character((char) x.byteValue()).toString()))
+						.collect(Collectors.joining("")));
 
 	}
 
@@ -98,7 +99,6 @@ public class Euler59 {
 		});
 
 		int cnt = Euler59.cnt;
-
 		Euler59.cnt = 0;
 
 		return cnt;
