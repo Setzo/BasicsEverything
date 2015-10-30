@@ -104,7 +104,7 @@ public class Euler59 {
 		return cnt;
 	}
 
-	static class Looper {
+	private static class Looper {
 
 		private static List<Byte> maxKey;
 
