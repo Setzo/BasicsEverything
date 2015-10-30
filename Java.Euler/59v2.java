@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Euler59 {
@@ -115,14 +116,11 @@ public class Euler59 {
 			Euler59.Looper.maxKey = new ArrayList<Byte>(Euler59.TO);
 			Euler59.Looper.key = new ArrayList<Byte>(Euler59.TO);
 			Euler59.Looper.max = 0;
-
-			Euler59.Looper.key.add((byte) 'a');
-			Euler59.Looper.key.add((byte) 'a');
-			Euler59.Looper.key.add((byte) 'a');
 			
-			Euler59.Looper.maxKey.add((byte) 'a');
-			Euler59.Looper.maxKey.add((byte) 'a');
-			Euler59.Looper.maxKey.add((byte) 'a');
+			IntStream.range(Euler59.FROM, Euler59.TO).forEach(x -> {
+				Euler59.Looper.key.add((byte) 'a');
+				Euler59.Looper.maxKey.add((byte) 'a');
+			});
 		}
 
 		private static final void loopThrough(final List<Byte> keys, final int recursionCounter,
