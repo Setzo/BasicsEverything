@@ -1,7 +1,6 @@
 package euler59;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,38 +52,20 @@ public class Euler59 {
 
 	public static void main(String[] args) {
 
-		try {
+		final List<Byte> keys = Euler59.ALPHABET.chars()
+				.mapToObj(n -> (byte) n)
+				.collect(Collectors.toList());
 
-			final Scanner sc = new Scanner(new URL(Euler59.CIPHER_URL).openStream());
+		Euler59.Looper.loopThrough(keys, Euler59.FROM, Euler59::valSigma);
 
-			StringBuilder sb = new StringBuilder();
+		System.out.printf("%d : %s\n", Euler59.Looper.max, Euler59.Looper.maxKey.stream()
+				.map(x -> (new Character((char) x.byteValue()).toString()))
+				.collect(Collectors.joining("")));
+		
+		System.out.println(Euler59.xor(Euler59.Looper.maxKey).stream()
+				.map(x -> (new Character((char) x.byteValue()).toString()))
+				.collect(Collectors.joining("")));
 
-			while (sc.hasNextLine()) {
-
-				sb.append(sc.nextLine()).append("\n");
-			}
-
-			sc.close();
-
-			final List<Byte> keys = Euler59.ALPHABET.chars()
-					.mapToObj(n -> (byte) n)
-					.collect(Collectors.toList());
-
-			Euler59.Looper.loopThrough(keys, Euler59.FROM, Euler59::valSigma);
-
-			System.out.printf("%d : %s\n", Euler59.Looper.max, Euler59.Looper.maxKey.stream()
-					.map(x -> (new Character((char) x.byteValue()).toString()))
-					.collect(Collectors.joining("")));
-			
-			System.out.println(Euler59.xor(Euler59.Looper.maxKey).stream()
-					.map(x -> (new Character((char) x.byteValue()).toString()))
-					.collect(Collectors.joining("")));
-
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private static int valSigma(List<Byte> key) {
