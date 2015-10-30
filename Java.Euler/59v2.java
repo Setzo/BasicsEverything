@@ -14,7 +14,7 @@ public class Euler59 {
 
 	private static final String CIPHER_URL = "https://projecteuler.net/project/resources/p059_cipher.txt";
 
-	private static final String ALPHABET = "abcdefghijklmnouprstuw";
+	private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
 	private static final int FROM = 0;
 
