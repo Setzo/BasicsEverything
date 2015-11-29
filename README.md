@@ -7,32 +7,3 @@
 <h3>Peace.</h3>
 
 * * *
-
-<h3>Technologies used:</h3>
-
-- <h4>Java</h4>
-  - <h5>Spring</h5>
-      - <h6>SpEL</h6>
-  - <h5>Swing</h5>
-  - <h5>Maven</h5>
-  - <h5>JUnit</h5>
-  - <h5>Servlets</h5>
-    - <h6>JDBC</h6>
-    - <h6>JNDI</h6>
-  - <h5>Java Server Pages</h5>
-    - <h6>JSTL</h6>
-    - <h6>EL</h6>
-  - <h5>Collections</h5>
-  - <h5>Multithreading</h5>
-  - <h5>Tomcat 8</h5>
-- <h4>C++</h4>
-- <h4>C#</h4>
-- <h4>Scala</h4>
-- <h4>HTML</h4>
-- <h4>SQL</h4>
-  - <h5>MySQL Server 5.6</h5>
-  - <h5>MySQL Workbench</h5>
-- <h4>XML</h4>
-- <h4>Pascal</h4>
-
-* * *
