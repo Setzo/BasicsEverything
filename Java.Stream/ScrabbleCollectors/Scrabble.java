@@ -57,16 +57,18 @@ public class Scrabble {
 				)
 				.sum();
 		
-		shakespeareWords.stream()
+		shakespeareWords
+			.stream()
 			.filter(scrabbleWords::contains)
 			.filter(word -> blankCounter.apply(word) <= 2)
 			.sorted()
 			.collect(
 				Collectors.groupingBy(score)
 			)
-			.entrySet().stream()
+			.entrySet()
+			.stream()
 			.sorted(
-					Comparator.comparing(entry -> -entry.getKey())
+				Comparator.comparing(entry -> -entry.getKey())
 			)
 			.limit(3)
 			.forEach(System.out::println);
@@ -77,8 +79,8 @@ public class Scrabble {
 	}
 	
 	public static Stream<String> getStream(String path) throws IOException {
-		
 		return Files.lines(Paths.get(path))
 				.map(word -> word.toLowerCase());
 	}
 }
+
