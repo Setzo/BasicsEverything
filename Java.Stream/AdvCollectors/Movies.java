@@ -3,54 +3,122 @@ package adv;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashSet;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
+import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class Movies {
 
-	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException {
 
-		Set<Movie> movies = new HashSet<Movie>();
-		
-		Stream<String> lines = Files.lines(Paths.get("src/adv/movies.txt"));
-		
-		lines.forEach(line -> {
+		Set<Movie> movies = 
+				StreamSupport.stream(
+					new MovieSpliterator(
+							Files.lines(Paths.get("src/adv/movies.txt")).spliterator()
+					),
+					false
+				)
+				.collect(Collectors.toSet());
 			
-			String[] elements = line.split("/");
-			
-			String title = elements[0].substring(0, elements[0].lastIndexOf("(")).trim();
-			
-			String releaseYear = elements[0].substring(elements[0].lastIndexOf("(") + 1,
-					elements[0].lastIndexOf(")"));
-			
-			if(releaseYear.contains(",")) {
-				return;
-			}
-			
-			Movie movie = new Movie(title, Integer.valueOf(releaseYear));
-			
-			for(int i = 0; i < elements.length; i++) {
-				
-				String[] name = elements[i].split(",");
-				String lastname = name[0].trim();
-				String firstname = "";
-				
-				if(name.length > 1) {
-					firstname = name[1].trim();
-				}
-				
-				Actor actor = new Actor(lastname, firstname);
-				movie.addActor(actor);
-			}
-			
-			movies.add(movie);
-		});
-		
-		lines.close();
-		
 		System.out.println(movies.size());
+		
+		/**
+		 * Overall actor count.
+		 */
+		long countActors = movies.stream()
+				.flatMap(movie -> movie.getActors().stream())
+				.distinct()
+				.count();
+		
+		System.out.println(countActors);
+		
+		/**
+		 * Actor that played in the most movies
+		 */
+		Map.Entry<Actor, Long> actorEntry = movies.stream()
+			.flatMap(movie -> movie.getActors().stream())
+			.collect(
+				Collectors.groupingBy( 
+					Function.identity(),
+					Collectors.counting()
+				)
+			)
+			.entrySet()
+			.stream()
+			.max(
+				Map.Entry.comparingByValue()
+			)
+			.get();
+		
+		System.out.println(actorEntry);
+		
+		/**
+		 * Actor that played in the greatest amount of movies during a given year.
+		 */
+		Map.Entry<Integer, Map.Entry<Actor, AtomicLong>> actorThatPlayedInTheMostMoviesInAGivenYear = 
+			movies.stream()
+				.collect(
+					Collectors.groupingBy(
+						movie -> movie.getReleaseYear(),
+						TreeMap<Integer, HashMap<Actor, AtomicLong>>::new,
+						Collector.of(
+							HashMap<Actor, AtomicLong>::new,
+							(map, movie) -> {
+								movie.getActors().forEach(
+									actor -> map.computeIfAbsent(actor, a -> new AtomicLong()).incrementAndGet()
+								);
+							},
+							(map1, map2) -> {
+								map2.entrySet().forEach(
+									entry2 -> map1.merge(entry2.getKey(), entry2.getValue(), 
+										(atomic1, atomic2) -> { 
+											atomic1.addAndGet(atomic2.get());
+											return atomic1;
+										}
+									)
+								);
+								return map1;
+							},
+							Collector.Characteristics.IDENTITY_FINISH
+						)
+					)
+				)
+				.entrySet()
+				.stream()
+				.collect(
+					Collectors.toMap(
+						Map.Entry::getKey,
+						entry -> entry.getValue()
+							.entrySet()
+							.stream()
+							.max(
+								Map.Entry.comparingByValue(
+									Comparator.comparing(AtomicLong::get)
+								)
+							)
+							.get()
+					)
+				)
+				.entrySet()
+				.stream()
+				.max(
+					Map.Entry.comparingByValue(
+						Comparator.comparing(
+							entry -> entry.getValue().get()
+						)
+					)
+				)
+				.get();
+		
+		System.out.println(actorThatPlayedInTheMostMoviesInAGivenYear);
+	
 	}
 
 }
