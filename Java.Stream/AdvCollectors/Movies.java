@@ -19,13 +19,13 @@ public class Movies {
 	public static void main(String[] args) throws IOException {
 
 		Set<Movie> movies = 
-				StreamSupport.stream(
-					new MovieSpliterator(
-							Files.lines(Paths.get("src/adv/movies.txt")).spliterator()
-					),
-					false
-				)
-				.collect(Collectors.toSet());
+			StreamSupport.stream(
+				new MovieSpliterator(
+					Files.lines(Paths.get("src/adv/movies.txt")).spliterator()
+				),
+				false
+			)
+			.collect(Collectors.toSet());
 			
 		System.out.println(movies.size());
 		
