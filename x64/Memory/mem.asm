@@ -12,9 +12,9 @@ extrn ExitProcess: PROC
 Start PROC
 
   xor rax, rax
-  xor rax, rax
-  xor rax, rax
-  xor rax, rax
+  xor rbx, rbx
+  xor rcx, rcx
+  xor rdx, rdx
 
   mov al, z0
   mov bx, z1
