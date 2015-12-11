@@ -92,12 +92,11 @@ public class Euler59 {
 
 		Euler59.cnt = 0;
 
-		xored.forEach(item -> {
-			if (Character.isLetter((char) ((byte) item))) {
-				Euler59.cnt++;
-			}
-		});
-
+		Euler59.cnt += xored.stream()
+			.filter(item -> Character.isLetter((char) ((byte) item)))
+			.collect(Collectors.counting())
+			.intValue();
+		
 		int cnt = Euler59.cnt;
 		Euler59.cnt = 0;
 
