@@ -90,8 +90,6 @@ public class Euler59 {
 
 	private static int sigma(List<Byte> xored) {
 
-		Euler59.cnt = 0;
-
 		Euler59.cnt += xored.stream()
 			.filter(item -> Character.isLetter((char) ((byte) item)))
 			.collect(Collectors.counting())
