@@ -32,7 +32,7 @@ Start PROC
     dec variable
     mov r12, variable
  
-    cmp r12b, 0h
+    cmp r12d, 0h
     jl fnloop
  
     inc variable
