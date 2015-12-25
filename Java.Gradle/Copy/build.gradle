@@ -1,0 +1,19 @@
+
+def config = copySpec {
+	exclude {
+		it.file.name.startsWith('Test')
+	}
+	from 'src'
+}
+
+task copyFiles2(type: Copy) {
+	
+	with config
+	into 'dest'
+}
+
+task copyFiles(type: Copy) {
+//	exclude 'Main.java'
+	from 'src'
+	into 'dest'
+}
