@@ -17,7 +17,7 @@ l2 WORD 0
 
 Start PROC
     
-    ; STOS /////////////////////////////
+    ; STOS /////////////////////////
     ; Zajęcie 0x80 bajtów na stosie dla przyszłego użycia
     sub rsp, 80h
     
@@ -32,7 +32,7 @@ Start PROC
     push rdx
     call wczytaj
     
-    ; DODAWANIE //////////////////////
+    ; DODAWANIE ////////////////////
     ; Wrzucenie l1 i l2 na stos jako parametr dla procedury dodaj,
     ; która doda do siebie obie wartości i zwróci wartość wrzucając
     ; na stos wynik.
@@ -40,7 +40,7 @@ Start PROC
     push l2
     call dodaj
     
-    ; WYPISYWANIE ///////////////////
+    ; WYPISYWANIE //////////////////
     ; Wywołanie procedury, która wypiszę wynik dodawania. Procedura
     ; ta przyjmuje jeden parametr poprzez stos. Jako że wcześniej wywołaliśmy 
     ; procedurę dodaj, to nie musimy nic wrzucać na stos, bo poprzednia
