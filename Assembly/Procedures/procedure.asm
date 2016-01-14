@@ -18,7 +18,7 @@ l2 WORD 0
 Start PROC
     
     ; STOS /////////////////////////
-    ; Zajęcie 0x80 bajtów na stosie dla przyszłego użycia
+    ; Zarezerwowanie 0x80 bitów na stosie dla przyszłego użycia
     sub rsp, 80h
     
     ; WCZYTYWANIE //////////////////
@@ -53,9 +53,9 @@ Start PROC
 ; Procedura wczytująca liczbę do adresu podanego jej poprzez stos.
 wczytaj:
     
-    ; Wywołanie procedury poprzez instrukcję CALL zapisuje wskaźnik
+    ; Wywołanie procedury poprzez instrukcję CALL powoduje zapisanie wskaźnika
     ; powrotu na stosie. Zdejmując go ze stosu na rejestr R13 jesteśmy
-    ; w stanie uzyskać dostęp do pozostałych parametrów na stosie.
+    ; w stanie uzyskać dostęp do pozostałej części stosu.
     pop r13
     
     ; Przypisanie adresu na format do wczytywania liczb do rcx'a,
