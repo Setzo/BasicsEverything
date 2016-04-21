@@ -90,6 +90,7 @@ public class RSA {
         int[] decrypted = new int[toDecrypt.length];
 
         for(int counter = 0; counter < toDecrypt.length; counter++) {
+
             decrypted[counter] =
                 Integer.parseInt(
                     BigInteger.valueOf(Integer.parseInt(toDecrypt[counter]))
@@ -101,7 +102,6 @@ public class RSA {
         }
 
         return decrypted;
-
     }
 
     private static String numericToAscii(String numeric) {
@@ -140,14 +140,14 @@ public class RSA {
         System.out.println("Public key (E): " + publicKey);
         System.out.println("Private key (D): " + privateKey);
 
-        int[] asciiVals = asciiValues("wiosna");
+        int[] asciiVals = asciiValues(WORD);
         System.out.print("Before: ");
         for (int i : asciiVals) {
             System.out.print(i + " ");
         }
         System.out.println();
 
-        int[] encrypted = encrypt("wiosna", publicKey, pxq);
+        int[] encrypted = encrypt(WORD, publicKey, pxq);
         StringBuilder toDec = new StringBuilder();
         for (int i : encrypted) {
             toDec.append(i);
