@@ -29,7 +29,7 @@ public class RSA {
 
     private static boolean isCoprime(int num1, int num2) {
 
-        int max = Math.max(num1, num2);
+        final int max = Math.max(num1, num2);
 
         for (int counter = 2; counter <= max / 2; counter++) {
             if (num1 % counter == 0 && num2 % counter == 0) {
@@ -54,7 +54,7 @@ public class RSA {
     private static int[] asciiValues(String word) {
 
         int[] ascii = new int[word.length()];
-        char[] letters = word.toCharArray();
+        final char[] letters = word.toCharArray();
 
         for (int counter = 0; counter < word.length(); counter++) {
 
@@ -67,7 +67,7 @@ public class RSA {
     private static int[] encrypt(String word, int publicKey, int pxq) {
 
         int[] encrypted = new int[word.length()];
-        char[] letters = word.toCharArray();
+        final char[] letters = word.toCharArray();
 
         for (int counter = 0; counter < word.length(); counter++) {
 
@@ -86,7 +86,7 @@ public class RSA {
 
     private static int[] decrypt(String encrypted, int privateKey, int pxq) {
 
-        String[] toDecrypt = encrypted.split("\\s");
+        final String[] toDecrypt = encrypted.split("\\s");
         int[] decrypted = new int[toDecrypt.length];
 
         for(int counter = 0; counter < toDecrypt.length; counter++) {
@@ -119,17 +119,17 @@ public class RSA {
 
     public static void main(String args[]) {
 
-        int p = P_TABLE[AGENT_NUMBER % P_TABLE.length];
-        int q = Q_TABLE[AGENT_NUMBER % Q_TABLE.length];
+        final int p = P_TABLE[AGENT_NUMBER % P_TABLE.length];
+        final int q = Q_TABLE[AGENT_NUMBER % Q_TABLE.length];
 
-        int pxq = p * q;
+        final int pxq = p * q;
 
         // http://stackoverflow.com/questions/20925656/how-to-compute-eulers-totient-function-%CF%86-in-java
-        int totient = (p - 1) * (q - 1);
+        final int totient = (p - 1) * (q - 1);
 
-        int publicKey = getCoprime(q, totient);
+        final int publicKey = getCoprime(q, totient);
 
-        int privateKey = getPrivateKey(publicKey, totient);
+        final int privateKey = getPrivateKey(publicKey, totient);
 
         System.out.println("Agent: " + AGENT_NUMBER);
         System.out.println("Word: " + WORD);
@@ -140,14 +140,14 @@ public class RSA {
         System.out.println("Public key (E): " + publicKey);
         System.out.println("Private key (D): " + privateKey);
 
-        int[] asciiVals = asciiValues(WORD);
+        final int[] asciiVals = asciiValues(WORD);
         System.out.print("Before: ");
         for (int i : asciiVals) {
             System.out.print(i + " ");
         }
         System.out.println();
 
-        int[] encrypted = encrypt(WORD, publicKey, pxq);
+        final int[] encrypted = encrypt(WORD, publicKey, pxq);
         StringBuilder toDec = new StringBuilder();
         for (int i : encrypted) {
             toDec.append(i);
@@ -157,7 +157,7 @@ public class RSA {
         System.out.println("Encrypted (Text): " + numericToAscii(toDec.toString()));
 
         StringBuilder toEnc = new StringBuilder();
-        int[] decrypted = decrypt(toDec.toString(), privateKey, pxq);
+        final int[] decrypted = decrypt(toDec.toString(), privateKey, pxq);
         for (int i : decrypted) {
             toEnc.append(i);
             toEnc.append(" ");
