@@ -119,8 +119,8 @@ public class RSA {
 
     public static void main(String args[]) {
 
-        int p = P_TABLE[AGENT_NUMBER % 16];
-        int q = Q_TABLE[AGENT_NUMBER % 16];
+        int p = P_TABLE[AGENT_NUMBER % P_TABLE.length];
+        int q = Q_TABLE[AGENT_NUMBER % Q_TABLE.length];
 
         int pxq = p * q;
 
