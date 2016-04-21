@@ -131,6 +131,7 @@ public class RSA {
 
         int privateKey = getPrivateKey(publicKey, totient);
 
+        System.out.println("Agent: " + AGENT_NUMBER);
         System.out.println("Word: " + WORD);
         System.out.println("P: " + p);
         System.out.println("Q: " + q);
