@@ -104,6 +104,19 @@ public class RSA {
 
     }
 
+    private static String numericToAscii(String numeric) {
+
+        String[] toAscii = numeric.split("\\s");
+        StringBuilder sb = new StringBuilder();
+
+        for(int counter = 0; counter < toAscii.length; counter++) {
+
+            sb.append((char)((byte) Integer.parseInt(toAscii[counter])));
+        }
+
+        return sb.toString();
+    }
+
     public static void main(String args[]) {
 
         int p = P_TABLE[AGENT_NUMBER % 16];
@@ -139,7 +152,8 @@ public class RSA {
             toDec.append(i);
             toDec.append(" ");
         }
-        System.out.println("Encrypted: " + toDec.toString());
+        System.out.println("Encrypted (Numeric): " + toDec.toString());
+        System.out.println("Encrypted (Text): " + numericToAscii(toDec.toString()));
 
         StringBuilder toEnc = new StringBuilder();
         int[] decrypted = decrypt(toDec.toString(), privateKey, pxq);
@@ -147,6 +161,7 @@ public class RSA {
             toEnc.append(i);
             toEnc.append(" ");
         }
-        System.out.println("Decrypted: " + toEnc.toString());
+        System.out.println("Decrypted (Numeric): " + toEnc.toString());
+        System.out.println("Decrypted (Text): " + numericToAscii(toEnc.toString()));
     }
 }
