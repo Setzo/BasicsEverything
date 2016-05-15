@@ -12,7 +12,7 @@ class Car2 {
     }
 }
 
-window.onload = function() {
+window.onload = () => {
 
     var car = new Car2('meow');
 

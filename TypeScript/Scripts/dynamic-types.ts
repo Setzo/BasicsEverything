@@ -1,3 +1,4 @@
+/// <reference path="typings/knockout.d.ts" />
 
 declare var ko: KnockoutStatic;
 

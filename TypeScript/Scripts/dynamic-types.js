@@ -1,3 +1,4 @@
+/// <reference path="typings/knockout.d.ts" />
 var dynamicTypes;
 (function (dynamicTypes) {
     var name = ko.observable('John Papa');
