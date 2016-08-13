@@ -3,14 +3,17 @@
   <div class="media">
     <div class="media-left">
       <a href="#">
-        <img class="media-object" src="http://www.gravatar.com/avatar/424242">
+        <img class="media-object" src="<%= @question.gravatar %>">
       </a>
     </div>
     <div class="media-body">
-      <h4 class="media-heading">user@email.com asked:</h4>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Phasellus convallis consectetur massa, eu convallis magna interdum in.
-      Sed ut venenatis quam. Sed non tortor ac sapien cursus suscipit id ut felis.
+      <h4 class="media-heading"><%= @question.email %> asked:</h4>
+      <%= time_ago_in_words @question.created_at %> ago
+      <br>
+      <%= @question.body %>
+      <div>
+        <a href="<%= question_path(@question) %>" class="btn btn-success btn-xs">View Answers</a>
+      </div>
     </div>
   </div>
 </div>
