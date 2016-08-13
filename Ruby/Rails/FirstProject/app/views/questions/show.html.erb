@@ -1,4 +1,3 @@
-
 <div class="lead well">
   <div class="media">
     <div class="media-left">
@@ -22,50 +21,34 @@
   <div class="col-sm-8 col-sm-offset-2">
 
     <div>
-      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#new-answer-modal">Submit new answer</button>
+      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#new-answer-modal">Submit
+        new answer
+      </button>
     </div>
 
     <%= render 'home/new_answer_form' %>
 
-    <div class="media">
-      <div class="media-left">
-        <a href="#">
-          <img class="media-object" src="http://www.gravatar.com/avatar/424242">
-        </a>
-      </div>
-      <div class="media-body">
-        <h4 class="media-heading">user@email.com asked:</h4>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Phasellus convallis consectetur massa, eu convallis magna interdum in.
-        Sed ut venenatis quam. Sed non tortor ac sapien cursus suscipit id ut felis.
-      </div>
-    </div>
-    <div class="media">
-      <div class="media-left">
-        <a href="#">
-          <img class="media-object" src="http://www.gravatar.com/avatar/424242">
-        </a>
-      </div>
-      <div class="media-body">
-        <h4 class="media-heading">user@email.com asked:</h4>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Phasellus convallis consectetur massa, eu convallis magna interdum in.
-        Sed ut venenatis quam. Sed non tortor ac sapien cursus suscipit id ut felis.
-      </div>
-    </div>
-    <div class="media">
-      <div class="media-left">
-        <a href="#">
-          <img class="media-object" src="http://www.gravatar.com/avatar/424242">
-        </a>
-      </div>
-      <div class="media-body">
-        <h4 class="media-heading">user@email.com asked:</h4>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Phasellus convallis consectetur massa, eu convallis magna interdum in.
-        Sed ut venenatis quam. Sed non tortor ac sapien cursus suscipit id ut felis.
-      </div>
-    </div>
+    <% @answers.each do |answer| %>
+
+        <div class="media">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object" src="<%= answer.gravatar %>">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading"><%= answer.email %> asked:</h4>
+            <%= time_ago_in_words answer.created_at %> ago
+            <br>
+            <%= answer.body %>
+          </div>
+        </div>
+
+    <% end %>
+
+    <% if @answers.empty? %>
+        <div class="alert alert-info">Nothing here yet.</div>
+    <% end %>
 
   </div>
 </div>

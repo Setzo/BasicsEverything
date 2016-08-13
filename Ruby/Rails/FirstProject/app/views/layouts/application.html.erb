@@ -17,6 +17,10 @@
 
   <%= render 'home/navbar' %>
 
+  <div class="well">
+    <%= current_user_email %>
+  </div>
+
   <div class="container">
     <%= yield %>
   </div>
