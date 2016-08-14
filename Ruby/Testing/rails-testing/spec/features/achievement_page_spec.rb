@@ -12,10 +12,10 @@ feature 'achievement page' do
 
   scenario 'render markdown description' do
 
-    achievement = FactoryGirl.create(:achievement, description: 'YEAAAAAAAAAAAAAAAAAAH')
+    achievement = FactoryGirl.create(:achievement, description: '*YEAAAAAAAAAAAAAAAAAAH*')
     visit("/achievements/#{achievement.id}")
 
-    expect(page).to have_content('YEAAAAAAAAAAAAAAAAAAH')
+    expect(page).to have_css('em', text: 'YEAAAAAAAAAAAAAAAAAAH')
   end
 
 end
