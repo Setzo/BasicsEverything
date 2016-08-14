@@ -8,6 +8,8 @@ class AchievementsController < ApplicationController
     @achievement = Achievement.new(achievements_params)
     if @achievement.save
       redirect_to root_url, notice: 'Achievement has been created.'
+    else
+      render :new
     end
   end
 
