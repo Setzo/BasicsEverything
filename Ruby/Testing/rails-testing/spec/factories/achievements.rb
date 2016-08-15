@@ -5,6 +5,7 @@ FactoryGirl.define do
     privacy :private_access
     featured true
     cover_image '../fixtures/cover_image.png'
+    user { FactoryGirl.create(:user) }
 
     factory :public_achievement do
       privacy :public_access
