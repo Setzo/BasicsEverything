@@ -3,6 +3,7 @@ require 'rails_helper'
 describe AchievementsController, type: :controller do
 
   shared_examples 'public access to achievements' do
+
     describe 'GET index' do
       it 'renders :index template' do
         get :index
