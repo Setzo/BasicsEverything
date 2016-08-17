@@ -4,7 +4,7 @@ class AchievementsController < ApplicationController
   before_action :owners_only, only: [:update, :edit, :destroy]
 
   def index
-    @achievements = Achievement.public_access
+    @achievements = Achievement.get_public_achievements
   end
 
   def new
@@ -35,6 +35,13 @@ class AchievementsController < ApplicationController
     else
       render :new
     end
+    # service = CreateAchievement.new(achievements_params, current_user)
+    # service.create
+    # if service.created?
+    #   redirect_to achievement_url(@achievement), notice: 'Achievement has been created.'
+    # else
+    #   render :new
+    # end
   end
 
   def show
