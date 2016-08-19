@@ -6,7 +6,7 @@ feature 'create_new_achievement' do
 
   let(:new_achievement_form) { NewAchievementForm.new }
   let(:login_form) { LoginForm.new }
-  let(:user) {FactoryGirl.create(:user)}
+  let(:user) { FactoryGirl.create(:user) }
 
   before do
     login_form.visit_page.login_as(user)
@@ -18,8 +18,8 @@ feature 'create_new_achievement' do
     achievement_title = 'Read a book'
 
     new_achievement_form.visit_page.fill_in_with(
-      title: achievement_title,
-      cover_image: 'cover_image.png'
+        title: achievement_title,
+        cover_image: 'cover_image.png'
     ).submit
 
     expect(ActionMailer::Base.deliveries.count).to eq(1)

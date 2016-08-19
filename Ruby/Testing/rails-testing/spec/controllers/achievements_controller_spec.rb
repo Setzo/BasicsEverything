@@ -10,7 +10,7 @@ describe AchievementsController, type: :controller do
 
         achievement = instance_double(Achievement)
 
-        allow(Achievement).to receive(:get_public_achievements) {[achievement]}
+        allow(Achievement).to receive(:get_public_achievements) { [achievement] }
         get :index
         expect(assigns(:achievements)).to eq([achievement])
       end
@@ -127,7 +127,7 @@ describe AchievementsController, type: :controller do
 
     context 'controller level' do
 
-      let(:user) {FactoryGirl.create(:user)}
+      let(:user) { FactoryGirl.create(:user) }
 
       before do
         sign_in(user)

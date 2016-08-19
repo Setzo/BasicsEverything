@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :achievement do
-    sequence(:title) { |title_number| "Achievement ##{title_number}"}
+    sequence(:title) { |title_number| "Achievement ##{title_number}" }
     description 'My description'
     privacy :private_access
     featured true

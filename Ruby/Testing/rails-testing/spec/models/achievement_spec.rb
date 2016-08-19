@@ -4,6 +4,8 @@ RSpec.describe Achievement, type: :model do
 
   describe 'validations' do
 
+    it { should have_many(:encouragements) }
+
     it 'requires title' do
       achievement = Achievement.new(title: '')
       achievement.valid?
@@ -12,7 +14,7 @@ RSpec.describe Achievement, type: :model do
       expect(achievement.valid?).to be_falsy
     end
 
-    it {should validate_presence_of(:title)}
+    it { should validate_presence_of(:title) }
 
     it 'requires title to be unique for one user' do
       user = FactoryGirl.create(:user)
@@ -31,14 +33,14 @@ RSpec.describe Achievement, type: :model do
       expect(second_achievement.valid?).to be_truthy
     end
 
-    it {should validate_uniqueness_of(:title).scoped_to(:user_id).with_message('You can\'t have two same name achievements.')}
+    it { should validate_uniqueness_of(:title).scoped_to(:user_id).with_message('You can\'t have two same name achievements.') }
 
     it 'belongs to user' do
       achievement = Achievement.new(title: 'first', user: nil)
       expect(achievement.valid?).to be_falsy
     end
 
-    it {should validate_presence_of(:user)}
+    it { should validate_presence_of(:user) }
 
     it 'has belongs_to user association' do
       user = FactoryGirl.create(:user)
@@ -49,7 +51,7 @@ RSpec.describe Achievement, type: :model do
       expect(u.macro).to eq(:belongs_to)
     end
 
-    it {should belong_to(:user)}
+    it { should belong_to(:user) }
   end
 
   it 'converts markdown to html' do

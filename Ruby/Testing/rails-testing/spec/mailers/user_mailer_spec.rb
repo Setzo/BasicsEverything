@@ -4,8 +4,8 @@ RSpec.describe UserMailer, type: :mailer do
 
   include Rails.application.routes.url_helpers
 
-  let(:achievement_id) {1}
-  let(:email) {UserMailer.achievement_created('author@email.com', achievement_id).deliver_now}
+  let(:achievement_id) { 1 }
+  let(:email) { UserMailer.achievement_created('author@email.com', achievement_id).deliver_now }
 
   it 'sends achievement created email to author of this achievement' do
     expect(email.to).to include('author@email.com')

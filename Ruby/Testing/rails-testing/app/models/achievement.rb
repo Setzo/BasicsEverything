@@ -2,6 +2,8 @@ class Achievement < ApplicationRecord
 
   belongs_to :user
 
+  has_many :encouragements
+
   validates :title, presence: true
   # validates :title, uniqueness: true
   # validate :unique_title_for_one_user
@@ -11,12 +13,12 @@ class Achievement < ApplicationRecord
       message: 'You can\'t have two same name achievements.'
   }
 
-  enum privacy: [ :public_access, :private_access, :friends_access ]
+  enum privacy: [:public_access, :private_access, :friends_access]
 
   mount_uploader :cover_image, CoverImageUploader
 
   def description_html
-    Redcarpet::Markdown.new(Redcarpet::Render::HTML ).render(description)
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(description)
   end
 
   def silly_title
