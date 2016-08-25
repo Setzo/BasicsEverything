@@ -11,7 +11,9 @@ let mainWindow
 app.on('ready', _ => {
    mainWindow = new BrowserWindow({
       height: 400,
-      width: 400
+      width: 400,
+      frame: false,
+      transparent: true
    })
 
    mainWindow.loadURL("file://" + __dirname + "/countdown.html")
