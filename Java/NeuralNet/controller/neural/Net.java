@@ -1,152 +1,153 @@
 package controller.neural;
+
 import java.util.Vector;
 
 
 public class Net {
 
-	private static double recentAverageSmoothingFactor = 100.0;
-	private double recentAverageError = 0.5;
-	
-	private double error;
-	
-	private Vector<Layer> layers;
-	
-	private Vector<Integer> topologyy;
-	
-	public Net(Vector<Integer> topology) {
+    private static double recentAverageSmoothingFactor = 100.0;
+    private double recentAverageError = 0.5;
 
-		layers = new Vector<Layer>();
-		
-		int numLayers = topology.size();
+    private double error;
 
-		for (int layerNum = 0; layerNum < numLayers; ++layerNum) {
+    private Vector<Layer> layers;
 
-			layers.add(new Layer());
+    private Vector<Integer> topologyy;
 
-			int numOutputs = layerNum == topology.size() - 1 ? 0 : topology.get(layerNum + 1);
-			
-			for (int nNeuron = 0; nNeuron <= topology.get(layerNum); ++nNeuron) {
+    public Net(Vector<Integer> topology) {
 
-				layers.lastElement().add(new Neuron(numOutputs, nNeuron));
-			}
+        layers = new Vector<Layer>();
 
-			layers.lastElement().lastElement().setOutputValue(1.0);
-		}
-	}
-	
-	public void feedForward(Vector<Double> inputValues) {
+        int numLayers = topology.size();
 
-		assert(inputValues.size() == layers.get(0).size() - 1);
+        for (int layerNum = 0; layerNum < numLayers; ++layerNum) {
 
-		for (int nNeuron = 0; nNeuron < inputValues.size(); ++nNeuron) {
+            layers.add(new Layer());
 
-			layers.get(0).get(nNeuron).setOutputValue(inputValues.get(nNeuron));
-		}
+            int numOutputs = layerNum == topology.size() - 1 ? 0 : topology.get(layerNum + 1);
 
-		for (int layerNum = 1; layerNum < layers.size(); ++layerNum) {
+            for (int nNeuron = 0; nNeuron <= topology.get(layerNum); ++nNeuron) {
 
-			Layer previousLayer = layers.get(layerNum - 1);
-			for (int nNeuron = 0; nNeuron < layers.get(layerNum).size() - 1; ++nNeuron) {
+                layers.lastElement().add(new Neuron(numOutputs, nNeuron));
+            }
 
-				layers.get(layerNum).get(nNeuron).feedForward(previousLayer);
-			}
-		}
-	}
-	
-	public void backPropagation(Vector<Double> desiredValues) {
+            layers.lastElement().lastElement().setOutputValue(1.0);
+        }
+    }
 
-		Layer outputLayer = layers.lastElement();
-		error = 0.0;
+    public void feedForward(Vector<Double> inputValues) {
 
-		for (int nNeuron = 0; nNeuron < outputLayer.size() - 1; ++nNeuron) {
+        assert (inputValues.size() == layers.get(0).size() - 1);
 
-			double delta = desiredValues.get(nNeuron) - outputLayer.get(nNeuron).getOutputValue();
-			error += (delta * delta);
-		}
+        for (int nNeuron = 0; nNeuron < inputValues.size(); ++nNeuron) {
 
-		error /= outputLayer.size() - 1;
-		error = Math.sqrt(error);
+            layers.get(0).get(nNeuron).setOutputValue(inputValues.get(nNeuron));
+        }
 
-		recentAverageError = (recentAverageError
-			* recentAverageSmoothingFactor + error)
-			/ (recentAverageSmoothingFactor + 1.0);
+        for (int layerNum = 1; layerNum < layers.size(); ++layerNum) {
 
-		for (int nNeuron = 0; nNeuron < outputLayer.size() - 1; ++nNeuron) {
+            Layer previousLayer = layers.get(layerNum - 1);
+            for (int nNeuron = 0; nNeuron < layers.get(layerNum).size() - 1; ++nNeuron) {
 
-			outputLayer.get(nNeuron).calculateOutputGradients(desiredValues.get(nNeuron));
-		}
+                layers.get(layerNum).get(nNeuron).feedForward(previousLayer);
+            }
+        }
+    }
 
-		for (int layerNum = layers.size() - 2; layerNum > 0; --layerNum) {
+    public void backPropagation(Vector<Double> desiredValues) {
 
-			Layer hiddenLayer = layers.get(layerNum);
-			Layer nextLayer = layers.get(layerNum + 1);
+        Layer outputLayer = layers.lastElement();
+        error = 0.0;
 
-			for (int nNeuron = 0; nNeuron < hiddenLayer.size(); ++nNeuron) {
+        for (int nNeuron = 0; nNeuron < outputLayer.size() - 1; ++nNeuron) {
 
-				hiddenLayer.get(nNeuron).calculateHiddenGradients(nextLayer);
-			}
-		}
+            double delta = desiredValues.get(nNeuron) - outputLayer.get(nNeuron).getOutputValue();
+            error += (delta * delta);
+        }
 
-		for (int layerNum = layers.size() - 1; layerNum > 0; --layerNum) {
+        error /= outputLayer.size() - 1;
+        error = Math.sqrt(error);
 
-			Layer layer = layers.get(layerNum);
-			Layer prevLayer = layers.get(layerNum - 1);
+        recentAverageError = (recentAverageError
+                * recentAverageSmoothingFactor + error)
+                / (recentAverageSmoothingFactor + 1.0);
 
-			for (int nNeuron = 0; nNeuron < layer.size() - 1; ++nNeuron) {
+        for (int nNeuron = 0; nNeuron < outputLayer.size() - 1; ++nNeuron) {
 
-				layer.get(nNeuron).updateInputWeights(prevLayer);
-			}
-		}
-	}
-	
-	public Vector<Double> getResultValues() {
+            outputLayer.get(nNeuron).calculateOutputGradients(desiredValues.get(nNeuron));
+        }
 
-		Vector<Double> resultValues = new Vector<Double>();
+        for (int layerNum = layers.size() - 2; layerNum > 0; --layerNum) {
 
-		for (int nNeuron = 0; nNeuron < layers.lastElement().size() - 1; ++nNeuron) {
+            Layer hiddenLayer = layers.get(layerNum);
+            Layer nextLayer = layers.get(layerNum + 1);
 
-			resultValues.add(layers.lastElement().get(nNeuron).getOutputValue());
-		}
-		
-		return resultValues;
-	}
-	
-	public Vector<Vector<Vector<Connection>>> getConnectionWeights() {
-		
-		Vector<Vector<Vector<Connection>>> connections = new Vector<Vector<Vector<Connection>>>();
-		
-		for(int layNum = 0; layNum < layers.size() - 1; layNum++) {
-			
-			connections.add(new Vector<Vector<Connection>>());
-			
-			for(int nNeuron = 0; nNeuron < layers.get(layNum).size(); nNeuron++) {
-				
-				connections.get(layNum).add(layers.get(layNum).get(nNeuron).getOutputWeights());
-			}
-		}
-		
-		return connections;
-	}
-	
-	public void setConnectionWeights(Vector<Integer> topology, Vector<Vector<Vector<Connection>>> connectionWeights) {
+            for (int nNeuron = 0; nNeuron < hiddenLayer.size(); ++nNeuron) {
 
-		int numLayers = topology.size();
-		
-		for(int layNum = 0; layNum < numLayers - 1; ++layNum) {
-			
-			for(int nNeuron = 0; nNeuron <= topology.get(layNum); ++nNeuron) {
-				
-				layers.get(layNum).get(nNeuron).setOutputWeights(connectionWeights.get(layNum).get(nNeuron));
-			}
-		}
-	}
+                hiddenLayer.get(nNeuron).calculateHiddenGradients(nextLayer);
+            }
+        }
 
-	public double getRecentAverageError() {
+        for (int layerNum = layers.size() - 1; layerNum > 0; --layerNum) {
 
-		return recentAverageError;
-	}
-	
-	public Vector<Integer> getTopologyy() {
-		return this.topologyy;
-	}
+            Layer layer = layers.get(layerNum);
+            Layer prevLayer = layers.get(layerNum - 1);
+
+            for (int nNeuron = 0; nNeuron < layer.size() - 1; ++nNeuron) {
+
+                layer.get(nNeuron).updateInputWeights(prevLayer);
+            }
+        }
+    }
+
+    public Vector<Double> getResultValues() {
+
+        Vector<Double> resultValues = new Vector<Double>();
+
+        for (int nNeuron = 0; nNeuron < layers.lastElement().size() - 1; ++nNeuron) {
+
+            resultValues.add(layers.lastElement().get(nNeuron).getOutputValue());
+        }
+
+        return resultValues;
+    }
+
+    public Vector<Vector<Vector<Connection>>> getConnectionWeights() {
+
+        Vector<Vector<Vector<Connection>>> connections = new Vector<Vector<Vector<Connection>>>();
+
+        for (int layNum = 0; layNum < layers.size() - 1; layNum++) {
+
+            connections.add(new Vector<Vector<Connection>>());
+
+            for (int nNeuron = 0; nNeuron < layers.get(layNum).size(); nNeuron++) {
+
+                connections.get(layNum).add(layers.get(layNum).get(nNeuron).getOutputWeights());
+            }
+        }
+
+        return connections;
+    }
+
+    public void setConnectionWeights(Vector<Integer> topology, Vector<Vector<Vector<Connection>>> connectionWeights) {
+
+        int numLayers = topology.size();
+
+        for (int layNum = 0; layNum < numLayers - 1; ++layNum) {
+
+            for (int nNeuron = 0; nNeuron <= topology.get(layNum); ++nNeuron) {
+
+                layers.get(layNum).get(nNeuron).setOutputWeights(connectionWeights.get(layNum).get(nNeuron));
+            }
+        }
+    }
+
+    public double getRecentAverageError() {
+
+        return recentAverageError;
+    }
+
+    public Vector<Integer> getTopologyy() {
+        return this.topologyy;
+    }
 }

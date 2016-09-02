@@ -2,5 +2,5 @@ package gui.listeners;
 
 public interface OutputLineListener {
 
-	public void lineToAppend(String lineToApp);
+    public void lineToAppend(String lineToApp);
 }

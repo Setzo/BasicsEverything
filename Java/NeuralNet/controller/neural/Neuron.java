@@ -1,127 +1,128 @@
 package controller.neural;
+
 import java.util.Vector;
 
 
 public class Neuron {
 
-	private static double eta = 0.15;
-	private static double alpha = 0.5;
-	
-	private Vector<Connection> outputWeights;
-	
-	private double outputValue;
-	private double gradient;
-	
-	private int index;
-	
-	public Neuron(int numOfOutputs, int index) {
-		
-		outputWeights = new Vector<Connection>();
+    private static double eta = 0.15;
+    private static double alpha = 0.5;
 
-		for(int currentConnection = 0; currentConnection < numOfOutputs; ++currentConnection) {
-			
-			outputWeights.add(new Connection());
-		}
-			
-		this.index = index;
-	}
-	
-	public void setOutputValue(double outputValue) {
-		
-		this.outputValue = outputValue;
-	}
-	
-	public double getOutputValue() {
-		
-		return this.outputValue;
-	}
-	
-	public void feedForward(Layer previousLayer) {
-		
-		double sigma = 0.0;
-		
-		for (int nNeuron = 0; nNeuron < previousLayer.size(); ++nNeuron) {
+    private Vector<Connection> outputWeights;
 
-			sigma += previousLayer.get(nNeuron).getOutputValue()
-				* previousLayer.get(nNeuron).outputWeights.get(this.index).weight;
-		}
+    private double outputValue;
+    private double gradient;
 
-		outputValue = this.transferFunction(sigma);
-	}
-	
-	public void calculateOutputGradients(double desiredValue) {
-		
-		double delta = desiredValue - outputValue;
-		gradient = delta * this.transferFunctionDerivative(outputValue);
-	}
-	
-	public void calculateHiddenGradients(Layer nextLayer) {
+    private int index;
 
-		double dow = this.sigmaDOW(nextLayer);
-		gradient = dow * this.transferFunctionDerivative(outputValue);
-	}
-	
-	public void updateInputWeights(Layer previousLayer) {
+    public Neuron(int numOfOutputs, int index) {
 
-		for (int nNeuron = 0; nNeuron < previousLayer.size(); ++nNeuron) {
+        outputWeights = new Vector<Connection>();
 
-			Neuron neuron = previousLayer.get(nNeuron);
-			double oldDeltaWeight = neuron.outputWeights.get(index).deltaWeight;
+        for (int currentConnection = 0; currentConnection < numOfOutputs; ++currentConnection) {
 
-			double newDeltaWeight =
-				eta * neuron.getOutputValue() * gradient
-				+ alpha * oldDeltaWeight;
+            outputWeights.add(new Connection());
+        }
 
-			neuron.outputWeights.get(index).deltaWeight = newDeltaWeight;
-			neuron.outputWeights.get(index).weight += newDeltaWeight;
-		}
-	}
-	
-	private double transferFunction(double delta) {
+        this.index = index;
+    }
 
-		return Math.tanh(delta);
-	}
+    public void setOutputValue(double outputValue) {
 
-	private double transferFunctionDerivative(double delta) {
+        this.outputValue = outputValue;
+    }
 
-		return 1.0 - delta * delta;
-	}
+    public double getOutputValue() {
 
-	private double sigmaDOW(Layer nextLayer) {
+        return this.outputValue;
+    }
 
-		double sigma = 0.0;
+    public void feedForward(Layer previousLayer) {
 
-		for (int nNeuron = 0; nNeuron < nextLayer.size() - 1; ++nNeuron) {
+        double sigma = 0.0;
 
-			sigma += outputWeights.get(nNeuron).weight * nextLayer.get(nNeuron).gradient;
-		}
+        for (int nNeuron = 0; nNeuron < previousLayer.size(); ++nNeuron) {
 
-		return sigma;
-	}
-	
-	public Vector<Connection> getOutputWeights() {
-		
-		return this.outputWeights;
-	}
-	
-	public void setOutputWeights(Vector<Connection> outputWeights) {
-		
-		this.outputWeights = outputWeights;
-	}
+            sigma += previousLayer.get(nNeuron).getOutputValue()
+                    * previousLayer.get(nNeuron).outputWeights.get(this.index).weight;
+        }
 
-	public static double getEta() {
-		return eta;
-	}
+        outputValue = this.transferFunction(sigma);
+    }
 
-	public static double getAlpha() {
-		return alpha;
-	}
+    public void calculateOutputGradients(double desiredValue) {
 
-	public static void setEta(double eta) {
-		Neuron.eta = eta;
-	}
+        double delta = desiredValue - outputValue;
+        gradient = delta * this.transferFunctionDerivative(outputValue);
+    }
 
-	public static void setAlpha(double alpha) {
-		Neuron.alpha = alpha;
-	}
+    public void calculateHiddenGradients(Layer nextLayer) {
+
+        double dow = this.sigmaDOW(nextLayer);
+        gradient = dow * this.transferFunctionDerivative(outputValue);
+    }
+
+    public void updateInputWeights(Layer previousLayer) {
+
+        for (int nNeuron = 0; nNeuron < previousLayer.size(); ++nNeuron) {
+
+            Neuron neuron = previousLayer.get(nNeuron);
+            double oldDeltaWeight = neuron.outputWeights.get(index).deltaWeight;
+
+            double newDeltaWeight =
+                    eta * neuron.getOutputValue() * gradient
+                            + alpha * oldDeltaWeight;
+
+            neuron.outputWeights.get(index).deltaWeight = newDeltaWeight;
+            neuron.outputWeights.get(index).weight += newDeltaWeight;
+        }
+    }
+
+    private double transferFunction(double delta) {
+
+        return Math.tanh(delta);
+    }
+
+    private double transferFunctionDerivative(double delta) {
+
+        return 1.0 - delta * delta;
+    }
+
+    private double sigmaDOW(Layer nextLayer) {
+
+        double sigma = 0.0;
+
+        for (int nNeuron = 0; nNeuron < nextLayer.size() - 1; ++nNeuron) {
+
+            sigma += outputWeights.get(nNeuron).weight * nextLayer.get(nNeuron).gradient;
+        }
+
+        return sigma;
+    }
+
+    public Vector<Connection> getOutputWeights() {
+
+        return this.outputWeights;
+    }
+
+    public void setOutputWeights(Vector<Connection> outputWeights) {
+
+        this.outputWeights = outputWeights;
+    }
+
+    public static double getEta() {
+        return eta;
+    }
+
+    public static double getAlpha() {
+        return alpha;
+    }
+
+    public static void setEta(double eta) {
+        Neuron.eta = eta;
+    }
+
+    public static void setAlpha(double alpha) {
+        Neuron.alpha = alpha;
+    }
 }

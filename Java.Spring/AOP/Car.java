@@ -2,10 +2,10 @@ package main;
 
 import org.springframework.stereotype.Component;
 
-@Component("car")
+@Component( "car" )
 public class Car {
 
-	public void type(int x) {
-		System.out.println("type");
-	}
+    public void type(int x) {
+        System.out.println("type");
+    }
 }

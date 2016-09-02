@@ -8,21 +8,21 @@ import controller.uti.Utilitiess;
 
 public class NeuralNetFileFilter extends FileFilter {
 
-	public boolean accept(File file) {
-		
-		if(file.isDirectory()) {
-			return true;
-		}
-		
-		if(Utilitiess.getExtension(file.getName()).equals("nnet")) {
-			return true;
-		}
-		
-		return false;
-	}
+    public boolean accept(File file) {
 
-	public String getDescription() {
-		
-		return "Neural network training files (.nnet)";
-	}
+        if (file.isDirectory()) {
+            return true;
+        }
+
+        if (Utilitiess.getExtension(file.getName()).equals("nnet")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public String getDescription() {
+
+        return "Neural network training files (.nnet)";
+    }
 }

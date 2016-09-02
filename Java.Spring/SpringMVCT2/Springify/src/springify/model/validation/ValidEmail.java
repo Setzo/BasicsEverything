@@ -10,15 +10,15 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER })
-@Retention(RetentionPolicy.RUNTIME)
+@Target( {ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER} )
+@Retention( RetentionPolicy.RUNTIME )
 @Documented
-@Constraint(validatedBy = springify.model.validation.ValidEmailValidator.class)
+@Constraint( validatedBy = springify.model.validation.ValidEmailValidator.class )
 public @interface ValidEmail {
 
-	String message() default "Email is invalid";
+    String message() default "Email is invalid";
 
-	Class<?>[] groups() default { };
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default { };
+    Class<? extends Payload>[] payload() default {};
 }

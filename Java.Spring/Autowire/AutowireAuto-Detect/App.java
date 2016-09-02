@@ -5,32 +5,32 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"beans/annotations/beans.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext(
+                "beans/annotations/beans.xml");
 
-		Logger logger = (Logger) context.getBean("logger");
+        Logger logger = (Logger) context.getBean("logger");
 
-		logger.writeConsole("Hello there");
-		logger.writeFile("Hi again");
-		
-		LoggerOptional loggerOptional = (LoggerOptional) context.getBean("loggerOptional");
+        logger.writeConsole("Hello there");
+        logger.writeFile("Hi again");
 
-		loggerOptional.writeConsole("Hello there");
-		loggerOptional.writeFile("Hi again");
-		
-		LoggerJSR loggerJSR = (LoggerJSR) context.getBean("loggerJSR");
+        LoggerOptional loggerOptional = (LoggerOptional) context.getBean("loggerOptional");
 
-		loggerJSR.writeConsole("Hello there");
-		loggerJSR.writeFile("Hi again");
-		
-		LoggerInject loggerInject = (LoggerInject) context.getBean("loggerInject");
+        loggerOptional.writeConsole("Hello there");
+        loggerOptional.writeFile("Hi again");
 
-		loggerInject.writeConsole("Hello there");
-		loggerInject.writeFile("Hi again");
+        LoggerJSR loggerJSR = (LoggerJSR) context.getBean("loggerJSR");
 
-		((ClassPathXmlApplicationContext) context).close();
-	}
+        loggerJSR.writeConsole("Hello there");
+        loggerJSR.writeFile("Hi again");
+
+        LoggerInject loggerInject = (LoggerInject) context.getBean("loggerInject");
+
+        loggerInject.writeConsole("Hello there");
+        loggerInject.writeFile("Hi again");
+
+        ((ClassPathXmlApplicationContext) context).close();
+    }
 
 }

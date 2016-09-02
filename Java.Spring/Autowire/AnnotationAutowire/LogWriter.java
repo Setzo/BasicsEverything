@@ -1,5 +1,5 @@
 package spring.testing.annotations;
 
 public interface LogWriter {
-	public void write(String text);
+    public void write(String text);
 }

@@ -1,8 +1,8 @@
 package beans;
 
 public class TestBean {
-	
-	public String getInfo() {
-		return "info";
-	}
+
+    public String getInfo() {
+        return "info";
+    }
 }

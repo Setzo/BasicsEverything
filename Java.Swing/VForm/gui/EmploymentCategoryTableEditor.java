@@ -12,30 +12,30 @@ import data.EmploymentCategory;
 
 public class EmploymentCategoryTableEditor extends AbstractCellEditor implements TableCellEditor {
 
-	private static final long serialVersionUID = -7373440460883286418L;
-	
-	private JComboBox<EmploymentCategory> comboBox;
+    private static final long serialVersionUID = -7373440460883286418L;
 
-	public EmploymentCategoryTableEditor() {
-		comboBox = new JComboBox<EmploymentCategory>(EmploymentCategory.values());
-	}
-	
-	public Object getCellEditorValue() {
-		
-		return comboBox.getSelectedItem();
-	}
+    private JComboBox<EmploymentCategory> comboBox;
 
-	public Component getTableCellEditorComponent(JTable table, Object value,
-			boolean isSelected, int row, int column) {
-		
-		comboBox.setSelectedItem(value);
-		comboBox.addActionListener((e) -> {
-			fireEditingStopped();
-		});
-		return comboBox;
-	}
+    public EmploymentCategoryTableEditor() {
+        comboBox = new JComboBox<EmploymentCategory>(EmploymentCategory.values());
+    }
 
-	public boolean isCellEditable(EventObject e) {
-		return true;
-	}
+    public Object getCellEditorValue() {
+
+        return comboBox.getSelectedItem();
+    }
+
+    public Component getTableCellEditorComponent(JTable table, Object value,
+                                                 boolean isSelected, int row, int column) {
+
+        comboBox.setSelectedItem(value);
+        comboBox.addActionListener((e) -> {
+            fireEditingStopped();
+        });
+        return comboBox;
+    }
+
+    public boolean isCellEditable(EventObject e) {
+        return true;
+    }
 }

@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class DatabaseExceptionHandler {
 
-	@ExceptionHandler(DataAccessException.class)
-	public String handleException(DataAccessException e) {
-		
-		return "error";
-	}
+    @ExceptionHandler( DataAccessException.class )
+    public String handleException(DataAccessException e) {
+
+        return "error";
+    }
 }

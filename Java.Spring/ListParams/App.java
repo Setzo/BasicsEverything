@@ -8,15 +8,15 @@ import bucket.Bucket;
 
 public class App {
 
-	public static void main(String[] args) {
-		
-		ApplicationContext context = new ClassPathXmlApplicationContext("beans/beans.xml");
+    public static void main(String[] args) {
 
-		Bucket bucket = (Bucket)context.getBean("bucket");
-		
-		System.out.println(bucket);
-		
-		((ClassPathXmlApplicationContext)context).close();
-	}
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans/beans.xml");
+
+        Bucket bucket = (Bucket) context.getBean("bucket");
+
+        System.out.println(bucket);
+
+        ((ClassPathXmlApplicationContext) context).close();
+    }
 
 }

@@ -3,135 +3,135 @@ package data;
 import java.io.Serializable;
 
 public class Person implements Serializable {
-	
-	private static final long serialVersionUID = 7862907502368768298L;
 
-	private static int cnt = 1;
-	
-	private int id;
-	private String name;
-	private String occupation;
-	private AgeCategoryEnumerated age;
-	private EmploymentCategory employment;
-	private boolean isPLCitizen;
-	private String docID;
-	private GenderCategory gender;
-	private String phoneNumber;
-	
-	public Person() {
-		this.id = cnt;
-		cnt++;
-	}
+    private static final long serialVersionUID = 7862907502368768298L;
 
-	public Person(String name, String occupation,
-			AgeCategoryEnumerated age, EmploymentCategory employment,
-			boolean isPLCitizen, String docID, GenderCategory gender,
-			String phoneNumber) {
-		
-		this();
-		this.name = name;
-		this.occupation = occupation;
-		this.age = age;
-		this.employment = employment;
-		this.isPLCitizen = isPLCitizen;
-		this.docID = docID;
-		this.gender = gender;
-		this.phoneNumber = phoneNumber;
-	}
-	
-	public Person(int id, String name, String occupation,
-			AgeCategoryEnumerated age, EmploymentCategory employment,
-			boolean isPLCitizen, String docID, GenderCategory gender,
-			String phoneNumber) {
-		
-		this(name, occupation, age, employment, isPLCitizen, docID, gender, phoneNumber);
-		this.id = id;
-	}
+    private static int cnt = 1;
 
-	public int getId() {
-		return id;
-	}
+    private int id;
+    private String name;
+    private String occupation;
+    private AgeCategoryEnumerated age;
+    private EmploymentCategory employment;
+    private boolean isPLCitizen;
+    private String docID;
+    private GenderCategory gender;
+    private String phoneNumber;
 
-	public String getName() {
-		return name;
-	}
+    public Person() {
+        this.id = cnt;
+        cnt++;
+    }
 
-	public String getOccupation() {
-		return occupation;
-	}
+    public Person(String name, String occupation,
+                  AgeCategoryEnumerated age, EmploymentCategory employment,
+                  boolean isPLCitizen, String docID, GenderCategory gender,
+                  String phoneNumber) {
 
-	public AgeCategoryEnumerated getAge() {
-		return age;
-	}
+        this();
+        this.name = name;
+        this.occupation = occupation;
+        this.age = age;
+        this.employment = employment;
+        this.isPLCitizen = isPLCitizen;
+        this.docID = docID;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+    }
 
-	public EmploymentCategory getEmployment() {
-		return employment;
-	}
+    public Person(int id, String name, String occupation,
+                  AgeCategoryEnumerated age, EmploymentCategory employment,
+                  boolean isPLCitizen, String docID, GenderCategory gender,
+                  String phoneNumber) {
 
-	public boolean isPLCitizen() {
-		return isPLCitizen;
-	}
+        this(name, occupation, age, employment, isPLCitizen, docID, gender, phoneNumber);
+        this.id = id;
+    }
 
-	public String getDocID() {
-		return docID;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public GenderCategory getGender() {
-		return gender;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	
-	public static int getCnt() {
-		return cnt;
-	}
+    public String getOccupation() {
+        return occupation;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public AgeCategoryEnumerated getAge() {
+        return age;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public EmploymentCategory getEmployment() {
+        return employment;
+    }
 
-	public void setOccupation(String occupation) {
-		this.occupation = occupation;
-	}
+    public boolean isPLCitizen() {
+        return isPLCitizen;
+    }
 
-	public void setAge(AgeCategoryEnumerated age) {
-		this.age = age;
-	}
+    public String getDocID() {
+        return docID;
+    }
 
-	public void setEmployment(EmploymentCategory employment) {
-		this.employment = employment;
-	}
+    public GenderCategory getGender() {
+        return gender;
+    }
 
-	public void setPLCitizen(boolean isPLCitizen) {
-		this.isPLCitizen = isPLCitizen;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public void setDocID(String docID) {
-		this.docID = docID;
-	}
+    public static int getCnt() {
+        return cnt;
+    }
 
-	public void setGender(GenderCategory gender) {
-		this.gender = gender;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public static void setCnt(int cnt) {
-		Person.cnt = cnt;
-	}
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
 
-	public String toString() {
-		return "Person [id=" + id + ", name=" + name + ", occupation="
-				+ occupation + ", age=" + age + ", employment=" + employment
-				+ ", isPLCitizen=" + isPLCitizen + ", docID=" + docID
-				+ ", gender=" + gender + ", phoneNumber=" + phoneNumber + "]";
-	}
+    public void setAge(AgeCategoryEnumerated age) {
+        this.age = age;
+    }
+
+    public void setEmployment(EmploymentCategory employment) {
+        this.employment = employment;
+    }
+
+    public void setPLCitizen(boolean isPLCitizen) {
+        this.isPLCitizen = isPLCitizen;
+    }
+
+    public void setDocID(String docID) {
+        this.docID = docID;
+    }
+
+    public void setGender(GenderCategory gender) {
+        this.gender = gender;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public static void setCnt(int cnt) {
+        Person.cnt = cnt;
+    }
+
+    public String toString() {
+        return "Person [id=" + id + ", name=" + name + ", occupation="
+                + occupation + ", age=" + age + ", employment=" + employment
+                + ", isPLCitizen=" + isPLCitizen + ", docID=" + docID
+                + ", gender=" + gender + ", phoneNumber=" + phoneNumber + "]";
+    }
 }

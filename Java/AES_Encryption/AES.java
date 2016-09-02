@@ -15,80 +15,80 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class AES {
 
-	private final String initializationVector;
+    private final String initializationVector;
 
-	public AES(String initializationVector) {
+    public AES(String initializationVector) {
 
-		this.initializationVector = initializationVector;
-	}
+        this.initializationVector = initializationVector;
+    }
 
-	public byte[] encryptAES(String plainText, String encryptionKey) {
+    public byte[] encryptAES(String plainText, String encryptionKey) {
 
-		try {
+        try {
 
-			Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
+            Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
 
-			SecretKeySpec key =
-					new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
+            SecretKeySpec key =
+                    new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
 
-			cipher.init(Cipher.ENCRYPT_MODE, key, 
-					new IvParameterSpec(initializationVector.getBytes("UTF-8")));
+            cipher.init(Cipher.ENCRYPT_MODE, key,
+                    new IvParameterSpec(initializationVector.getBytes("UTF-8")));
 
-			return cipher.doFinal(plainText.getBytes("UTF-8"));
+            return cipher.doFinal(plainText.getBytes("UTF-8"));
 
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchProviderException e) {
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (InvalidAlgorithmParameterException e) {
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			e.printStackTrace();
-		}
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public String decryptAES(byte[] cipherText, String encryptionKey) {
-		
-		try {
-			
-			Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
-			
-			SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
-			
-			cipher.init(Cipher.DECRYPT_MODE, key,
-					new IvParameterSpec(initializationVector.getBytes("UTF-8")));
-			
-			return new String(cipher.doFinal(cipherText), "UTF-8");
-			
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchProviderException e) {
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (InvalidAlgorithmParameterException e) {
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
+    public String decryptAES(byte[] cipherText, String encryptionKey) {
+
+        try {
+
+            Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
+
+            SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
+
+            cipher.init(Cipher.DECRYPT_MODE, key,
+                    new IvParameterSpec(initializationVector.getBytes("UTF-8")));
+
+            return new String(cipher.doFinal(cipherText), "UTF-8");
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 }

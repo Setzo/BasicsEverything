@@ -4,82 +4,82 @@ import java.util.EventObject;
 
 public class FormEvent extends EventObject {
 
-	private static final long serialVersionUID = 6409245800344985837L;
+    private static final long serialVersionUID = 6409245800344985837L;
 
-	private String name;
-	private String occupation;
-	private int age;
-	private String employment;
-	private boolean plCitizen;
-	private String nrDow;
+    private String name;
+    private String occupation;
+    private int age;
+    private String employment;
+    private boolean plCitizen;
+    private String nrDow;
 
-	public FormEvent(Object source) {
+    public FormEvent(Object source) {
 
-		super(source);
-	}
+        super(source);
+    }
 
-	public FormEvent(Object source, String name, String occupation, int age,
-			String employment, boolean plCitizen, String nrDow) {
-		
-		super(source);
+    public FormEvent(Object source, String name, String occupation, int age,
+                     String employment, boolean plCitizen, String nrDow) {
 
-		this.name = name;
-		this.occupation = occupation;
-		this.age = age;
-		this.employment = employment;
-		this.plCitizen = plCitizen;
-		this.nrDow = nrDow;
-	}
+        super(source);
 
-	public String getName() {
-		return name;
-	}
+        this.name = name;
+        this.occupation = occupation;
+        this.age = age;
+        this.employment = employment;
+        this.plCitizen = plCitizen;
+        this.nrDow = nrDow;
+    }
 
-	public String getOccupation() {
-		return occupation;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getEmployment() {
-		return employment;
-	}
+    public String getOccupation() {
+        return occupation;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public String getEmployment() {
+        return employment;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public int getAge() {
+        return age;
+    }
 
-	public void setOccupation(String occupation) {
-		this.occupation = occupation;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setAge(int id) {
-		this.age = id;
-	}
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
 
-	public void setAge(String employment) {
-		this.employment = employment;
-	}
+    public void setAge(int id) {
+        this.age = id;
+    }
 
-	public boolean isPlCitizen() {
-		return plCitizen;
-	}
+    public void setAge(String employment) {
+        this.employment = employment;
+    }
 
-	public String getNrDow() {
-		return nrDow;
-	}
+    public boolean isPlCitizen() {
+        return plCitizen;
+    }
 
-	public void setEmployment(String employment) {
-		this.employment = employment;
-	}
+    public String getNrDow() {
+        return nrDow;
+    }
 
-	public void setPlCitizen(boolean plCitizen) {
-		this.plCitizen = plCitizen;
-	}
+    public void setEmployment(String employment) {
+        this.employment = employment;
+    }
 
-	public void setNrDow(String nrDow) {
-		this.nrDow = nrDow;
-	}
+    public void setPlCitizen(boolean plCitizen) {
+        this.plCitizen = plCitizen;
+    }
+
+    public void setNrDow(String nrDow) {
+        this.nrDow = nrDow;
+    }
 }

@@ -5,32 +5,32 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"beans/beans.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext(
+                "beans/beans.xml");
 
-		LoggerByType loggerbyType = (LoggerByType) context.getBean("loggerbytype");
+        LoggerByType loggerbyType = (LoggerByType) context.getBean("loggerbytype");
 
-		loggerbyType.writeConsole("Hello there");
-		loggerbyType.writeFile("Hi again");
+        loggerbyType.writeConsole("Hello there");
+        loggerbyType.writeFile("Hi again");
 
-		LoggerByName loggerByName = (LoggerByName) context.getBean("loggerbyname");
+        LoggerByName loggerByName = (LoggerByName) context.getBean("loggerbyname");
 
-		loggerByName.writeConsole("Hello there");
-		loggerByName.writeFile("Hi again");
-		
-		LoggerByConstructor loggerByConstructor = (LoggerByConstructor) context.getBean("loggerbyconstructor");
+        loggerByName.writeConsole("Hello there");
+        loggerByName.writeFile("Hi again");
 
-		loggerByConstructor.writeConsole("Hello there");
-		loggerByConstructor.writeFile("Hi again");
-		
-		LoggerByName loggerByDefault = (LoggerByName) context.getBean("loggerbydefault");
+        LoggerByConstructor loggerByConstructor = (LoggerByConstructor) context.getBean("loggerbyconstructor");
 
-		loggerByDefault.writeConsole("Hello there");
-		loggerByDefault.writeFile("Hi again");
+        loggerByConstructor.writeConsole("Hello there");
+        loggerByConstructor.writeFile("Hi again");
 
-		((ClassPathXmlApplicationContext) context).close();
-	}
+        LoggerByName loggerByDefault = (LoggerByName) context.getBean("loggerbydefault");
+
+        loggerByDefault.writeConsole("Hello there");
+        loggerByDefault.writeFile("Hi again");
+
+        ((ClassPathXmlApplicationContext) context).close();
+    }
 
 }

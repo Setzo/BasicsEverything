@@ -1,14 +1,14 @@
 package beans;
 
 public class Phone {
-	
-	private int phone;
 
-	public int getPhone() {
-		return phone;
-	}
+    private int phone;
 
-	public void setPhone(int phone) {
-		this.phone = phone;
-	}
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
 }

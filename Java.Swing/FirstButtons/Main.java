@@ -2,14 +2,14 @@ import javax.swing.SwingUtilities;
 
 
 public class HelloWorld {
-	public static void main(String[] args) {
-		
-		SwingUtilities.invokeLater(new Runnable(){
+    public static void main(String[] args) {
 
-			@Override
-			public void run() {
-				new MainFrame();
-			}
-			});
-	}
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                new MainFrame();
+            }
+        });
+    }
 }

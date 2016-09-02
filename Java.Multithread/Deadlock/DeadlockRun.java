@@ -10,24 +10,23 @@ public class Runner {
 
     private Lock lock1 = new ReentrantLock();
     private Lock lock2 = new ReentrantLock();
-    
+
     private void acquireLocks(Lock l1, Lock l2) throws InterruptedException {
-        while(true) {
-        	
+        while (true) {
+
             boolean gotL1 = false;
             boolean gotL2 = false;
             try {
                 gotL1 = l1.tryLock();
                 gotL2 = l2.tryLock();
-            }
-            finally {
-                if(gotL1 && gotL2) {
+            } finally {
+                if (gotL1 && gotL2) {
                     return;
                 }
-                if(gotL1) {
+                if (gotL1) {
                     l1.unlock();
                 }
-                if(gotL2) {
+                if (gotL2) {
                     l2.unlock();
                 }
             }
@@ -51,7 +50,7 @@ public class Runner {
     }
 
     public void secondThread() throws InterruptedException {
-    	
+
         Random rng = new Random();
         for (int i = 0; i < 10000; i++) {
             acquireLocks(lock2, lock1);

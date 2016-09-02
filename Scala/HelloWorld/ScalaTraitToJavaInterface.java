@@ -1,12 +1,12 @@
 package hello.world;
 
-public class ScalaTraitToJavaInterface implements HelloWorldTrait{
+public class ScalaTraitToJavaInterface implements HelloWorldTrait {
 
-	public void sayHello() {
-		System.out.println("Hello");
-	}
+    public void sayHello() {
+        System.out.println("Hello");
+    }
 
-	public void sayHelloMoreTimes() {
-		HelloWorldTrait$class.sayHelloMoreTimes(this);
-	}
+    public void sayHelloMoreTimes() {
+        HelloWorldTrait$class.sayHelloMoreTimes(this);
+    }
 }

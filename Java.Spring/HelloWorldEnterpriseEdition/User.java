@@ -2,7 +2,7 @@ package tst;
 
 public class User {
 
-	public void sayHello() {
-		System.out.println("Hello!");
-	}
+    public void sayHello() {
+        System.out.println("Hello!");
+    }
 }

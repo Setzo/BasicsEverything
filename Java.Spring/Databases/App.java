@@ -12,14 +12,14 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 
 public class App {
 
-	public static void main(String[] args) {
-		
-		ApplicationContext context = new ClassPathXmlApplicationContext("main/beans/beans.xml");
-		
-		OfferDAO offerDAO = (OfferDAO)context.getBean("offerDAO");
-		
-		try {
-			
+    public static void main(String[] args) {
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("main/beans/beans.xml");
+
+        OfferDAO offerDAO = (OfferDAO) context.getBean("offerDAO");
+
+        try {
+
 			/*List<Offer> al = new ArrayList<Offer>();
 			
 			al.add(new Offer("k", "d", "a"));
@@ -34,10 +34,10 @@ public class App {
 			al.add(new Offer(10, "f", "f", "f"));
 			
 			offerDAO.update(al);*/
-			
-			//int[] iny = {11, 12, 13};
-			
-			//offerDAO.delete(iny);
+
+            //int[] iny = {11, 12, 13};
+
+            //offerDAO.delete(iny);
 			
 			/*
 			Offer off = offerDAO.getOffer(7);
@@ -49,38 +49,38 @@ public class App {
 			
 			offerDAO.update(off);
 			*/
-			
-			//offerDAO.delete(7);
-			//offerDAO.create(new Offer("Seth", "unknown", "ohai!"));
-			
-			List<Offer> list = offerDAO.getOffers();
-			
-			for(Offer offer : list) {
-				
-				System.out.println(offer);
-			}
-			
-			System.out.println(offerDAO.getOffer(2));
-			
-			MapSqlParameterSource params = new MapSqlParameterSource();
-			params.addValue("name", "liam");
-			params.addValue("id", 3);
-			
-			List<Offer> paramList = offerDAO.getOffersWithParams(params, 
-					"select * from offers where id = :id and name = :name");
-			
-			for(Offer offer : paramList) {
-				
-				System.out.println(offer);
-			}
-			
-		} catch (DataAccessException e) {
-			
-			System.out.println(e.getMessage());
-			System.out.println(e.getClass());
-		}
-		
-		((ClassPathXmlApplicationContext)context).close();
-	}
+
+            //offerDAO.delete(7);
+            //offerDAO.create(new Offer("Seth", "unknown", "ohai!"));
+
+            List<Offer> list = offerDAO.getOffers();
+
+            for (Offer offer : list) {
+
+                System.out.println(offer);
+            }
+
+            System.out.println(offerDAO.getOffer(2));
+
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("name", "liam");
+            params.addValue("id", 3);
+
+            List<Offer> paramList = offerDAO.getOffersWithParams(params,
+                    "select * from offers where id = :id and name = :name");
+
+            for (Offer offer : paramList) {
+
+                System.out.println(offer);
+            }
+
+        } catch (DataAccessException e) {
+
+            System.out.println(e.getMessage());
+            System.out.println(e.getClass());
+        }
+
+        ((ClassPathXmlApplicationContext) context).close();
+    }
 
 }

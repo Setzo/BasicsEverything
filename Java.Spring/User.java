@@ -2,62 +2,62 @@ package tst;
 
 public class User {
 
-	private int id;
-	private String login;
-	
-	private Address address;
-	
-	private int count;
-	
-	public User() {
-		
-	}
-	
-	public User(int id, String login) {
+    private int id;
+    private String login;
 
-		this.id = id;
-		this.login = login;
-	}
-	
-	public static User getInstance(int id, String login) {
-		
-		System.out.println("getInstance();");
-		return new User(id, login);
-	}
-	
-	public void onCreate() {
-		
-		System.out.println("created" + this);
-	}
-	
-	public void onDestroy() {
-		
-		System.out.println("Destroyed");
-	}
+    private Address address;
 
-	public void sayHello() {
-		System.out.println("Hello!");
-	}
+    private int count;
 
-	public int getCount() {
-		return count;
-	}
+    public User() {
 
-	public void setCount(int count) {
-		this.count = count;
-	}
-	
-	public Address getAddress() {
-		return address;
-	}
+    }
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+    public User(int id, String login) {
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", address=" + address
-				+ ", count=" + count + "]";
-	}
+        this.id = id;
+        this.login = login;
+    }
+
+    public static User getInstance(int id, String login) {
+
+        System.out.println("getInstance();");
+        return new User(id, login);
+    }
+
+    public void onCreate() {
+
+        System.out.println("created" + this);
+    }
+
+    public void onDestroy() {
+
+        System.out.println("Destroyed");
+    }
+
+    public void sayHello() {
+        System.out.println("Hello!");
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", login=" + login + ", address=" + address
+                + ", count=" + count + "]";
+    }
 }

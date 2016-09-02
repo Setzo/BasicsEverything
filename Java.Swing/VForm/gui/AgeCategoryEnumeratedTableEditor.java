@@ -12,30 +12,30 @@ import data.AgeCategoryEnumerated;
 
 public class AgeCategoryEnumeratedTableEditor extends AbstractCellEditor implements TableCellEditor {
 
-	private static final long serialVersionUID = -7456073522387041237L;
-	
-	private JComboBox<AgeCategoryEnumerated> comboBox;
+    private static final long serialVersionUID = -7456073522387041237L;
 
-	public AgeCategoryEnumeratedTableEditor() {
-		comboBox = new JComboBox<AgeCategoryEnumerated>(AgeCategoryEnumerated.values());
-	}
-	
-	public Object getCellEditorValue() {
-		
-		return comboBox.getSelectedItem();
-	}
+    private JComboBox<AgeCategoryEnumerated> comboBox;
 
-	public Component getTableCellEditorComponent(JTable table, Object value,
-			boolean isSelected, int row, int column) {
-		
-		comboBox.setSelectedItem(value);
-		comboBox.addActionListener((e) -> {
-			fireEditingStopped();
-		});
-		return comboBox;
-	}
+    public AgeCategoryEnumeratedTableEditor() {
+        comboBox = new JComboBox<AgeCategoryEnumerated>(AgeCategoryEnumerated.values());
+    }
 
-	public boolean isCellEditable(EventObject e) {
-		return true;
-	}
+    public Object getCellEditorValue() {
+
+        return comboBox.getSelectedItem();
+    }
+
+    public Component getTableCellEditorComponent(JTable table, Object value,
+                                                 boolean isSelected, int row, int column) {
+
+        comboBox.setSelectedItem(value);
+        comboBox.addActionListener((e) -> {
+            fireEditingStopped();
+        });
+        return comboBox;
+    }
+
+    public boolean isCellEditable(EventObject e) {
+        return true;
+    }
 }

@@ -3,15 +3,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
- 
+
 public class FileReaderEasyWay {
- 
+
     public static void main(String[] args) {
         File file = new File("byteObs.txt");
- 
+
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
- 
+
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
             }
@@ -20,7 +20,7 @@ public class FileReaderEasyWay {
         } catch (IOException e) {
             System.out.println("Unable to read file " + file.toString());
         }
- 
+
     }
- 
+
 }

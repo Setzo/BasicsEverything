@@ -10,17 +10,17 @@ import data.EmploymentCategory;
 
 public class EmploymentCategoryTableRenderer implements TableCellRenderer {
 
-	private JComboBox<EmploymentCategory> comboBox;
-	
-	public EmploymentCategoryTableRenderer() {
-		comboBox = new JComboBox<EmploymentCategory>(EmploymentCategory.values());
-	}
-	
-	public Component getTableCellRendererComponent(JTable table, Object value,
-			boolean isSelected, boolean hasFocus, int row, int column) {
-		
-		comboBox.setSelectedItem(value);
-		
-		return comboBox;
-	}
+    private JComboBox<EmploymentCategory> comboBox;
+
+    public EmploymentCategoryTableRenderer() {
+        comboBox = new JComboBox<EmploymentCategory>(EmploymentCategory.values());
+    }
+
+    public Component getTableCellRendererComponent(JTable table, Object value,
+                                                   boolean isSelected, boolean hasFocus, int row, int column) {
+
+        comboBox.setSelectedItem(value);
+
+        return comboBox;
+    }
 }

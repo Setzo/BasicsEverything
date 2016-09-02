@@ -16,48 +16,48 @@ import javax.sql.DataSource;
 
 public class JNDIConnect extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private DataSource dataSource;
-	
-	public JNDIConnect() {
+    private DataSource dataSource;
+
+    public JNDIConnect() {
         super();
     }
 
-	public void init(ServletConfig config) throws ServletException {
-		
-		try {
-			InitialContext initContext = new InitialContext();
-			
-			Context env = (Context)initContext.lookup("java:comp/env");
-			
-			dataSource = (DataSource)env.lookup("jdbc/testdatabase");
-			
-		} catch (NamingException e) {
-			throw new ServletException();
-		}
-	}
+    public void init(ServletConfig config) throws ServletException {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		Connection con = null;
-		
-		try {
-			con = dataSource.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		response.getWriter().println("Connected! :D");
-		
-		try {
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            InitialContext initContext = new InitialContext();
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
+            Context env = (Context) initContext.lookup("java:comp/env");
+
+            dataSource = (DataSource) env.lookup("jdbc/testdatabase");
+
+        } catch (NamingException e) {
+            throw new ServletException();
+        }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Connection con = null;
+
+        try {
+            con = dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        response.getWriter().println("Connected! :D");
+
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    }
 
 }

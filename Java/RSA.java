@@ -72,13 +72,13 @@ public class RSA {
         for (int counter = 0; counter < word.length(); counter++) {
 
             encrypted[counter] =
-                Integer.parseInt(
-                    BigInteger.valueOf((long) letters[counter])
-                        .modPow(
-                            BigInteger.valueOf(publicKey),
-                            BigInteger.valueOf(pxq)
-                        ).toString()
-                );
+                    Integer.parseInt(
+                            BigInteger.valueOf((long) letters[counter])
+                                    .modPow(
+                                            BigInteger.valueOf(publicKey),
+                                            BigInteger.valueOf(pxq)
+                                    ).toString()
+                    );
         }
 
         return encrypted;
@@ -89,16 +89,16 @@ public class RSA {
         final String[] toDecrypt = encrypted.split("\\s");
         int[] decrypted = new int[toDecrypt.length];
 
-        for(int counter = 0; counter < toDecrypt.length; counter++) {
+        for (int counter = 0; counter < toDecrypt.length; counter++) {
 
             decrypted[counter] =
-                Integer.parseInt(
-                    BigInteger.valueOf(Integer.parseInt(toDecrypt[counter]))
-                        .modPow(
-                            BigInteger.valueOf(privateKey),
-                            BigInteger.valueOf(pxq)
-                        ).toString()
-            );
+                    Integer.parseInt(
+                            BigInteger.valueOf(Integer.parseInt(toDecrypt[counter]))
+                                    .modPow(
+                                            BigInteger.valueOf(privateKey),
+                                            BigInteger.valueOf(pxq)
+                                    ).toString()
+                    );
         }
 
         return decrypted;
@@ -109,9 +109,9 @@ public class RSA {
         String[] toAscii = numeric.split("\\s");
         StringBuilder sb = new StringBuilder();
 
-        for(int counter = 0; counter < toAscii.length; counter++) {
+        for (int counter = 0; counter < toAscii.length; counter++) {
 
-            sb.append((char)((byte) Integer.parseInt(toAscii[counter])));
+            sb.append((char) ((byte) Integer.parseInt(toAscii[counter])));
         }
 
         return sb.toString();

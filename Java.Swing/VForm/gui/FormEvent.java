@@ -4,98 +4,98 @@ import java.util.EventObject;
 
 public class FormEvent extends EventObject {
 
-	private static final long serialVersionUID = 6409245800344985837L;
+    private static final long serialVersionUID = 6409245800344985837L;
 
-	private String name;
-	private String occupation;
-	private int age;
-	private String employment;
-	private boolean plCitizen;
-	private String docID;
-	private String gender;
-	private String phoneNumber;
+    private String name;
+    private String occupation;
+    private int age;
+    private String employment;
+    private boolean plCitizen;
+    private String docID;
+    private String gender;
+    private String phoneNumber;
 
-	public FormEvent(Object source) {
+    public FormEvent(Object source) {
 
-		super(source);
-	}
+        super(source);
+    }
 
-	public FormEvent(Object source, String name, String occupation, int age,
-			String employment, boolean plCitizen, String nrDow, String gender, String phoneNumber) {
-		
-		super(source);
+    public FormEvent(Object source, String name, String occupation, int age,
+                     String employment, boolean plCitizen, String nrDow, String gender, String phoneNumber) {
 
-		this.name = name;
-		this.occupation = occupation;
-		this.age = age;
-		this.employment = employment;
-		this.plCitizen = plCitizen;
-		this.docID = nrDow;
-		this.gender = gender;
-		this.phoneNumber = phoneNumber;
-	}
+        super(source);
 
-	public String getName() {
-		return name;
-	}
+        this.name = name;
+        this.occupation = occupation;
+        this.age = age;
+        this.employment = employment;
+        this.plCitizen = plCitizen;
+        this.docID = nrDow;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+    }
 
-	public String getOccupation() {
-		return occupation;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public String getOccupation() {
+        return occupation;
+    }
 
-	public String getEmployment() {
-		return employment;
-	}
+    public int getAge() {
+        return age;
+    }
 
-	public boolean isPlCitizen() {
-		return plCitizen;
-	}
+    public String getEmployment() {
+        return employment;
+    }
 
-	public String getDocID() {
-		return docID;
-	}
+    public boolean isPlCitizen() {
+        return plCitizen;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public String getDocID() {
+        return docID;
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public void setOccupation(String occupation) {
-		this.occupation = occupation;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
 
-	public void setEmployment(String employment) {
-		this.employment = employment;
-	}
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-	public void setPlCitizen(boolean plCitizen) {
-		this.plCitizen = plCitizen;
-	}
+    public void setEmployment(String employment) {
+        this.employment = employment;
+    }
 
-	public void setDocID(String docID) {
-		this.docID = docID;
-	}
+    public void setPlCitizen(boolean plCitizen) {
+        this.plCitizen = plCitizen;
+    }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public void setDocID(String docID) {
+        this.docID = docID;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }

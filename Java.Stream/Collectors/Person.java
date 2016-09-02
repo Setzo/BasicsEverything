@@ -2,51 +2,51 @@ package col;
 
 public class Person {
 
-	private String name;
-	
-	private String city;
-	
-	private int age;
+    private String name;
 
-	public static final Person empty() {
-		return new Person();
-	}
-	
-	public Person(String name, int age, String city) {
-		this.name = name;
-		this.city = city;
-		this.age = age;
-	}
+    private String city;
 
-	public Person() {
-	}
+    private int age;
 
-	@Override
-	public String toString() {
-		return "Person [name=" + name + ", email=" + city + ", age=" + age + "]";
-	}
+    public static final Person empty() {
+        return new Person();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Person(String name, int age, String city) {
+        this.name = name;
+        this.city = city;
+        this.age = age;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Person() {
+    }
 
-	public String getCity() {
-		return city;
-	}
+    @Override
+    public String toString() {
+        return "Person [name=" + name + ", email=" + city + ", age=" + age + "]";
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 }

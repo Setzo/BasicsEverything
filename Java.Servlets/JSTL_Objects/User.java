@@ -2,33 +2,33 @@ package beans;
 
 public class User {
 
-	private String name;
-	private int id;
+    private String name;
+    private int id;
 
-	public User() {
+    public User() {
 
-	}
+    }
 
-	public User(String name, int id) {
+    public User(String name, int id) {
 
-		super();
-		this.name = name;
-		this.id = id;
-	}
+        super();
+        this.name = name;
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 }
