@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "async-js",
+  "dependencies": {
+    "expect": "^1.20.1",
+    "live-server": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "live-server"
+  }
+}
