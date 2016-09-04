@@ -43,17 +43,42 @@ function getForecast(city, callback) {
   }, delayms)
 }
 
-function fetchCurrentCity(onError, onSuccess) {
+suite.only("operations")
+
+function fetchCurrentCity() {
+
+  const operation = {}
+
   getCurrentCity((error, result) => {
     if(error) {
-      onError(error)
+      operation.onError(error)
       return
     }
-    onSuccess(result)
+    operation.onSuccess(result)
   })
+
+  operation.setCallbacks = (onSuccess, onError) => {
+    operation.onSuccess = onSuccess
+    operation.onError = onError
+  }
+
+  return operation;
 }
 
-test("fetchCurrentCity with separate success and error callbacks", _ => {
+test("fetchCurrentCity pass multiple callbacks, call all of them", done => {
 
-  fetchCurrentCity(error => console.log(error), success => console.log(success))
+  // Initiate operation.
+  const operation = fetchCurrentCity()
+  const multiDone = callDone(done).afterTwoCalls()
+
+  operation.setCallbacks(result => multiDone())
+  operation.setCallbacks(result => multiDone())
+
+})
+
+test("fetchCurrentCity pass the callbacks later on", done => {
+
+  // Initiate operation.
+  const operation = fetchCurrentCity()
+  operation.setCallbacks(result => done(), error => done(error))
 })
