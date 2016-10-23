@@ -16,4 +16,10 @@ public:
         std::string lastname,
         int number);
     ~Person(void);
+    int getNumber();
+    bool operator<(Person &p1);
+    bool operator<(int i);
+    friend bool operator<(int i, Person p);
 };
+
+bool operator<(int i, Person p);

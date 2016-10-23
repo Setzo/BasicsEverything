@@ -7,9 +7,25 @@
 using std::cout;
 using std::endl;
 
-int main() {
+template <class T> T max(T &t0, T &t1) {
+    return t0 < t1 ? t0 : t1;
+}
+
+auto main() -> int {
 
     Person p0("Mike", "Ross", 231123);
+    Person p1("Developer", "Developerski", 456);
+
+    Person pMax = max(p0, p1);
+
+    cout << pMax.getNumber() << endl;
+
+    if (p0 < p1) {
+        cout << "less\n";
+    } else {
+        cout << "more\n";
+    }
+
     Developer d0("Wojciech", "Pruszak", 22, "Software Engineer");
 
     cout << "Hello, World!" << endl;

@@ -13,3 +13,19 @@ Person::Person(
 Person::~Person(void) {
     std::cout << "Destroying: " << firstname << std::endl;
 }
+
+int Person::getNumber() {
+    return number;
+}
+
+bool Person::operator<(int i) {
+    return number < i;
+}
+
+bool Person::operator<(Person &p1) {
+    return number < p1.number;
+}
+
+bool operator<(int i, Person p) {
+    return i < p.number;
+}
