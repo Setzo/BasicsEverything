@@ -18,6 +18,12 @@ auto main() -> int {
 
     Person pMax = max(p0, p1);
 
+    int x = 1;
+    cout << x << endl;
+    int* pX = &x;
+    (*pX)++;
+    cout << x << endl;
+
     cout << pMax.getNumber() << endl;
 
     if (p0 < p1) {
