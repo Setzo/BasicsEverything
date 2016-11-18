@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ $# -ne 2 ]]; then
-    echo 'Need exactly two arguments.'
+    echo 'Need exactly two arguments.' >&2
     exit 1
 fi
 
