@@ -37,4 +37,10 @@ while read -r; do
     printf "%s\n" "$REPLY"
 done
 
+# Print last line of the file.
+# While loop will not print, cause last line will contain
+# EOF. Therefore read -r on line with EOF returns false
+# and saves whatever it read into REPLY variable.
+[[ $REPLY ]] && { printf "%s\n" "$REPLY"; }
+
 exit 0
