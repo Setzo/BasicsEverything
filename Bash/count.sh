@@ -5,20 +5,38 @@ declare -i begin=0
 declare -i step=1
 
 # OPTARG will contain option argument (if any given).
-while getopts "b:s:r" opt; do
+# ":b:s:r"
+# : - start in silent mode
+# b: - option with parameter
+# s: - option with parameter
+# r - option withour parameter
+#
+# :) missing option argument option name
+# in OPTARG
+#
+# \?) actual question mark returned -
+# indication that option is unknown
+# option name in OPTARG
+#
+while getopts ":b:s:r" opt; do
     case "$opt" in
     r)
         reverse="yes"
        ;;
     b)
         [[ ${OPTARG} =~ ^-?[0-9]+$ ]] || { echo "${OPTARG} is not a number" >&2; exit 1; }
-        start="${OPTARG}"
+        begin="${OPTARG}"
         ;;
     s)
         [[ ${OPTARG} =~ ^-?[0-9]+$ ]] || { echo "${OPTARG} is not a number" >&2; exit 1; }
         step="${OPTARG}"
         ;;
+    :)
+        echo "Option -${OPTARG} is missing an argument" >&2
+        exit 1
+        ;;
     \?)
+        echo "Unknown option: -${OPTARG}" >&2
         exit 1
         ;;
     esac
