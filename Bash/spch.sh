@@ -19,6 +19,8 @@ false
 
 echo "Process id: ${$}"
 
+# -- - end of command params
+
 cat <<< 'string'
 
 echo $(( $? == 0 ? 1 : 2 ))
@@ -40,6 +42,9 @@ echo $(( 20#AHHH ))
 
 # CTRL D to stop
 #cat - > file.txt
+
+# "$@" - "$1" "$2" "$3"..
+# "$*" - "$1 $2 $3.."
 
 # If no exit, will exit with exit status of
 # last command. Equivalent to:
