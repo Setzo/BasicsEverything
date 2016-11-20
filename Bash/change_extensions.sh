@@ -9,7 +9,7 @@
 
 for f in *"$1"; do
     base=`basename "$f" "$1"`
-    echo mv "$f" "${base}${2}"
+    mv "$f" "${base}${2}"
 done
 
 exit 0
