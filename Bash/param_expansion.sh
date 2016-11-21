@@ -4,20 +4,9 @@
 : ${2?"Usage: $(basename $0 .sh) ARGUMENT PATTERN REPLACEMENT"}
 : ${3?"Usage: $(basename $0 .sh) ARGUMENT PATTERN REPLACEMENT"}
 
-# Num of parameters.
-# echo ${#@}
-# echo ${#*}
-
-# Num of elements in array
-# echo ${#array[@]}
-# echo ${#array[*]}
-
 argument="$1"
 pattern="$2"
 replacement="$3"
-
-echo "${PWD##*/}" # Current working dir basename
-echo "${0##*/}" # Script name
 
 # All of the above does not change real value of the parameter
 echo "Argument: $argument"

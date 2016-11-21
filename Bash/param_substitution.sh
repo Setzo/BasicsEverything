@@ -25,6 +25,17 @@ echo "${var="xxx"}"
 echo "${var="zzz"}" # var equals xxx at this point,
                     # thus not changing its value to zzz
 
+# Num of parameters.
+# echo ${#@}
+# echo ${#*}
+
+# Num of elements in array
+# echo ${#array[@]}
+# echo ${#array[*]}
+
+echo "${PWD##*/}" # Current working dir basename
+echo "${0##*/}" # Script name
+
 txz1=5
 txz2=3
 txz3=1
