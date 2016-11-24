@@ -25,6 +25,6 @@ if ! jobId=`at "$hour" <<< "$command" 2>&1 | tail -n1 | cut -f2 -d" "` ; then
     exit 1
 fi
 
-echo "Will run '${command}' (job id: ${jobId}) at ${hour}"
+echo "Will run '${command}' (job id: ${jobId}) at ${hour}" >&2
 
 exit 0
