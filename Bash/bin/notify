@@ -9,7 +9,6 @@
 }
 
 ICON_PATH="${ICON_PATH:-/usr/share/icons/Numix-Circle/}"
-ICON_DEFAULT="${ICON_DEFAULT:-plex}"
 
 time='1000'
 urgency='low'
