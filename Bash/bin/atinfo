@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+[[ $# -eq 0 ]] && {
+    echo "Usage: $(basename $0) [JOBID]" >&2
+    echo 'Expecting at least one argument' >&2
+    exit 1
+}
+
+echo '###'
+
+for jobId in "$@"; do
+    [[ ! "$jobId" =~ ^[0-9]+$ ]] && {
+        echo "Argument: '${jobId}' is not a number" >&2
+        exit 1
+    }
+
+    if ! at -c "$jobId" 2> /dev/null | grep -vE '^(\w+=.*;\s+export\s+\w+|#.*|umask.*|\s*)$'; then
+        echo "Job ${jobId} does not exist" >&2
+    fi
+    echo '###'
+done
+
+exit 0
