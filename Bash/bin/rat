@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Executes given command at given hour.
+
 [[ $# -lt 2 ]] && {
     echo "Usage: $(basename $0) HH:MM COMMAND" >&2
     exit 1

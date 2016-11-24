@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+# Shows info about `at` job.
+
 [[ $# -eq 0 ]] && {
-    echo "Usage: $(basename $0) [JOBID]" >&2
+    echo "Usage: $(basename $0) JOBID" >&2
     echo 'Expecting at least one argument' >&2
     exit 1
 }

@@ -1,3 +1,69 @@
 #!/usr/bin/env bash
 
+# Shows simple desktop notification.
 
+[[ $# -eq 0 ]] && {
+    echo "Usage: $(basename $0) [OPTIONS] SUMMARY [MESSAGE]" >&2
+    echo 'Expecting at least one argument' >&2
+    exit 1
+}
+
+ICON_PATH="${ICON_PATH:-/usr/share/icons/Numix-Circle/}"
+ICON_DEFAULT="${ICON_DEFAULT:-plex}"
+
+time='1000'
+urgency='low'
+icon='plex'
+
+while getopts ":u:t:i:" opt; do
+    case "$opt" in
+    u)
+        shopt -s nocasematch
+        [[ $OPTARG =~ ^(low|normal|critical)$ ]] || {
+            echo "Given urgency level: ${OPTARG}" >&2
+            echo "Allowed urgency levels: LOW, NORMAL, CRITICAL" >&2
+            echo "Using default urgency level: ${urgency} ms" >&2
+            continue
+        }
+        urgency="$OPTARG"
+        shopt -u nocasematch
+        ;;
+    t)
+        [[ $OPTARG =~ ^-?[0-9]+$ ]] || {
+            echo "${OPTARG} is not a number" >&2
+            echo "Using default time: ${time} ms" >&2
+            continue
+        }
+        time="$OPTARG"
+        ;;
+    i)
+        (( `find "$ICON_PATH" -name "${OPTARG}.png" -o -name "${OPTARG}.svg" | wc -l` > 0 )) || {
+            echo "Icon '${OPTARG}' not found at: ${ICON_PATH}" >&2
+            echo "Using default icon (${icon})" >&2
+            continue
+        }
+        icon="$OPTARG"
+        ;;
+    :)
+        echo "Option -${OPTARG} is missing an argument" >&2
+        exit 1
+        ;;
+    \?)
+        echo "Unknown option: -${OPTARG}" >&2
+        exit 1
+        ;;
+    esac
+done
+
+# Skip processed options.
+shift $(( OPTIND - 1 ))
+
+summary="$1"
+message="${*:2}"
+
+if ! notify-send -i "$icon" -t "$time" -u "$urgency" "$summary" "$message"; then
+    echo 'Something went wrong' >&2
+    exit 1
+fi
+
+exit 0
