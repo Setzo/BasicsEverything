@@ -60,7 +60,7 @@ shift $(( OPTIND - 1 ))
 summary="$1"
 message="${*:2}"
 
-if ! notify-send -i "$icon" -t "$time" -u "$urgency" "$summary" "$message" > /dev/null >&2; then
+if ! notify-send -i "$icon" -t "$time" -u "$urgency" "$summary" "$message" > /dev/null 2>&1; then
     echo 'Something went wrong' >&2
     exit 1
 fi
