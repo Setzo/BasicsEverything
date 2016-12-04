@@ -8,8 +8,8 @@
 #}
 
 for f in *"$1"; do
-    base=`basename "$f" "$1"`
-    mv "$f" "${base}${2}"
+#    base=`basename "$f" "$1"`
+    mv -- "$f" "${f/%$1/$2}"
 done
 
 exit 0

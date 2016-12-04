@@ -26,7 +26,20 @@ error() {
 
 # Returns 0 if argument is a number
 isnum () {
-    [[ $1 =~ ^[0-9]+$ ]]
+    declare -r num_exp='^[0-9]+$'
+    declare -r octal_exp='^0(.*)'
+
+    num_error='ok'
+
+    if [[ $1 =~ $num_exp ]]; then
+        if [[ $1 =~ $octal_exp ]]; then
+            error "${1} is not a number, did you mean ${BASH_REMATCH[1]}?" 1
+        fi
+    else
+        error "${1} is not a number" 1
+    fi
+
+    return 0
 }
 
 declare reverse=""
@@ -57,11 +70,11 @@ while getopts ":hb:s:r" opt; do
         reverse="yes"
        ;;
     b)
-        isnum "${OPTARG}" || error "${OPTARG} is not a number" 1
+        isnum "${OPTARG}"
         begin="${OPTARG}"
         ;;
     s)
-        isnum "${OPTARG}" || error "${OPTARG} is not a number" 1
+        isnum "${OPTARG}"
         step="${OPTARG}"
         ;;
     :)
@@ -77,6 +90,7 @@ done
 shift $(( OPTIND - 1 ))
 
 [[ $1 ]] || error "Missing an argument" 1
+isnum "${1}"
 declare end="${1}"
 
 operator="+="
