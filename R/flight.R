@@ -45,3 +45,21 @@ noOnTime <- delayedDistribution[1]
 noDelayed <- delayedDistribution[2]
 percentageDelayed <- noDelayed / (noDelayed + noOnTime)
 percentageDelayed
+
+install.packages('caret')
+library(caret)
+
+set.seed(12345)
+featureCols <- c('ARR_DEL15', 'DAY_OF_WEEK', 'CARRIER', 'DEST', 'ORIGIN', 'DEP_TIME_BLK')
+onTimeDataFiltered <- onTimeData[, featureCols]
+inTrainRows <- createDataPartition(onTimeDataFiltered$ARR_DEL15, p = 0.7, list = F)
+head(inTrainRows, 10)
+
+trainDataFiltered <- onTimeDataFiltered[inTrainRows,]
+testDataFiltered <- onTimeDataFiltered[-inTrainRows,]
+nrow(trainDataFiltered) / nrow(testDataFiltered) + nrow(trainDataFiltered)
+nrow(testDataFiltered) / nrow(testDataFiltered) + nrow(trainDataFiltered)
+
+logisticRegressionModel <- train(ARR_DEL15 ~ ., data = trainDataFiltered, method = 'glm', familty = 'binomial')
+logRegressionPrediction <- predict(logisticRegressionModel, testDataFiltered)
+logRegressionConfusionMatrix <- confusionMatrix(logRegressionPrediction, testDataFiltered[, 'ARR_DEL15'])
