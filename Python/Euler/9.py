@@ -1,12 +1,14 @@
-def find():
-    for a in range(1, 1000):
-        for b in range(1, 1000):
-            for c in range(1, 1000):
-                if (a * a) + (b * b) == c * c and a + b + c == 1000:
+def find(limit):
+    for c in range(limit // 3, limit):
+        for b in range(limit // 6, c):
+            for a in range(1, b)[::-1]:
+                if a + b < c:
+                    break
+                if a + b + c == limit and (a * a) + (b * b) == c * c:
                     return [a, b, c]
 
 
-numbers = find()
+numbers = find(1000)
 product = 1
 for i in numbers:
     product *= i
