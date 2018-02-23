@@ -7,5 +7,3 @@ def checkio(data):
         and re.search("[a-z]", data)
         and re.search("[A-Z]", data)
         and re.search("\d", data))
-
-print(checkio("aawd3123DDDzz"))
