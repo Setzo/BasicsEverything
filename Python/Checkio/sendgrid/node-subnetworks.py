@@ -13,7 +13,6 @@ def subnetworks(net, dead_nodes):
                 subnets.append([connection])
                 continue
             appended = False
-            twoSubnetsMatch = False
             for subnet in subnets:
                 for subnet_connection in subnet:
                     if node in subnet_connection and node not in dead_nodes:
