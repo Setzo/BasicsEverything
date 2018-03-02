@@ -15,3 +15,9 @@ print(dictionary)
 
 # No error
 print(dictionary.get('non existing key'))
+
+print(dictionary.items())
+t_tuple = tuple(dictionary.items())
+print(t_tuple)
+
+print(dict(t_tuple))
