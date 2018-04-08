@@ -20,7 +20,7 @@ public class ServerTreeCellRenderer implements TreeCellRenderer {
         cellRenderer = new DefaultTreeCellRenderer();
 
         cellRenderer.setLeafIcon(Uti.createIcon("/images/database20.png", null));
-        cellRenderer.setOpenIcon(Uti.createIcon("/images/minusServer.png", null));
+        cellRenderer.setOpenIcon(Uti.createIcon("/images/plusServer.png", null));
         cellRenderer.setClosedIcon(Uti.createIcon("/images/plusServer.png", null));
     }
 
