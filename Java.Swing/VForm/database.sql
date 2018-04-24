@@ -19,6 +19,6 @@ CREATE TABLE `people` (
 
 LOCK TABLES `people` WRITE;
 
-INSERT INTO `people` VALUES (1,'Setzo','ADULT','SELF-EMPLOYED','AMW12345',1,'MALE','Java Developer','790727182');
+INSERT INTO `people` VALUES (1,'Wojciech Pruszak','ADULT','SELF_EMPLOYED','AMW12345',1,'MALE','Java Developer','235325');
 
 UNLOCK TABLES;

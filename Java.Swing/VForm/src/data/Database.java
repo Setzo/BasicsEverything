@@ -1,5 +1,7 @@
 package data;
 
+import data.listeners.CntChangeListener;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,8 +19,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
-import data.listeners.CntChangeListener;
 
 public class Database {
 
@@ -45,7 +45,7 @@ public class Database {
         }
 
         String connectionURL = "jdbc:mysql://localhost:3306/swingtest";
-        con = DriverManager.getConnection(connectionURL, "root", "");
+        con = DriverManager.getConnection(connectionURL, "root", "tester");
     }
 
     public void disconnect() {
@@ -140,7 +140,6 @@ public class Database {
 
         while (results.next()) {
             if (results.getInt("plcitizen") == 1) {
-
                 addPerson(new Person(
                         results.getInt("id"),
                         results.getString("name"),
