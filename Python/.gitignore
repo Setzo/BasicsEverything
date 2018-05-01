@@ -3,3 +3,5 @@ venv/
 *-checkpoint.ipynb
 .ipynb/checkpoints/
 words
+__pycache__/
+*.pyc
