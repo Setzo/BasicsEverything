@@ -36,3 +36,13 @@ print(sequence_class(True))
 print(sequence_class(False))
 print(sequence_class(True)([1, 2, 3]))
 print(sequence_class(False)([1, 2, 3]))
+
+if callable(2):
+    print('2 is callable')
+else:
+    print('2 is not callable')
+
+if callable(Resolver):
+    print('Resolver is callable')
+else:
+    print('Resolver is not callable')
