@@ -11,6 +11,7 @@ open class Inherits(protected val test: String) : Interfaces {
 class InheritsChild(test: String, var test2: Int) : Inherits(test) {
 
     var property: String = "property"
+    private set
 
     companion object {
 
