@@ -5,16 +5,16 @@ version = "1.0"
 
 buildscript {
     var kotlin_version: String by extra
-    kotlin_version = "1.2.41"
+    kotlin_version = "1.2.50"
 
     repositories {
         mavenCentral()
     }
-    
+
     dependencies {
         classpath(kotlinModule("gradle-plugin", kotlin_version))
     }
-    
+
 }
 
 apply {

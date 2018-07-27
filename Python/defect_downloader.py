@@ -11,7 +11,8 @@ import sys
 import glob
 import io
 
-SERIALIZATION_METHOD = 'html'
+SERIALIZATION_METHOD = 'xml'
+PRETTY_PRINT = True
 REMOVE_TEMPORARY_FILES = True
 MAX_DOWNLOAD_THREADS = 10
 MAX_XSLT_THREADS = 4
@@ -115,7 +116,8 @@ class XsltTransformer(threading.Thread):
                     dom = lxml.etree.parse(to_transform_path)
                     transformed = XsltTransformer.xslt(dom)
                     file.write(
-                        str(lxml.etree.tostring(transformed, method=SERIALIZATION_METHOD), encoding='utf-8'))
+                        str(lxml.etree.tostring(transformed, pretty_print=PRETTY_PRINT, method=SERIALIZATION_METHOD),
+                            encoding='utf-8'))
             except BaseException as exception:
                 print('Thread {} encountered an error: {}'.format(threading.current_thread().name, str(exception)),
                       file=sys.stderr)
@@ -270,7 +272,8 @@ def merge_files(domain_to_project_dictionary, output_directory):
             result_file_name = '{}/{}/{}_result.xml'.format(output_directory, domain, project)
             print('Writing file: {}'.format(result_file_name))
             with open(result_file_name, 'w+', encoding='utf-8') as result_file:
-                result_file.write(str(lxml.etree.tostring(tree, method=SERIALIZATION_METHOD), encoding='utf-8'))
+                result_file.write(str(lxml.etree.tostring(tree, method=SERIALIZATION_METHOD, pretty_print=PRETTY_PRINT),
+                                      encoding='utf-8'))
     print('Finished merging files.')
 
 
@@ -369,7 +372,8 @@ def normalize_result(authentication_headers, domain, project, output_directory):
     print('Finished result transformation.')
     with(open('{}/{}/{}_result.xml'.format(output_directory, domain, project), 'w+', encoding='utf-8')) as file:
         print('Writing normalized file.')
-        file.write(str(lxml.etree.tostring(transformed, method=SERIALIZATION_METHOD), encoding='utf-8'))
+        file.write(str(lxml.etree.tostring(transformed, method=SERIALIZATION_METHOD, pretty_print=PRETTY_PRINT),
+                       encoding='utf-8'))
     print('Finished normalizing result.')
 
 
@@ -421,3 +425,4 @@ def ask_user_for_needed_parameters():
 
 
 init_workflow()
+
